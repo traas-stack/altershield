@@ -1,0 +1,7 @@
+.idea
+*.iml
+pom.xml.versionsBackup
+target/
+*.log
+.DS_Store
+!/scripts/api/target
