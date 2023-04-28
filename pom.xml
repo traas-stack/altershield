@@ -46,6 +46,16 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+            <!--code formatter-->
+            <plugin>
+                <groupId>net.revelc.code.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <version>2.11.0</version>
+                <configuration>
+                    <configFile>${user.dir}/Formatter.xml</configFile>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
