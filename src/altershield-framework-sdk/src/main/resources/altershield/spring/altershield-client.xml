@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="httpAlterShieldClient"
+          class="com.alipay.altershield.framework.common.httpclient.HttpAlterShieldClientImpl">
+        <property name="httpInvoker" ref="httpInvoker"/>
+        <property name="serverAddress" value="${altershield.framework.client.base.serverAddress}"/>
+        <property name="platform" value="${altershield.framework.client.base.platform}"/>
+        <property name="platformToken" value="${altershield.framework.client.base.platformToken}"/>
+        <property name="proxyAddress" value="${altershield.framework.client.http.proxy.proxyAddress}"/>
+        <property name="proxyParamName" value="${altershield.framework.client.http.proxy.proxyParamName}"/>
+    </bean>
+
+    <bean id="heartbeatCheck"
+          class="com.alipay.altershield.framework.sdk.change.facade.http.HttpHeartbeatCheckClientImpl">
+        <property name="httpAlterShieldClient" ref="httpAlterShieldClient"/>
+    </bean>
+
+    <bean id="heartbeatUtil" class="com.alipay.altershield.framework.sdk.change.client.impl.HeartbeatUtil" init-method="init" destroy-method="destroy">
+        <constructor-arg value="${altershield.framework.client.base.platform}"/>
+    </bean>
+
+    <bean id="alterShieldChangeFacade" class="com.alipay.altershield.framework.sdk.change.facade.http.HttpAlterShieldChangeFacadeImpl" init-method="init">
+        <property name="httpAlterShieldClient" ref="httpAlterShieldClient"/>
+    </bean>
+
+    <bean id="changeInnerClient" class="com.alipay.altershield.framework.sdk.change.client.impl.ChangeInnerClientImpl">
+        <property name="heartbeatUtil" ref="heartbeatUtil"/>
+        <property name="changeFacade" ref="alterShieldChangeFacade"/>
+        <property name="hiddenServerError" value="${altershield.framework.client.base.hiddenServerError}"/>
+        <property name="validator" ref="validator"/>
+    </bean>
+
+    <!-- 标准三板斧场景使用 -->
+    <bean id="changeClient" class="com.alipay.altershield.framework.sdk.change.client.impl.ChangeClientImpl">
+        <property name="changeInnerClient" ref="changeInnerClient"/>
+    </bean>
+
+    <!-- G1场景使用 -->
+    <bean id="simpleChangeClient" class="com.alipay.altershield.framework.sdk.change.client.impl.SimpleChangeClientImpl">
+        <property name="changeInnerClient" ref="changeInnerClient"/>
+    </bean>
+
+    <!-- G0 场景使用-->
+    <bean id="changeNotifyClient" class="com.alipay.altershield.framework.sdk.change.client.impl.ChangeNotifyClientImpl">
+        <property name="changeInnerClient" ref="changeInnerClient"/>
+    </bean>
+
+
+    <bean id="httpAlterShieldMetaChangeSceneFacade" class="com.alipay.altershield.framework.sdk.meta.facade.http.HttpAlterShieldMetaChangeSceneFacadeImpl" >
+        <property name="httpAlterShieldClient" ref="httpAlterShieldClient"/>
+    </bean>
+
+    <bean id="opsCloudMetaChangeSceneClient" class="com.alipay.altershield.framework.sdk.meta.client.impl.MetaChangeSceneClientImpl">
+        <property name="validator" ref="validator"/>
+        <property name= "metaChangeSceneFacade" ref="httpAlterShieldMetaChangeSceneFacade"/>
+    </bean>
+</beans>

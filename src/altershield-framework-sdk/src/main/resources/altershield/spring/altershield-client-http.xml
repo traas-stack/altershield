@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 配置httpclient，用户可以自己实现 -->
+    <bean id="httpInvoker" class="com.alipay.altershield.framework.common.httpclient.DefaultHttpInvoker" init-method="init">
+        <property name="connectionManagerTimeout" value="${altershield.framework.client.http.connectionManagerTimeout}"/>
+        <property name="connectionTimeout" value="${altershield.framework.client.http.connectionTimeout}"/>
+        <property name="maxConnPerHost" value="${altershield.framework.client.http.maxConnPerHost}"/>
+        <property name="maxTotalConn" value="${altershield.framework.client.http.maxTotalConn}"/>
+        <property name="soTimeout" value="${altershield.framework.client.http.soTimeout}"/>
+    </bean>
+</beans>
