@@ -12,7 +12,7 @@ repos:
       - id: trailing-whitespace
       - id: check-added-large-files
         args:
-          - --maxkb=100
+          - --maxkb=1024
       - id: check-case-conflict
 
   - repo: https://github.com/commitizen-tools/commitizen

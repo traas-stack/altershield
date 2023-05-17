@@ -49,7 +49,8 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-**Open Change Management Specification** is a set of technical standards for change control, which aims to provide universal change control solutions for IT-related enterprises. With the use of technical standards in this program, changes made by departments or enterprises with different business backgrounds can be integrated, enabling the ability to perceive, intervene, analyze and mitigate risks throughout the entire change lifecycle, thereby reducing the impact of changes on business.
+
+**Open Change Management Specification** (OCMS) is a set of change management technical standards applicable to SRE and DevOps modes. OCMS provides universal change management solutions driven by data, which can integrate change data from different departments or enterprises. By integrating standardization, OCMS helps users to achieve the ability to perceive, intervene, analyze risks, and prevent risks in the entire life cycle of changes, thereby reducing the impact of changes on business. OCMS aims to provide an efficient change management solution for information technology-related enterprises and help users optimize system performance, enhance reliability, and stability under the SRE and DevOps modes.
 
 Before we begin, you may need to understand [what change management is]().
 
@@ -115,12 +116,10 @@ Distributed under the Apache2.0 License. See `LICENSE` for more information.
 
 <!-- CONTACT -->
 ## Contact
-
-AlterShield email - altershield.io@gmail.com
-DingDing group - 11360043976
-WeChat official account：
-Slack
-
+- Contact us via Email: traas_stack@antgroup.com / altershield.io@gmail.com
+- Ding Talk Group [QR code](./docs/dingtalk.png)
+- WeChat Official Account [QR code](./docs/wechat.png)
+- [Slack](https://altershield.slack.com/)
 
 
 
