@@ -56,7 +56,7 @@
 
 **Open Change Management Specification** (OCMS) is a set of change management technical standards applicable to SRE and DevOps modes. OCMS provides universal change management solutions driven by data, which can integrate change data from different departments or enterprises. By integrating standardization, OCMS helps users to achieve the ability to perceive, intervene, analyze risks, and prevent risks in the entire life cycle of changes, thereby reducing the impact of changes on business. OCMS aims to provide an efficient change management solution for information technology-related enterprises and help users optimize system performance, enhance reliability, and stability under the SRE and DevOps modes.
 
-Before we begin, you may need to understand [What is Change Management?]().
+Before we begin, you may need to understand [What is Change Management?](https://traas-stack.github.io/altershield-docs/introduction/what-is-change-management).
 
 ### What does it provide
 
@@ -84,7 +84,7 @@ Before we begin, you may need to understand [What is Change Management?]().
 3. The upcoming risk analysis framework provided by change management will need to be combined with your CMDB (or other metadata storage) to obtain data and deduce the impact of changes.
 4. Change management will soon launch universal risk mitigation capabilities. In addition, if you want to better address change risk issues that are specific to your business background, you will need to customize risk mitigation plugins to encapsulate your experience.
 
-_For more information, please refer to the [Documentation](https://example.com)_
+_For more information, please refer to the [Documentation](https://traas-stack.github.io/altershield-docs/)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
