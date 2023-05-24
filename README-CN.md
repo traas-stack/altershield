@@ -1,7 +1,7 @@
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80"/>
+  <a href="https://github.com/traas-stack/altershield">
+    <img src="docs/logo/logo.png" alt="Logo" width="80" height="80"/>
   </a>
 
 <h3 align="center">AlterShield</h3>
@@ -114,7 +114,7 @@ _更多信息，请前往 [AlterShield文档](https://example.com)_
 ## Contact
 - 邮箱地址: traas_stack@antgroup.com / altershield.io@gmail.com
 - 钉钉群 [二维码](./docs/dingtalk.png)
-- 微信公众号 [二维码](./docs/wechat.png)
+- 微信公众号 [二维码](./docs/wechat.jpg)
 - [Slack](https://altershield.slack.com/)
 
 

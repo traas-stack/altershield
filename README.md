@@ -1,7 +1,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80"/>
+    <img src="docs/logo/logo.png" alt="Logo" width="80" height="80"/>
   </a>
 
 <h3 align="center">AlterShield</h3>
@@ -118,7 +118,7 @@ Distributed under the Apache2.0 License. See `LICENSE` for more information.
 ## Contact
 - Contact us via Email: traas_stack@antgroup.com / altershield.io@gmail.com
 - Ding Talk Group [QR code](./docs/dingtalk.png)
-- WeChat Official Account [QR code](./docs/wechat.png)
+- WeChat Official Account [QR code](./docs/wechat.jpg)
 - [Slack](https://altershield.slack.com/)
 
 
