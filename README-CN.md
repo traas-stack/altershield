@@ -44,7 +44,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## 项目介绍
-AlterShield 是一款面向多业务背景下的变更管控解决方案。[什么是变更和变更管控](https://traas-stack.github.io/altershield-docs/zh-CN/introduction/what-is-change-management)
+AlterShield 是一款能够有效进行变更风险防控，预防变更引发生产环境故障的变更管控解决方案。[什么是变更和变更管控](https://traas-stack.github.io/altershield-docs/zh-CN/introduction/what-is-change-management)
 
 它是蚂蚁集团内部变更管控平台 OpsCloud 的开源版本。它凝聚了蚂蚁集团在公司大规模变更下积累的变更管控技术、产品以及方法论。在复杂业务场景下，提供变更过程中的生命周期感知、变更异常识别（变更防御）、变更熔断能力。
 
@@ -56,6 +56,10 @@ Open Change Management Specification (OCMS) 在目前阶段包含了以下内容
 - 一套变更信息模型，定义了一种变更想要进行管控，需要具备的信息结构，该结构用于后续的变更信息感知、变更防御、变更度量等流程
 - 一套变更接入的SDK，以前后置切面的形式，在每个变更步骤生效的前、后进行扩展，进行变更防御的异常检测
 - 一套基于插件的变更防御框架，将不同场景下需要的异常识别能力（如：监控告警检测、日志异常检测等）以插件的形式实现并集成到框架中，在SDK中的前后置切面中调度执行
+
+如果您想要了解更多，可以访问我们的文档库获取更多信息模型及SDK的定义：
+- [变更信息模型定义](https://traas-stack.github.io/altershield-docs/zh-CN/open-change-management-specification/change-model)
+- [变更接入SDK](https://traas-stack.github.io/altershield-docs/zh-CN/open-change-management-specification/change-access-sdk)
 
 ### 我们的目标及后续的计划
 
