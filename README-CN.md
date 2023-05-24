@@ -51,7 +51,7 @@
 
 Open Change Management Specification (OCMS)是一套可适用于SRE和DevOps模式的变更管理技术标准。OCMS以数据驱动的方式，提供了普适性的变更管控方案，可整合来自不同部门或企业的变更数据。OCMS通过整合标准化，帮助用户实现对变更全生命周期的感知、干预、风险分析和风险防控等能力，从而降低变更造成的业务影响。OCMS旨在为信息技术相关企业提供一种高效的变更管理解决方案，并帮助用户在SRE和DevOps模式下优化系统表现，提高可靠性和稳定性。
 
-在此之前，您可能还需要了解： [什么是变更管控](02-what-is-change-management.md)。
+在此之前，您可能还需要了解： [什么是变更管控](https://traas-stack.github.io/altershield-docs/zh-CN/introduction/what-is-change-management)。
 
 ## 它提供了什么
 
@@ -79,7 +79,7 @@ Open Change Management Specification (OCMS)是一套可适用于SRE和DevOps模�
 3. 即将推出变更管控提供的风险分析框架，需要结合您的CMDB（或其他元数据存储）来获取数据推导变更影响面。
 4. 变更管控即将推出通用的风险防控能力。除此之外，如果您想更贴合您的业务背景解决变更风险问题，需要自定义风险防控插件来沉淀您的经验。
 
-_更多信息，请前往 [AlterShield文档](https://example.com)_
+_更多信息，请前往 [AlterShield文档](https://traas-stack.github.io/altershield-docs/zh-CN/)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
