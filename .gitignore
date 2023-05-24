@@ -1,0 +1,15 @@
+**/target
+**/mule.log
+**/.settings
+**/.project
+**/.classpath
+**/test-output
+**/.class
+**/*.iml
+logs
+*.iml
+*.ipr
+*.iws
+*.log
+.DS_Store
+.idea

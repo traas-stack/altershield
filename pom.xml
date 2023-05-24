@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <altershield.framework.sdk.version>0.0.1</altershield.framework.sdk.version>
+        <altershield.framework.spi.version>0.0.1</altershield.framework.spi.version>
+        <java.version>8</java.version>
+        <spring.boot.version>2.5.6</spring.boot.version>
+    </properties>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.6</version>
+    </parent>
+    <groupId>com.alipay</groupId>
+    <artifactId>altershield</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>altershield</name>
+    <description>altershield</description>
+    <modules>
+        <module>src/altershield-framework-sdk</module>
+        <module>src/altershield-bootstrap</module>
+        <module>src/altershield-framework-spi</module>
+        <module>src/altershield-schedule</module>
+        <module>src/altershield-defender</module>
+        <module>src/altershield-change</module>
+        <module>src/altershield-plugin-market</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.71_noneautotype</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!--code formatter-->
+            <plugin>
+                <groupId>net.revelc.code.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <version>2.11.0</version>
+                <configuration>
+                    <configFile>${user.dir}/Formatter.xml</configFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
