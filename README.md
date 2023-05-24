@@ -80,9 +80,9 @@ Before we begin, you may need to understand [What is Change Management?](https:/
 - [ ] Add Quick Start
 - [ ] Add Installation 
 - [ ] Add Defense Plugin 
-- [ ] Add 
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+We will continue to add more roadmaps.
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

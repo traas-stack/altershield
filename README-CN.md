@@ -77,7 +77,7 @@ Open Change Management Specification (OCMS)是一套可适用于SRE和DevOps模�
 - [ ] 增加安装使用说明 
 - [ ] 增加变更防御插件 
 
-We will continue to add more roadmaps.
+我们会持续增加RoadMap。
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
