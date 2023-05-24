@@ -9,14 +9,14 @@
   <p align="center">
     开放的变更管控规范
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>查看文档 »</strong></a>
+    <a href="https://traas-stack.github.io/altershield-docs/"><strong>查看文档 »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">查看演示</a>
+    <a href="https://github.com/traas-stack/altershield">查看演示</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">报告bug</a>
+    <a href="https://github.com/traas-stack/altershield/issues/new?template=bug_report.md">报告bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">请求功能</a>
+    <a href="https://github.com/traas-stack/altershield/issues/new?template=feature_request.md">请求功能</a>
   </p>
 </div>
 
