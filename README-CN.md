@@ -1,10 +1,10 @@
 <br />
 <div align="center">
-  <a href="https://github.com/traas-stack/altershield">
+  <!-- <a href="https://github.com/traas-stack/altershield">
     <img src="docs/logo/logo.png" alt="Logo" width="80" height="80"/>
-  </a>
+  </a> -->
 
-<h3 align="center">AlterShield</h3>
+<h1 align="center">AlterShield</h1>
 
   <p align="center">
     开放的变更管控规范
