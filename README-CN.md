@@ -1,85 +1,109 @@
 <br />
 <div align="center">
-  <a href="https://github.com/traas-stack/altershield">
+  <!-- <a href="https://github.com/traas-stack/altershield">
     <img src="docs/logo/logo.png" alt="Logo" width="80" height="80"/>
-  </a>
+  </a> -->
 
-<h3 align="center">AlterShield</h3>
+<h1 align="center">AlterShield</h1>
 
   <p align="center">
-    开放的变更管控规范
+    开源变更管控信息技术标准
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>查看文档 »</strong></a>
+    <a href="https://traas-stack.github.io/altershield-docs/"><strong>查看文档 »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">查看演示</a>
+    <a href="https://github.com/traas-stack/altershield">源码</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">报告bug</a>
+    <a href="https://github.com/traas-stack/altershield/issues/new?template=bug_report.md">提交Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">请求功能</a>
+    <a href="https://github.com/traas-stack/altershield/blob/main/README.md">English</a>
   </p>
 </div>
 
-![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
-
+<p align="center">
+  <a href="https://altershield.slack.com/"><img src="https://img.shields.io/badge/slack-AlterShield-0abd59?logo=slack" alt="slack" /></a>
+  <a href="https://github.com/traas-stack/AlterShield"><img src="https://img.shields.io/github/stars/traas-stack/AlterShield?style=flat-square"></a>
+  <a href="https://github.com/traas-stack/AlterShield/issues"><img src="https://img.shields.io/github/issues/traas-stack/AlterShield"></a>
+  <a href=""><img src="https://img.shields.io/badge/license-Apache--2.0-green.svg"></a>
+</p>
 
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>目录</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">关于本项目</a>
-      <ul>
-        <li><a href="#what-dose-it-provide">提供了什么</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">使用说明</a></li>
-    <li><a href="#contributing">共建</a></li>
-    <li><a href="#license">开源许可</a></li>
-    <li><a href="#contact">联系我们</a></li>
+    <li><a href="#项目介绍">项目介绍</a></li>
+    <li><a href="#快速开始">快速开始</a></li>
+    <li><a href="#RoadMap">RoadMap</a></li>
+    <li><a href="#共建">共建</a></li>
+    <li><a href="#开源许可">开源许可</a></li>
+    <li><a href="#联系我们">联系我们</a></li>
   </ol>
 </details>
 
 
 
 <!-- ABOUT THE PROJECT -->
-## 什么是变更管控
+## 项目介绍
+AlterShield 是一款面向多业务背景下的变更管控解决方案。[什么是变更和变更管控](https://traas-stack.github.io/altershield-docs/zh-CN/introduction/what-is-change-management)
 
-Open Change Management Specification (OCMS)是一套可适用于SRE和DevOps模式的变更管理技术标准。OCMS以数据驱动的方式，提供了普适性的变更管控方案，可整合来自不同部门或企业的变更数据。OCMS通过整合标准化，帮助用户实现对变更全生命周期的感知、干预、风险分析和风险防控等能力，从而降低变更造成的业务影响。OCMS旨在为信息技术相关企业提供一种高效的变更管理解决方案，并帮助用户在SRE和DevOps模式下优化系统表现，提高可靠性和稳定性。
+它是蚂蚁集团内部变更管控平台 OpsCloud 的开源版本。它凝聚了蚂蚁集团在公司大规模变更下积累的变更管控技术、产品以及方法论。在复杂业务场景下，提供变更过程中的生命周期感知、变更异常识别（变更防御）、变更熔断能力。
 
-在此之前，您可能还需要了解： [什么是变更管控](02-what-is-change-management.md)。
+AlterShield 在此背景下，提出了变更管控技术协议标准（Open Change Management Specification，即OCMS），帮助不同业务、技术背景下的变更，进行统一的感知收集，使得后续的变更防御可以基于一套统一的结构信息来进行，不必为每种变更进行深度定制，极大的降低了研发成本。此协议标准在蚂蚁集团内部运行了长达6年之久，管控了数十亿级别的变更。
 
-## 它提供了什么
+### 什么是Open Change Management Specification
 
+Open Change Management Specification (OCMS) 在目前阶段包含了以下内容：
+- 一套变更信息模型，定义了一种变更想要进行管控，需要具备的信息结构，该结构用于后续的变更信息感知、变更防御、变更度量等流程
+- 一套变更接入的SDK，以前后置切面的形式，在每个变更步骤生效的前、后进行扩展，进行变更防御的异常检测
+- 一套基于插件的变更防御框架，将不同场景下需要的异常识别能力（如：监控告警检测、日志异常检测等）以插件的形式实现并集成到框架中，在SDK中的前后置切面中调度执行
 
-### 已推行
-- 一套变更信息模型，可将不同业务或不同技术背景下的变更进行统一的结构化定义，是后续做变更感知、干预、风险分析和风险防控的前提。
-- 一套分代际的变更生命周期接入框架，打入上游变更执行系统的各个阶段，为变更管控提供切面入口。同时，分代际的接入标准允许管理人员根据不同变更场景制定不同的管控标准，提升灵活性。
+### 我们的目标及后续的计划
 
-### 规划中
+#### 已支持
+- 上述 Open Change Management Specification 所提到的内容，变更防御框架目前还在调整中，会在下个版本开源出来
+- 云原生Kubernetes Deployment下的代码发布部署的变更管控解决方案
+
+#### 规划中
 - 一套插件化的变更风险分析框架，帮助风险评估人员在变更提单阶段，可视化关注到变更危险程度、可能出现的风险信息以及配套的风险防控充分度，从而降低人工分析成本。
 - 一套插件化的变更风险防控框架，使风险防控人员可以将在日常工作中积累的经验通过代码的形式沉淀下来。同时，框架中也沉淀了我们之前在实际业务中复用度较高的防控能力及在变更管控场景下风险可观测性的信息标准。
 
-### 终局
-基于风险分析和风险防控，最终我们提供了一套变更无人值守的框架方案，来帮助业务释放更多的人工执行、观测、恢复成本，提升研发效率。
-
+#### 长远目标
+- 基于风险分析和风险防控，最终我们提供了一套变更无人值守的框架方案，来帮助业务释放更多的人工执行、观测、恢复成本，提升研发效率。
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- USAGE EXAMPLES -->
-## 在使用之前，您还需要了解：
-1. 它不是变更执行系统，本身不具备变更执行能力。
+## 快速开始
+
+### 项目工程结构
+我们的工程代码主要在源代码的src目录下：
+- altershield-framework-sdk：前文所提到的变更信息模型及接入SDK，您可以在这里找到相关的信息模型定义及HTTP协议下的接入方案。
+    - 其中变更信息模型在core/change/facade/request目录下；HTTP SDK在sdk/change/client目录下
+- altershield-defender：前文所提到的变更防御框架，目前暂无内容，后续变更防御相关内容会陆续开源到此目录下
+
+云原生下的Operator管控机制，请跳转至 [altershield-opreator](https://github.com/traas-stack/altershield-operator) 项目查看
+
+
+### 在使用之前，您还需要了解：
+1. AlterShield 不是变更执行系统，本身不具备变更执行能力。
 2. 作为一套技术框架，它定义了变更接入、风险分析、风险防控的标准。但在实际使用之前，还需要***把这套技术框架，嵌入到变更执行平台中，做切面管控***。
 3. 即将推出变更管控提供的风险分析框架，需要结合您的CMDB（或其他元数据存储）来获取数据推导变更影响面。
 4. 变更管控即将推出通用的风险防控能力。除此之外，如果您想更贴合您的业务背景解决变更风险问题，需要自定义风险防控插件来沉淀您的经验。
 
-_更多信息，请前往 [AlterShield文档](https://example.com)_
+_更多信息，请前往 [AlterShield文档](https://traas-stack.github.io/altershield-docs/zh-CN/)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## RoadMap
+- [ ] 开源变更防御框架完整内容
+- [ ] 开源基于 Prometheus 的监控指标数据获取及异常检测插件
+- [ ] 增加安装使用说明
+- [ ] 增加变更平台接入SDK进行切面管控的案例
+- [ ] 增加通用的变更防御插件，如：变更窗口管控、变更参数校验等
 
+我们会持续增加RoadMap。
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- CONTRIBUTING -->
@@ -115,7 +139,7 @@ _更多信息，请前往 [AlterShield文档](https://example.com)_
 - 邮箱地址: traas_stack@antgroup.com / altershield.io@gmail.com
 - 钉钉群 [二维码](./docs/dingtalk.png)
 - 微信公众号 [二维码](./docs/wechat.jpg)
-- [Slack](https://altershield.slack.com/)
+- <a href="https://altershield.slack.com/"><img src="https://img.shields.io/badge/slack-AlterShield-0abd59?logo=slack" alt="slack" /></a>
 
 
 
