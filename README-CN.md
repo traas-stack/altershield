@@ -12,16 +12,20 @@
     <a href="https://traas-stack.github.io/altershield-docs/"><strong>查看文档 »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/traas-stack/altershield">查看演示</a>
+    <a href="https://github.com/traas-stack/altershield">源码</a>
     ·
-    <a href="https://github.com/traas-stack/altershield/issues/new?template=bug_report.md">报告bug</a>
+    <a href="https://github.com/traas-stack/altershield/issues/new?template=bug_report.md">提交Bug</a>
     ·
-    <a href="https://github.com/traas-stack/altershield/issues/new?template=feature_request.md">请求功能</a>
+    <a href="https://github.com/traas-stack/altershield/blob/main/README-CN.md">中文</a>
   </p>
 </div>
 
-![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
-
+<p align="center">
+  <a href="https://altershield.slack.com/"><img src="https://img.shields.io/badge/slack-AlterShield-0abd59?logo=slack" alt="slack" /></a>
+  <a href="https://github.com/traas-stack/AlterShield"><img src="https://img.shields.io/github/stars/traas-stack/AlterShield?style=flat-square"></a>
+  <a href="https://github.com/traas-stack/AlterShield/issues"><img src="https://img.shields.io/github/issues/traas-stack/AlterShield"></a>
+  <a href=""><img src="https://img.shields.io/badge/license-Apache--2.0-green.svg"></a>
+</p>
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -115,7 +119,7 @@ _更多信息，请前往 [AlterShield文档](https://example.com)_
 - 邮箱地址: traas_stack@antgroup.com / altershield.io@gmail.com
 - 钉钉群 [二维码](./docs/dingtalk.png)
 - 微信公众号 [二维码](./docs/wechat.jpg)
-- [Slack](https://altershield.slack.com/)
+- <a href="https://altershield.slack.com/"><img src="https://img.shields.io/badge/slack-AlterShield-0abd59?logo=slack" alt="slack" /></a>
 
 
 

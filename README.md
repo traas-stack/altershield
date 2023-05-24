@@ -12,16 +12,20 @@
     <a href="https://traas-stack.github.io/altershield-docs/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/traas-stack/altershield">View Demo</a>
+    <a href="https://github.com/traas-stack/altershield">View Source</a>
     ·
     <a href="https://github.com/traas-stack/altershield/issues/new?template=bug_report.md">Report Bug</a>
     ·
-    <a href="https://github.com/traas-stack/altershield/issues/new?template=feature_request.md">Request Feature</a>
+    <a href="https://github.com/traas-stack/altershield/blob/main/README-CN.md">中文</a>
   </p>
 </div>
 
-![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
-
+<p align="center">
+  <a href="https://altershield.slack.com/"><img src="https://img.shields.io/badge/slack-AlterShield-0abd59?logo=slack" alt="slack" /></a>
+  <a href="https://github.com/traas-stack/AlterShield"><img src="https://img.shields.io/github/stars/traas-stack/AlterShield?style=flat-square"></a>
+  <a href="https://github.com/traas-stack/AlterShield/issues"><img src="https://img.shields.io/github/issues/traas-stack/AlterShield"></a>
+  <a href=""><img src="https://img.shields.io/badge/license-Apache--2.0-green.svg"></a>
+</p>
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -52,7 +56,7 @@
 
 **Open Change Management Specification** (OCMS) is a set of change management technical standards applicable to SRE and DevOps modes. OCMS provides universal change management solutions driven by data, which can integrate change data from different departments or enterprises. By integrating standardization, OCMS helps users to achieve the ability to perceive, intervene, analyze risks, and prevent risks in the entire life cycle of changes, thereby reducing the impact of changes on business. OCMS aims to provide an efficient change management solution for information technology-related enterprises and help users optimize system performance, enhance reliability, and stability under the SRE and DevOps modes.
 
-Before we begin, you may need to understand [what change management is]().
+Before we begin, you may need to understand [What is Change Management?]().
 
 ### What does it provide
 
@@ -119,7 +123,7 @@ Distributed under the Apache2.0 License. See `LICENSE` for more information.
 - Contact us via Email: traas_stack@antgroup.com / altershield.io@gmail.com
 - Ding Talk Group [QR code](./docs/dingtalk.png)
 - WeChat Official Account [QR code](./docs/wechat.jpg)
-- [Slack](https://altershield.slack.com/)
+- <a href="https://altershield.slack.com/"><img src="https://img.shields.io/badge/slack-AlterShield-0abd59?logo=slack" alt="slack" /></a>
 
 
 
