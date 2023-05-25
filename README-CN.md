@@ -76,7 +76,7 @@ Open Change Management Specification (OCMS) 在目前阶段包含了以下内容
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
+<!-- QUICK START -->
 ## 快速开始
 
 ### 项目工程结构
