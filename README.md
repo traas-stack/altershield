@@ -100,6 +100,13 @@ _For more information, please refer to the [Documentation](https://traas-stack.g
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- ROADMAP -->
+## Roadmap
+- [ ] Complete content of open source change defense framework
+- [ ] Open source code for monitoring metric data acquisition and anomaly detection plugin based on Prometheus
+- [ ] Add installation and usage instructions
+- [ ] Add case study for integrating change platform access SDK to achieve aspect control
+- [ ] Add universal change defense plugins such as change window control and change parameter validation
 
 <!-- CONTRIBUTING -->
 ## Contributing
