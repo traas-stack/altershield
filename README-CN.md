@@ -14,7 +14,7 @@
     <br />
     <a href="https://github.com/traas-stack/altershield">源码</a>
     ·
-    <a href="https://github.com/traas-stack/altershield/issues/new?template=bug_report.md">提交Issue</a>
+    <a href="https://github.com/traas-stack/altershield/issues/new?template=bug_report.md">提交Bug</a>
     ·
     <a href="https://github.com/traas-stack/altershield/blob/main/README.md">English</a>
   </p>
