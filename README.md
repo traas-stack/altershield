@@ -31,21 +31,12 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#what-dose-it-provide">What dose it provide</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-    </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#About The Project">About The Project</a></li>
+    <li><a href="#Quick Start">Quick Start</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -54,55 +45,72 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-**Open Change Management Specification** (OCMS) is a set of change management technical standards applicable to SRE and DevOps modes. OCMS provides universal change management solutions driven by data, which can integrate change data from different departments or enterprises. By integrating standardization, OCMS helps users to achieve the ability to perceive, intervene, analyze risks, and prevent risks in the entire life cycle of changes, thereby reducing the impact of changes on business. OCMS aims to provide an efficient change management solution for information technology-related enterprises and help users optimize system performance, enhance reliability, and stability under the SRE and DevOps modes.
+AlterShield is a change control solution that effectively manages change risks and prevents production environment failures caused by changes. [What is change and change management](https://traas-stack.github.io/altershield-docs/introduction/what-is-change-management)
 
-Before we begin, you may need to understand [What is Change Management?](https://traas-stack.github.io/altershield-docs/introduction/what-is-change-management).
+It is an open-source version of the internal change control platform OpsCloud of Ant Group. It incorporates the change control technologies, products, and methodologies accumulated by Ant Group during large-scale changes. It provides lifecycle awareness, change anomaly detection (change defense), and change circuit-breaking capabilities in complex business scenarios. 
 
-### What does it provide
+Under this background, AlterShield proposes the Open Change Management Specification (OCMS) for change control technology protocols to help unify the sensing and collection of changes from different business and technical backgrounds. This enables subsequent change defense to be based on a set of unified structural information, making it unnecessary to deeply customize each change, greatly reducing R&D costs. This protocol standard has been running internally at Ant Group for up to 6 years, managing billions of changes.
 
-#### Has it been implemented
-- A change information model, which can uniformly and structurally define changes under different business or technical backgrounds, is a prerequisite for subsequent change perception, intervention, risk analysis, and risk mitigation.
-- A generational change lifecycle access framework, which covers various stages of upstream change execution systems, provides aspect-oriented entry points for change management. At the same time, the generational access standards allow managers to develop different control standards according to different change scenarios, improving flexibility.
+### What is Open Change Management Specification
+Open Change Management Specification (OCMS) currently includes the following:
 
-#### In planning
-- A plugin-based change risk analysis framework helps risk assessors visualize the degree of danger, possible risk information, and the adequacy of corresponding risk mitigation during the change request phase, thereby reducing human analysis costs.
-- A plugin-based change risk mitigation framework allows risk mitigation personnel to encapsulate their experience in the form of code during their daily work. At the same time, the framework also encapsulates the high-reusability risk mitigation capabilities and information standards for risk observability in change management scenarios that we have previously used in actual business.
+- A set of change information models defining the information structure required for change control, which is used in subsequent processes such as change information sensing, change defense, and change measurement
+- A set of change access SDKs that extend a pre- or post-step in each change step for abnormal detection, thus ensuring effective change defense.
+- A plugin-based change defense framework that integrates different abnormal recognition capabilities required in different scenarios (such as monitoring alert detection, log abnormality detection, etc.) in the form of plugins and schedules them to execute in the pre- or post-step in the SDK.
 
-#### Endgame
-- Based on risk analysis and risk mitigation, we ultimately provide a framework solution for unattended changes to help businesses release more manual execution, observation, and recovery costs, and improve development efficiency.
+If you would like to learn more, please visit our documentation library for more information on the definition of the Change Model and SDK:
+- [Definition of the Change Model](https://traas-stack.github.io/altershield-docs/open-change-management-specification/change-model/)
+- [Change Access SDK](https://traas-stack.github.io/altershield-docs/zh-CN/open-change-management-specification/change-access-sdk)
 
+### Our Goals and Future Plans
+
+#### Currently Supported
+- The contents mentioned in the Open Change Management Specification are currently supported. The change defense framework is still being adjusted and will be open-sourced in the next version. 
+- Change management solutions for code deployment under cloud-native Kubernetes.
+
+#### Planned
+- A plugin-based change risk analysis framework that helps risk evaluators visualize the degree of change danger, potential risk information, and the adequacy of supporting risk prevention and control measures during the change request stage, thereby reducing manual analysis costs.
+- A plugin-based change risk prevention and control framework that enables risk prevention and control personnel to codify their accumulated experience in daily work. The framework also codifies the risk observability information standards for risk prevention and control capabilities that we have high reuse rates for in actual business scenarios.
+
+#### Long-term Goals
+- Based on risk analysis and risk prevention and control, we ultimately provide a framework solution for unmanned change management to help businesses release more human execution, observation, and restoration costs and improve research and development efficiency.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- QUICK START -->
+## Quick Start
 
-# RoadMap
-- [ ] Add Quick Start
-- [ ] Add Installation 
-- [ ] Add Defense Plugin 
+### Project Structure
+Our project code is mainly located in the "src" directory of the source code.
 
-We will continue to add more roadmaps.
+- altershield-framework-sdk: The previously mentioned change information model and access SDK can be found here. You can also find the relevant information model definitions and access solutions based on HTTP protocol.
+  - The Change Model is located in the "core/change/facade/request" directory, and the HTTP SDK is located in the "sdk/change/client" directory.
+- altershield-defender: The previously mentioned change defense framework currently has no content. However, related content regarding change defense will be gradually open-sourced in this directory later.
 
+For the Operator control mechanism in cloud-native environments, please refer to the [altershield-operator](https://github.com/traas-stack/altershield-operator) project.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-1. It is not a change execution system and does not have the ability to execute changes itself.
-2. As a technical framework, it defines standards for change access, risk analysis, and risk mitigation. However, before it can be used in practice, ***it needs to be embedded into a change execution platform and used for aspect-oriented control.***
-3. The upcoming risk analysis framework provided by change management will need to be combined with your CMDB (or other metadata storage) to obtain data and deduce the impact of changes.
-4. Change management will soon launch universal risk mitigation capabilities. In addition, if you want to better address change risk issues that are specific to your business background, you will need to customize risk mitigation plugins to encapsulate your experience.
+### Before using, you also need to know:
+1. AlterShield is not a change execution system and does not have the ability to execute changes.
+2. As a technical framework, it defines the standards for change access, risk analysis, and risk prevention. However, before actual use, this technical framework needs to be embedded in the change execution platform for aspect control.
+3. A change control risk analysis framework will soon be launched, which needs to be combined with your CMDB (or other metadata storage) to obtain data to infer the scope of change impact.
+4. A general risk prevention capability will soon be launched for change control. In addition, if you want to solve change risk issues that are more tailored to your business background, you need to customize risk prevention plugins to accumulate your experience.
 
 _For more information, please refer to the [Documentation](https://traas-stack.github.io/altershield-docs/)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- ROADMAP -->
+## Roadmap
+- [ ] Complete content of open source change defense framework
+- [ ] Open source code for monitoring metric data acquisition and anomaly detection plugin based on Prometheus
+- [ ] Add installation and usage instructions
+- [ ] Add case study for integrating change platform access SDK to achieve aspect control
+- [ ] Add universal change defense plugins such as change window control and change parameter validation
 
+We will continue to add to the RoadMap.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
 ## Contributing
