@@ -21,19 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+package com.alipay.altershield.shared.schedule.event.publish;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.alipay.altershield.shared.schedule.event.AlterShieldSchedulerEvent;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * 调度事件publisher
+ * @author yuanji
+ * @version : OpsCloudEventPublisher.java, v 0.1 2022年08月12日 17:24 yuanji Exp $
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
-    }
+public interface AlterShieldSchedulerEventPublisher {
+
+    /**
+     * 提交事件
+     * @param sourceId 事件原id
+     * @param event 事件对象
+     * @return 返回 任务id
+     */
+    String publish(String sourceId, AlterShieldSchedulerEvent event);
 }

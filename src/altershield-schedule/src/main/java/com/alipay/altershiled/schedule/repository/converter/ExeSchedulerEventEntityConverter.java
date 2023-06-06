@@ -21,19 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+package com.alipay.altershiled.schedule.repository.converter;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.alipay.altershiled.schedule.dal.dataobject.ExeSchedulerEventDO;
+import com.alipay.altershiled.schedule.model.SchedulerEventEntity;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * The interface Exe scheduler event entity converter.
+ *
+ * @author yuanji
+ * @version : ExeSchdPointEntityConverter.java, v 0.1 2022年03月22日 3:54 下午 yuanji Exp $
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
-    }
+@Mapper
+public interface ExeSchedulerEventEntityConverter {
+
+    /**
+     * The constant INSTANCE.
+     */
+    ExeSchedulerEventEntityConverter INSTANCE = Mappers.getMapper(ExeSchedulerEventEntityConverter.class);
+
+    /**
+     * To data object exe scheduler event do.
+     *
+     * @param entity the entity
+     * @return the exe scheduler event do
+     */
+    ExeSchedulerEventDO toDataObject(SchedulerEventEntity entity);
+
+    /**
+     * To entity scheduler event entity.
+     *
+     * @param dataObject the data object
+     * @return the scheduler event entity
+     */
+    SchedulerEventEntity toEntity(ExeSchedulerEventDO dataObject);
 }

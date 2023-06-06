@@ -21,19 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+package com.alipay.altershield.shared.schedule.event.listener;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import lombok.Data;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ *
+ * @author yuanji
+ * @version : OpsCloudSchedulerEventContext.java, v 0.1 2022年08月24日 10:54 yuanji Exp $
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
-    }
+@Data
+public class AlterShieldSchedulerEventContext {
+
+    /**
+     * 事件id
+     */
+    private String eventId;
+    /**
+     * 源id
+     */
+    private String sourceId;
+
 }

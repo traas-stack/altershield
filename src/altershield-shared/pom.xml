@@ -7,16 +7,12 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-    <artifactId>altershield-schedule</artifactId>
+    <artifactId>altershield-shared</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
-            <groupId>com.alipay</groupId>
-            <artifactId>altershield-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alipay</groupId>
-            <artifactId>altershield-shared</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 </project>

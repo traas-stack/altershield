@@ -21,19 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+package com.alipay.altershield.shared.schedule.enums;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ *
+ * @author yuanji
+ * @version : OpsCloudScheduleEventResultStatus.java, v 0.1 2022年08月05日 15:50 yuanji Exp $
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
-    }
+public enum AlterShieldScheduleEventResultStatus {
+
+    /**
+     * 事件执行成功
+     * 系统会自动删除当前的point
+     */
+    SUCCESS,
+
+    /**
+     * 事件重试
+     * retryCount++，待下一次重新调度
+     * 系统异常也会自动处理为重试
+     */
+    RETRY,
+
+    /**
+     * 放弃
+     * 直接删除
+     */
+    ABANDON
 }
