@@ -21,19 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+package com.alipay.altershiled.schedule.event;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.alipay.altershiled.schedule.model.SchedulerEventEntity;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * SchdPointEntity thread local
+ * 获取上线文中的调度任务
+ * @author yuanji
+ * @version : SchedulerPointThreadLocal.java, v 0.1 2022年08月18日 14:12 yuanji Exp $
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
+public class SchedulerPointThreadLocal {
+
+    private  static ThreadLocal<SchedulerEventEntity> schdPointEntityThreadLocal = new ThreadLocal<>();
+
+    /**
+     * Set.
+     *
+     * @param schdPoint the schd point
+     */
+    public static void set(SchedulerEventEntity schdPoint)
+    {
+        schdPointEntityThreadLocal.set(schdPoint);
     }
+
+    /**
+     * Get scheduler event entity.
+     *
+     * @return the scheduler event entity
+     */
+    public static SchedulerEventEntity get()
+    {
+        return schdPointEntityThreadLocal.get();
+    }
+
+    /**
+     * Clear.
+     */
+    public static void clear()
+    {
+        schdPointEntityThreadLocal.set(null);
+    }
+
+
 }

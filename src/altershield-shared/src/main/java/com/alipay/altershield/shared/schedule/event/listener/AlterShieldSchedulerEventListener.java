@@ -21,19 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+/**
+ * Alipay.com Inc. Copyright (c) 2004-2022 All Rights Reserved.
+ */
+package com.alipay.altershield.shared.schedule.event.listener;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.alipay.altershield.shared.schedule.event.AlterShieldSchedulerEvent;
+import com.alipay.altershield.shared.schedule.event.result.AlterShieldSchedulerEventExecuteResult;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ *
+ * @author yuanji
+ * @version : SchedulePointEventListener.java, v 0.1 2022年08月11日 10:47 yuanji Exp $
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
-    }
+public interface AlterShieldSchedulerEventListener<T extends AlterShieldSchedulerEvent> {
+
+    /**
+     * 接受事件
+     * @param event
+     * @return
+     */
+    AlterShieldSchedulerEventExecuteResult onEvent(AlterShieldSchedulerEventContext context, T event);
+
 }

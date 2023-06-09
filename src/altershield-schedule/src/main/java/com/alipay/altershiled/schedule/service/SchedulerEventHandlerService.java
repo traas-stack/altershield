@@ -21,19 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+package com.alipay.altershiled.schedule.service;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.alipay.altershiled.schedule.enums.SchedulerEventHandleStatus;
+import com.alipay.altershiled.schedule.model.ScheduleDispatchContext;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * @author shuo.qius
+ * @version Jun 1, 2018
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
-    }
+public interface SchedulerEventHandlerService {
+
+    /**
+     * 调度执行
+     * @param eventContext
+     */
+    SchedulerEventHandleStatus executePoint(ScheduleDispatchContext eventContext);
+
 }
