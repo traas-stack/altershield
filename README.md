@@ -69,7 +69,7 @@ If you would like to learn more, please visit our documentation library for more
 <!-- QUICK START -->
 ## Quick Start
 
-Currently, the project is still in version 0.1, and we will further improve more "quick start" content in the future.
+The OCMS open-source standard is currently at version 0.1. If it cannot address your specific scenarios, you are welcome to participate in discussions to help improve and extend it.
 
 ### Project Structure
 Our project code is mainly located in the "src" directory of the source code.
@@ -108,10 +108,10 @@ We will continue to add to the RoadMap.
 
 As an open-source community, we welcome all forms of contribution, including but not limited to:
 - Correction of typos: help us correct any errors in the documentation.
-- Document translation: help us translate the documentation into your country's language, including English.
+- Document translation: help us translate the documentation into your native language, including English.
 - Discussion of issues and cases: discuss change failure cases in your company, which can be desensitized and participate in discussions to find solutions.
-- Bug submission: help us point out logical errors in AlterShield.
-- Discussion of new feature scenarios: any change-related functions that AlterShield does not yet have can be discussed together.
+- Bug submission: help us identify and address any logical issues in AlterShield.
+- Discussion of new feature scenarios: any change-related functions that AlterShield currently lacks can be discussed together.
 - Improvement of the OCMS agreement: currently, the OCMS open-source is still at version 0.1. If there are situations that cannot be adapted in your scenario, you can directly participate in discussions and extensions.
 - Integration of more monitoring tools: you can integrate the monitoring tools you use into the observability defense capabilities provided by AlterShield to expand AlterShield's detection capabilities.
 - Share your change defense expert experience: you can use the form of Plugin or SPI extension to share your change defense expert experience with AlterShield.
