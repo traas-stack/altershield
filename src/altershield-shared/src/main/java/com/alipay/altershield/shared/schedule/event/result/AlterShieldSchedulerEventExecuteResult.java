@@ -21,19 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+package com.alipay.altershield.shared.schedule.event.result;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.alipay.altershield.shared.schedule.enums.AlterShieldScheduleEventResultStatus;
+import lombok.Data;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * The type Scheduler event execute result.
+ *
+ * @author yuanji
+ * @version : SchedulerPointEventExecuteResult.java, v 0.1 2022年08月11日 16:49 yuanji Exp $
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
+@Data
+public class AlterShieldSchedulerEventExecuteResult {
+
+    private String msg;
+
+    private AlterShieldScheduleEventResultStatus status;
+
+
+    /**
+     * Instantiates a new Scheduler event execute result.
+     *
+     * @param msg    the msg
+     * @param status the status
+     */
+    public AlterShieldSchedulerEventExecuteResult(String msg, AlterShieldScheduleEventResultStatus status) {
+        this.msg = msg;
+        this.status = status;
     }
+
+    /**
+     * Instantiates a new Scheduler event execute result.
+     */
+    public AlterShieldSchedulerEventExecuteResult() {
+    }
+
+    public static AlterShieldSchedulerEventExecuteResult success(String msg)
+    {
+        return new AlterShieldSchedulerEventExecuteResult(msg, AlterShieldScheduleEventResultStatus.SUCCESS);
+    }
+
+
+
+
 }

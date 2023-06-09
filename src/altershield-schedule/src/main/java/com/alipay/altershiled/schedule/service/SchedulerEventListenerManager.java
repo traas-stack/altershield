@@ -21,19 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+package com.alipay.altershiled.schedule.service;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.alipay.altershield.shared.schedule.event.listener.AlterShieldSchedulerEventListener;
+import com.alipay.altershiled.schedule.service.impl.SchedulerEventListenerManagerImpl;
+
+import java.util.List;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * @author yuanji
+ * @version : SchedulePointEventManager.java, v 0.1 2022年08月11日 11:48 yuanji Exp $
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
-    }
+public interface SchedulerEventListenerManager {
+
+    /**
+     * 根据 eventType获取所有注册的listener数量
+     * @param eventType
+     * @return
+     */
+    int getListenerCount(String eventType);
+
+    /**
+     * 根据 eventType获取所有注册的listener实例
+     * @param eventType
+     * @return
+     */
+    List<SchedulerEventListenerManagerImpl.SchedulerPointEventListenerInstance> getListenerInstances(String eventType);
+
+    /**
+     * 根据eventType和listener名字获取listener
+     * @param eventType
+     * @param listenerName
+     * @return
+     */
+    AlterShieldSchedulerEventListener getListener(String eventType, String listenerName);
+
 }

@@ -21,19 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+/**
+ * Alipay.com Inc. Copyright (c) 2004-2023 All Rights Reserved.
+ */
+package com.alipay.altershield.common.logger;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * @version : Loggers.java, v 0.1 2023-05-29 15:41 xiangyue Exp $$
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
-    }
+public interface Loggers {
+    /**
+     * default
+     */
+    Logger DEFAULT = LoggerFactory.getLogger("ALTERSHIELD-FRAMEWORK");
+
+    /**
+     * 变更线程信息
+     */
+    Logger LOCAL_SCHEDULE = LoggerFactory.getLogger("ALTERSHIELD-LOCAL-SCHEDULE");
+
+    /**
+     * point处理线程
+     */
+    Logger SCHEDULE_POINT = LoggerFactory.getLogger("ALTERSHIELD-SCHEDULE-POINT");
+    /**
+     *
+     */
+    Logger SCHEDULE_POINT_DIGEST = LoggerFactory.getLogger("ALTERSHIELD-SCHEDULE-POINT-DIGEST");
+    /**
+     * DAL日志
+     */
+    Logger DAL = LoggerFactory.getLogger("ALTERSHIELD-DAL");
 }

@@ -81,7 +81,7 @@ public class CommonUtil {
      *
      * @return the opscld id default ext string
      */
-    public static String getOpscldIdDefaultExtString() {
+    public static String getAlterShieldIdDefaultExtString() {
         return "00000000";
     }
 

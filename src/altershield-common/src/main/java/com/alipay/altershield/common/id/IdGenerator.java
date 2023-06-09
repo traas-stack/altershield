@@ -21,19 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+package com.alipay.altershield.common.id;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.alipay.altershield.common.id.enums.IdBizCodeEnum;
+import com.alipay.altershield.framework.core.change.model.enums.ChangeScenarioEnum;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * @author shuo.qius
+ * @version May 25, 2018
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
-    }
+public interface IdGenerator {
+
+    /**
+     * 根据业务码和相关的id来产生唯一id
+     * @param bizCode
+     * @param relatedId
+     * @return
+     */
+    String generateIdByRelatedId(IdBizCodeEnum bizCode, String relatedId);
+
+    /**
+     * @param bizCode
+     * @param relatedId
+     * @param uid
+     * @return
+     */
+    String generateIdByRelatedIdButNewUid(IdBizCodeEnum bizCode, String relatedId, String uid);
+
+    /**
+     * @param bizCode
+     * @param uid
+     * @param changeScenarioEnum
+     * @return
+     */
+    String generateIdByUid(IdBizCodeEnum bizCode, String uid, ChangeScenarioEnum changeScenarioEnum);
+
+
+    /**
+     * @param bizCode never null
+     * @return
+     */
+    String generateIdWithNoSharding(IdBizCodeEnum bizCode);
+
+    /**
+     * 生成老变更场景ID
+     */
+    String generateChangeModelCode(IdBizCodeEnum bizCode);
+
+
 }

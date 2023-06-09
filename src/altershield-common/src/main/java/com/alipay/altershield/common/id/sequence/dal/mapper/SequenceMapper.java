@@ -21,19 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+package com.alipay.altershield.common.id.sequence.dal.mapper;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.alipay.altershield.common.id.sequence.dal.dataobject.SequenceDO;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * @author shuo.qius
+ * @version May 25, 2018
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
-    }
+@Mapper
+public interface SequenceMapper {
+
+    /**
+     * @param name
+     * @return
+     */
+    SequenceDO lockByName(String name);
+
+    /**
+     * @param name
+     * @param latestValue
+     */
+    void update(String name, long latestValue);
+
+    /**
+     * @param name
+     */
+    void insert(String name);
 }

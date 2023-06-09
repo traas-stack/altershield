@@ -21,19 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
+package com.alipay.altershiled.schedule.exception;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.alipay.altershiled.schedule.enums.SchedulerEventHandleStatus;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * dispatcher exception
+ *
+ * @author yuanji
+ * @version : SchedulerPointDispatcherException.java, v 0.1 2022年08月12日 11:59 yuanji Exp $
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
+public class SchedulerEventDispatcherException extends RuntimeException{
+
+    private SchedulerEventHandleStatus status;
+
+    /**
+     * Instantiates a new Scheduler point dispatcher exception.
+     *
+     * @param message the message
+     * @param status  the status
+     */
+    public SchedulerEventDispatcherException(String message, SchedulerEventHandleStatus status) {
+        super(message);
+        this.status = status;
+    }
+
+    /**
+     * Gets status.
+     *
+     * @return the status
+     */
+    public SchedulerEventHandleStatus getStatus() {
+        return status;
     }
 }

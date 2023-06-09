@@ -21,19 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+package com.alipay.altershiled.schedule.model;
 
 /**
- * @author xiangyue
- * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
+ * 调度分发context
+ * @author yuanji
+ * @version : PointTaskRef.java, v 0.1 2022年03月22日 10:32 上午 yuanji Exp $
  */
-@SpringBootApplication
-public class AlterShieldApplication {
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AlterShieldApplication.class);
-        app.run(args);
+public class ScheduleDispatchContext {
+
+    private final String eventId;
+    private final String uid;
+
+    /**
+     * Constructor.
+     *
+     * @param eventId the event id
+     * @param uid     the uid
+     */
+    public ScheduleDispatchContext(String eventId, String uid) {
+        this.eventId = eventId;
+        this.uid = uid;
+    }
+
+    /**
+     * Gets get event id.
+     *
+     * @return the get event id
+     */
+    public String getEventId() {
+        return eventId;
+    }
+
+    /**
+     * Gets get uid.
+     *
+     * @return the get uid
+     */
+    public String getUid() {
+        return uid;
     }
 }

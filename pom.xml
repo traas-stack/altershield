@@ -7,6 +7,7 @@
         <altershield.framework.spi.version>0.0.1</altershield.framework.spi.version>
         <java.version>8</java.version>
         <spring.boot.version>2.5.6</spring.boot.version>
+        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,6 +28,8 @@
         <module>src/altershield-defender</module>
         <module>src/altershield-change</module>
         <module>src/altershield-plugin-market</module>
+        <module>src/altershield-common</module>
+        <module>src/altershield-shared</module>
     </modules>
 
     <dependencyManagement>
@@ -35,6 +38,37 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>1.2.71_noneautotype</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.30</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.2.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alipay</groupId>
+                <artifactId>altershield-common</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alipay</groupId>
+                <artifactId>altershield-shared</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alipay</groupId>
+                <artifactId>altershield-framework-sdk</artifactId>
+                <version>0.0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
