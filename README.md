@@ -45,41 +45,31 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-AlterShield is a change control solution that effectively manages change risks and prevents production environment failures caused by changes. [What is change and change management](https://traas-stack.github.io/altershield-docs/introduction/what-is-change-management)
+If you want to learn more about AlterShield's practice in the field of change management, please read [article]().
 
-It is an open-source version of the internal change control platform OpsCloud of Ant Group. It incorporates the change control technologies, products, and methodologies accumulated by Ant Group during large-scale changes. It provides lifecycle awareness, change anomaly detection (change defense), and change circuit-breaking capabilities in complex business scenarios. 
+AlterShield is a change management solution that effectively prevents change-related risks and production environment failures. 
 
-Under this background, AlterShield proposes the Open Change Management Specification (OCMS) for change control technology protocols to help unify the sensing and collection of changes from different business and technical backgrounds. This enables subsequent change defense to be based on a set of unified structural information, making it unnecessary to deeply customize each change, greatly reducing R&D costs. This protocol standard has been running internally at Ant Group for up to 6 years, managing billions of changes.
+It is an open-source version of Ant Group's internal change management platform OpsCloud. It incorporates Ant Group's accumulated change management technology, products, and methodologies in large-scale corporate changes. In complex business scenarios, it provides lifecycle awareness, change defense, and change interruption capabilities during the change process.
+
+AlterShield proposes the Open Change Management Specification (OCMS), which helps to unify the perception and collection of changes across different business and technical backgrounds, enabling subsequent change defense based on a unified structured information set without the need for deep customization for each type of change, greatly reducing development costs.
 
 ### What is Open Change Management Specification
-Open Change Management Specification (OCMS) currently includes the following:
+
+Open Change Management Specification (OCMS) is an information technology agreement developed by AlterShield for defining change information and unifying perception and control of changes. This protocol is based on the summary and induction of thousands of change scenarios in Ant Group and is still in its early stages. This part is also open to everyone for further development. At this stage, it includes the following content: 
 
 - A set of change information models defining the information structure required for change control, which is used in subsequent processes such as change information sensing, change defense, and change measurement
 - A set of change access SDKs that extend a pre- or post-step in each change step for abnormal detection, thus ensuring effective change defense.
-- A plugin-based change defense framework that integrates different abnormal recognition capabilities required in different scenarios (such as monitoring alert detection, log abnormality detection, etc.) in the form of plugins and schedules them to execute in the pre- or post-step in the SDK.
 
 If you would like to learn more, please visit our documentation library for more information on the definition of the Change Model and SDK:
 - [Definition of the Change Model](https://traas-stack.github.io/altershield-docs/open-change-management-specification/change-model/)
 - [Change Access SDK](https://traas-stack.github.io/altershield-docs/zh-CN/open-change-management-specification/change-access-sdk)
 
-### Our Goals and Future Plans
-
-#### Currently Supported
-- The contents mentioned in the Open Change Management Specification are currently supported. The change defense framework is still being adjusted and will be open-sourced in the next version. 
-- Change management solutions for code deployment under cloud-native Kubernetes.
-
-#### Planned
-- A plugin-based change risk analysis framework that helps risk evaluators visualize the degree of change danger, potential risk information, and the adequacy of supporting risk prevention and control measures during the change request stage, thereby reducing manual analysis costs.
-- A plugin-based change risk prevention and control framework that enables risk prevention and control personnel to codify their accumulated experience in daily work. The framework also codifies the risk observability information standards for risk prevention and control capabilities that we have high reuse rates for in actual business scenarios.
-
-#### Long-term Goals
-- Based on risk analysis and risk prevention and control, we ultimately provide a framework solution for unmanned change management to help businesses release more human execution, observation, and restoration costs and improve research and development efficiency.
-
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- QUICK START -->
 ## Quick Start
+
+Currently, the project is still in version 0.1, and we will further improve more "quick start" content in the future.
 
 ### Project Structure
 Our project code is mainly located in the "src" directory of the source code.
@@ -102,11 +92,12 @@ _For more information, please refer to the [Documentation](https://traas-stack.g
 
 <!-- ROADMAP -->
 ## Roadmap
-- [ ] Complete content of open source change defense framework
-- [ ] Open source code for monitoring metric data acquisition and anomaly detection plugin based on Prometheus
-- [ ] Add installation and usage instructions
-- [ ] Add case study for integrating change platform access SDK to achieve aspect control
-- [ ] Add universal change defense plugins such as change window control and change parameter validation
+- [ ] Supplement more "quick start" and "Q&A" related content.
+- [ ] Add a case of integrating the OCMS SDK for change management in the project.
+- [ ] Open-source the complete Defender module: including defense framework, defense capabilities, and open extension parts.
+- [ ] Open-source the complete Analyser module: including analysis framework, impact analysis, risk analysis, observability analysis, and change grading parts.
+- [ ] Improve the observability anomaly detection ecosystem: integrate more open-source monitoring tools to provide anomaly detection capabilities.
+- [ ] Open up independent defense verification capabilities: make the defense framework independent of the OCMS SDK, without the need for integration and transformation, to perform change defense verification.
 
 We will continue to add to the RoadMap.
 
@@ -115,19 +106,17 @@ We will continue to add to the RoadMap.
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+As an open-source community, we welcome all forms of contribution, including but not limited to:
+- Correction of typos: help us correct any errors in the documentation.
+- Document translation: help us translate the documentation into your country's language, including English.
+- Discussion of issues and cases: discuss change failure cases in your company, which can be desensitized and participate in discussions to find solutions.
+- Bug submission: help us point out logical errors in AlterShield.
+- Discussion of new feature scenarios: any change-related functions that AlterShield does not yet have can be discussed together.
+- Improvement of the OCMS agreement: currently, the OCMS open-source is still at version 0.1. If there are situations that cannot be adapted in your scenario, you can directly participate in discussions and extensions.
+- Integration of more monitoring tools: you can integrate the monitoring tools you use into the observability defense capabilities provided by AlterShield to expand AlterShield's detection capabilities.
+- Share your change defense expert experience: you can use the form of Plugin or SPI extension to share your change defense expert experience with AlterShield.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- LICENSE -->

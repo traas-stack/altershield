@@ -7,7 +7,7 @@
 <h1 align="center">AlterShield</h1>
 
   <p align="center">
-    开源变更管控信息技术标准
+    变更风险防控平台，有效防控变更故障
     <br />
     <a href="https://traas-stack.github.io/altershield-docs/"><strong>查看文档 »</strong></a>
     <br />
@@ -44,44 +44,34 @@
 
 <!-- ABOUT THE PROJECT -->
 ## 项目介绍
-AlterShield 是一款能够有效进行变更风险防控，预防变更引发生产环境故障的变更管控解决方案。[什么是变更和变更管控](https://traas-stack.github.io/altershield-docs/zh-CN/introduction/what-is-change-management)
+如果您想了解更多关于 AlterShield 在变更管控领域的实践，请阅读 [文章]()
 
-它是蚂蚁集团内部变更管控平台 OpsCloud 的开源版本。它凝聚了蚂蚁集团在公司大规模变更下积累的变更管控技术、产品以及方法论。在复杂业务场景下，提供变更过程中的生命周期感知、变更异常识别（变更防御）、变更熔断能力。
+AlterShield 是一款能够有效进行变更风险防控，预防变更引发生产环境故障的变更管控解决方案。
 
-AlterShield 在此背景下，提出了变更管控技术协议标准（Open Change Management Specification，即OCMS），帮助不同业务、技术背景下的变更，进行统一的感知收集，使得后续的变更防御可以基于一套统一的结构信息来进行，不必为每种变更进行深度定制，极大的降低了研发成本。此协议标准在蚂蚁集团内部运行了长达6年之久，管控了数十亿级别的变更。
+它是蚂蚁集团内部变更管控平台 OpsCloud 的开源版本。它凝聚了蚂蚁集团在公司大规模变更下积累的变更管控技术、产品以及方法论。在复杂业务场景下，提供变更过程中的生命周期感知、变更防御、变更熔断能力。
+
+AlterShield 提出了变更管控信息技术协议（Open Change Management Specification，即OCMS），帮助不同业务、技术背景下的变更，进行统一的感知收集，使得后续的变更防御可以基于一套统一的结构信息来进行，不必为每种变更进行深度定制，极大的降低了研发成本。
 
 ### 什么是Open Change Management Specification
 
-Open Change Management Specification (OCMS) 在目前阶段包含了以下内容：
+Open Change Management Specification (OCMS) 是 AlterShield 为了进行变更信息定义、变更统一的感知和管控而制定的一份信息技术协议。 此协议基于蚂蚁集团的上千种变更场景总结归纳而来，非常初期的一个版本，这部分也欢迎大家来一起演进。它在目前阶段包含了以下内容：
 - 一套变更信息模型，定义了一种变更想要进行管控，需要具备的信息结构，该结构用于后续的变更信息感知、变更防御、变更度量等流程
 - 一套变更接入的SDK，以前后置切面的形式，在每个变更步骤生效的前、后进行扩展，进行变更防御的异常检测
-- 一套基于插件的变更防御框架，将不同场景下需要的异常识别能力（如：监控告警检测、日志异常检测等）以插件的形式实现并集成到框架中，在SDK中的前后置切面中调度执行
 
 如果您想要了解更多，可以访问我们的文档库获取更多信息模型及SDK的定义：
 - [变更信息模型定义](https://traas-stack.github.io/altershield-docs/zh-CN/open-change-management-specification/change-model)
 - [变更接入SDK](https://traas-stack.github.io/altershield-docs/zh-CN/open-change-management-specification/change-access-sdk)
-
-### 我们的目标及后续的计划
-
-#### 已支持
-- 上述 Open Change Management Specification 所提到的内容，变更防御框架目前还在调整中，会在下个版本开源出来
-- 云原生Kubernetes Deployment下的代码发布部署的变更管控解决方案
-
-#### 规划中
-- 一套插件化的变更风险分析框架，帮助风险评估人员在变更提单阶段，可视化关注到变更危险程度、可能出现的风险信息以及配套的风险防控充分度，从而降低人工分析成本。
-- 一套插件化的变更风险防控框架，使风险防控人员可以将在日常工作中积累的经验通过代码的形式沉淀下来。同时，框架中也沉淀了我们之前在实际业务中复用度较高的防控能力及在变更管控场景下风险可观测性的信息标准。
-
-#### 长远目标
-- 基于风险分析和风险防控，最终我们提供了一套变更无人值守的框架方案，来帮助业务释放更多的人工执行、观测、恢复成本，提升研发效率。
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- QUICK START -->
 ## 快速开始
 
+目前项目还处于0.1版本，后续我们会完善更多"快速开始"的内容。
+
 ### 项目工程结构
 我们的工程代码主要在源代码的src目录下：
-- altershield-framework-sdk：前文所提到的变更信息模型及接入SDK，您可以在这里找到相关的信息模型定义及HTTP协议下的接入方案。
+- altershield-framework-sdk：前文所提到的 OCMS SDK 相关内容，您可以在这里找到相关的信息模型定义及HTTP协议下的接入方案。
     - 其中变更信息模型在core/change/facade/request目录下；HTTP SDK在sdk/change/client目录下
 - altershield-defender：前文所提到的变更防御框架，目前暂无内容，后续变更防御相关内容会陆续开源到此目录下
 
@@ -91,39 +81,38 @@ Open Change Management Specification (OCMS) 在目前阶段包含了以下内容
 ### 在使用之前，您还需要了解：
 1. AlterShield 不是变更执行系统，本身不具备变更执行能力。
 2. 作为一套技术框架，它定义了变更接入、风险分析、风险防控的标准。但在实际使用之前，还需要***把这套技术框架，嵌入到变更执行平台中，做切面管控***。
-3. 即将推出变更管控提供的风险分析框架，需要结合您的CMDB（或其他元数据存储）来获取数据推导变更影响面。
-4. 变更管控即将推出通用的风险防控能力。除此之外，如果您想更贴合您的业务背景解决变更风险问题，需要自定义风险防控插件来沉淀您的经验。
+3. 后续计划开放变更防御框架。如果您想更贴合您的业务背景解决变更风险问题，需要在防御框架中扩展Plugin或SPI的方式来沉淀您的经验。
+4. 后续计划推出变更管控提供的风险分析框架，需要结合您的CMDB（或其他元数据存储）来获取数据推导变更影响面。
 
 _更多信息，请前往 [AlterShield文档](https://traas-stack.github.io/altershield-docs/zh-CN/)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## RoadMap
-- [ ] 开源变更防御框架完整内容
-- [ ] 开源基于 Prometheus 的监控指标数据获取及异常检测插件
-- [ ] 增加安装使用说明
-- [ ] 增加变更平台接入SDK进行切面管控的案例
-- [ ] 增加通用的变更防御插件，如：变更窗口管控、变更参数校验等
+- [ ] 补充更多关于"快速开始"和"Q&A"相关内容。
+- [ ] 在项目中增加变更平台接入 OCMS SDK 进行变更管控的案例。
+- [ ] 开源完整的 Defender 模块：包含防御框架、防御能力及开放扩展部分。
+- [ ] 开源完整的 Analyser 模块：包含分析框架、影响面分析、风险分析、可观测性分析及变更分级部分。
+- [ ] 完善可观测性异常检测生态：集成更多的开源监控工具，提供异常检测能力。
+- [ ] 开放独立的防御校验能力：使防御框架独立于 OCMS SDK，无需接入改造，即可进行变更防控校验。
 
-我们会持续增加RoadMap。
+我们会持续更新RoadMap。
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- CONTRIBUTING -->
-## 共建
+## 社区建设
 
-贡献是使开源社区成为一个学习、启发和创造的令人惊奇的地方的原因。您所做的任何贡献都将受到极大的赞赏。
-如果您有任何建议可以使它变得更好，请分支该存储库并创建拉取请求。您也可以打开一个带有“增强”标签的问题。
-别忘了给项目点个赞！再次感谢！
-
-
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+作为开源社区，我们欢迎各种形式的贡献，您可以参与到社区的共建的形式包括但不限于：
+- 错别字修正：帮助我们指正文档中的错误。 
+- 文档翻译：帮助我们将文档翻译成您国家的语言，包含英文。
+- 问题及案例探讨：您公司中的变更故障案例，脱敏后可参与讨论，一期探讨解决方案。 
+- Bug提交：帮助我们指出 AlterShield 中逻辑错误的地方。 
+- 新功能场景探讨：任何 AlterShield 还不具备的变更领域功能，都可以一起讨论。 
+- 完善 OCMS 协议：目前 OCMS 开源还处于0.1版本，如果在您的场景下有不能适配的情况，您可以直接参与讨论及扩充。 
+- 对接更多监控工具：您可以将您所使用的监控工具对接到 AlterShield 提供的可观测性防御能力中，扩展 AlterShield 的检测能力范围。 
+- 沉淀您的变更防御专家经验：您可以以Plugin、SPI扩展的形式，将您的变更防御专家经验沉淀到 AlterShield 中。
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
