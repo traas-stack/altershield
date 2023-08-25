@@ -31,10 +31,8 @@ import com.alipay.altershield.shared.schedule.event.AlterShieldSchedulerEvent;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * The type Ops cloud scheduler event holder.
- *
- * @author yuanji
- * @version : SchedulerPointEventHolder.java, v 0.1 2022年08月15日 20:20 yuanji Exp $
+ * @author jinyalong
+ * @version : AlterShieldSchedulerEventHolder.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public class AlterShieldSchedulerEventHolder {
 

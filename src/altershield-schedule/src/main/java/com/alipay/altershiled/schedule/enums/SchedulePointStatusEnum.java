@@ -24,8 +24,8 @@
 package com.alipay.altershiled.schedule.enums;
 
 /**
- * @author shuo.qius
- * @version Jun 1, 2018
+ * @author jinyalong
+ * @version : SchedulePointStatusEnum.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public enum SchedulePointStatusEnum {
     /**

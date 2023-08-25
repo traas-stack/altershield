@@ -38,13 +38,14 @@ import org.springframework.stereotype.Component;
 
 /**
  * 分配uid的主线程，单机负责捞取调度事件
- * @author yuanji
- * @version : ScheduleEventMainScheduler.java, v 0.1 2022年03月21日 2:42 下午 yuanji Exp $
+ *
+ * @author jinyalong
+ * @version : ScheduleEventMainScheduler.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 @Component
 public class ScheduleEventMainScheduler implements ApplicationRunner, InitializingBean, DisposableBean {
 
-    @Value("${opscloud.framework.server.scheduler.maxUid}")
+    @Value("${altershield.framework.server.scheduler.maxUid}")
     private int uidMaxSize = 100;
 
     private static UidToolkit uidToolkit;

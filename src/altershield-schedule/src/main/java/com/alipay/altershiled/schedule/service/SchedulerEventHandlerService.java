@@ -28,8 +28,8 @@ import com.alipay.altershiled.schedule.enums.SchedulerEventHandleStatus;
 import com.alipay.altershiled.schedule.model.ScheduleDispatchContext;
 
 /**
- * @author shuo.qius
- * @version Jun 1, 2018
+ * @author jinyalong
+ * @version : SchedulerEventHandlerService.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public interface SchedulerEventHandlerService {
 

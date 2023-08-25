@@ -30,9 +30,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- *
- * @author yuanji
- * @version : ThreadPoolConfig.java, v 0.1 2022年03月22日 1:44 下午 yuanji Exp $
+ * @author jinyalong
+ * @version : SchedulerThreadPoolConfig.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 @Configuration
 public class SchedulerThreadPoolConfig {

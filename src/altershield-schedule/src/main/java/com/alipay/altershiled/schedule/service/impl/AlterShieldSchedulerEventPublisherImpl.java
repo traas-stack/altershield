@@ -41,10 +41,8 @@ import org.springframework.util.Assert;
 import java.util.Date;
 
 /**
- * The type Scheduler event publisher.
- *
- * @author yuanji
- * @version : SchedulerEventPublisherImpl.java, v 0.1 2022年08月18日 14:12 yuanji Exp $
+ * @author jinyalong
+ * @version : AlterShieldSchedulerEventPublisherImpl.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 @Component
 public class AlterShieldSchedulerEventPublisherImpl implements AlterShieldSchedulerEventPublisher {

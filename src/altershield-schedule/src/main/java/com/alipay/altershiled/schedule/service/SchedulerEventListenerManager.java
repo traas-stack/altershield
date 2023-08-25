@@ -29,8 +29,8 @@ import com.alipay.altershiled.schedule.service.impl.SchedulerEventListenerManage
 import java.util.List;
 
 /**
- * @author yuanji
- * @version : SchedulePointEventManager.java, v 0.1 2022年08月11日 11:48 yuanji Exp $
+ * @author jinyalong
+ * @version : SchedulerEventListenerManager.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public interface SchedulerEventListenerManager {
 

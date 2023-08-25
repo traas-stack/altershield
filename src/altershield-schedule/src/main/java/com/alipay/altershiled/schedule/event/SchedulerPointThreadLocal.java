@@ -26,10 +26,9 @@ package com.alipay.altershiled.schedule.event;
 import com.alipay.altershiled.schedule.model.SchedulerEventEntity;
 
 /**
- * SchdPointEntity thread local
- * 获取上线文中的调度任务
- * @author yuanji
- * @version : SchedulerPointThreadLocal.java, v 0.1 2022年08月18日 14:12 yuanji Exp $
+ * 获取上下文中的调度任务
+ * @author jinyalong
+ * @version : SchedulerPointThreadLocal.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public class SchedulerPointThreadLocal {
 

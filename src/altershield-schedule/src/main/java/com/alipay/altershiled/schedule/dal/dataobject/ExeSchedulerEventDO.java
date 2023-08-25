@@ -26,8 +26,8 @@ package com.alipay.altershiled.schedule.dal.dataobject;
 import java.util.Date;
 
 /**
- *
- * @author yuanji
+ * @author jinyalong
+ * @version : ExeSchedulerEventDO.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public class ExeSchedulerEventDO {
     /**

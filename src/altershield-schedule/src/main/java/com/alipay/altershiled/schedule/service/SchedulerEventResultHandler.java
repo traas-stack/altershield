@@ -35,8 +35,8 @@ import org.slf4j.Logger;
 import java.util.Date;
 
 /**
- * @author yuanji
- * @version : SchedulerPointDispatchExceptionHandler.java, v 0.1 2022年08月12日 14:59 yuanji Exp $
+ * @author jinyalong
+ * @version : SchedulerEventResultHandler.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public abstract class SchedulerEventResultHandler {
 
