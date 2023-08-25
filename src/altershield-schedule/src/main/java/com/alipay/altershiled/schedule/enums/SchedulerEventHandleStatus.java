@@ -26,10 +26,10 @@ package com.alipay.altershiled.schedule.enums;
 import com.alipay.altershiled.schedule.service.SchedulerEventResultHandler;
 
 /**
- * schedulePoint处理状态
+ * 调度状态
  *
- * @author yuanji
- * @version : SchedulerPointExecutedStatus.java, v 0.1 2022年08月11日 17:16 yuanji Exp $
+ * @author jinyalong
+ * @version : SchedulerEventHandleStatus.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public enum SchedulerEventHandleStatus {
 

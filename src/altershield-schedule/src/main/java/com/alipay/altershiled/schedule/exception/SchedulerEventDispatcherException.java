@@ -28,12 +28,13 @@ import com.alipay.altershiled.schedule.enums.SchedulerEventHandleStatus;
 /**
  * dispatcher exception
  *
- * @author yuanji
- * @version : SchedulerPointDispatcherException.java, v 0.1 2022年08月12日 11:59 yuanji Exp $
+ * @author jinyalong
+ * @version : SchedulerEventDispatcherException.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public class SchedulerEventDispatcherException extends RuntimeException{
 
-    private SchedulerEventHandleStatus status;
+    private static final long serialVersionUID = 2077175079315108684L;
+    private final SchedulerEventHandleStatus status;
 
     /**
      * Instantiates a new Scheduler point dispatcher exception.

@@ -41,8 +41,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author lex
- * @version $Id: SchdPointRepositoryImpl.java, v 0.1 2019年10月23日 下午5:24 lex Exp $
+ * @author jinyalong
+ * @version : SchedulerEventRepositoryImpl.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 @Repository
 public class SchedulerEventRepositoryImpl implements SchedulerEventRepository {

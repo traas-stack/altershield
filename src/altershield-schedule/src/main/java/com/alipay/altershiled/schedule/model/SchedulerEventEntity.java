@@ -23,6 +23,7 @@
  */
 package com.alipay.altershiled.schedule.model;
 
+import com.alipay.altershield.common.util.CommonUtil;
 import com.alipay.altershiled.schedule.enums.SchedulePointStatusEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,8 +33,9 @@ import java.util.Date;
 /**
  * 一个事件的处理周期
  * eventStart -> (create-> executeStart -> executeEnd）+一次或多次，只会记录最后的一次时间  -> eventEnd
- * @author lex
- * @version $Id: SchdPointEntity.java, v 0.1 2019年10月23日 下午5:18 lex Exp $
+ *
+ * @author jinyalong
+ * @version : SchedulerEventEntity.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 @Getter
 @Setter

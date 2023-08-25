@@ -30,10 +30,8 @@ import org.mapstruct.factory.Mappers;
 
 
 /**
- * The interface Exe scheduler event entity converter.
- *
- * @author yuanji
- * @version : ExeSchdPointEntityConverter.java, v 0.1 2022年03月22日 3:54 下午 yuanji Exp $
+ * @author jinyalong
+ * @version : ExeSchedulerEventEntityConverter.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 @Mapper
 public interface ExeSchedulerEventEntityConverter {

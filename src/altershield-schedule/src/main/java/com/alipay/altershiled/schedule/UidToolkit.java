@@ -28,8 +28,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Random;
 
 /**
- * @author yuanji
- * @version : UidToolkit.java, v 0.1 2022年08月03日 15:05 yuanji Exp $
+ * @author jinyalong
+ * @version : UidToolkit.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public class UidToolkit {
 

@@ -41,8 +41,8 @@ import java.util.*;
 /**
  * schedulerPointEventListener管理器 负责管理listener的获取和注册
  *
- * @author yuanji
- * @version : SchedulerPointEventListenerManagerImpl.java, v 0.1 2022年08月15日 14:28 yuanji Exp $
+ * @author jinyalong
+ * @version : SchedulerEventListenerManagerImpl.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 @Service
 public class SchedulerEventListenerManagerImpl implements SchedulerEventListenerManager, ApplicationContextAware {

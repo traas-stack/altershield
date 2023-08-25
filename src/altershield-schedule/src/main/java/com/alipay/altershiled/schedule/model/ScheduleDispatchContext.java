@@ -25,8 +25,9 @@ package com.alipay.altershiled.schedule.model;
 
 /**
  * 调度分发context
- * @author yuanji
- * @version : PointTaskRef.java, v 0.1 2022年03月22日 10:32 上午 yuanji Exp $
+ *
+ * @author jinyalong
+ * @version : ScheduleDispatchContext.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public class ScheduleDispatchContext {
 

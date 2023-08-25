@@ -47,10 +47,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
- * The type Scheduler event dispatcher.
- *
- * @author shuo.qius
- * @version Jul 2, 2018
+ * @author jinyalong
+ * @version : SchedulerEventDispatcherImpl.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 @Component
 public class SchedulerEventDispatcherImpl implements SchedulerEventDispatcher {

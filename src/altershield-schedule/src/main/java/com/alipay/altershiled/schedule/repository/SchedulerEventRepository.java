@@ -30,10 +30,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 调度点仓库，在内心中灵活的控制使用哪个版本的调度点。
- *
- * @author lex
- * @version $Id: SchdPointRepository.java, v 0.1 2019年10月23日 下午5:17 lex Exp $
+ * @author jinyalong
+ * @version : SchedulerEventRepository.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public interface SchedulerEventRepository {
 

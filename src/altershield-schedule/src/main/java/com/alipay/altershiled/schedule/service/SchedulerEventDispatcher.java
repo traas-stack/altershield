@@ -46,8 +46,8 @@ package com.alipay.altershiled.schedule.service;
 import java.util.List;
 
 /**
- * @author shuo.qius
- * @version Jun 7, 2018
+ * @author jinyalong
+ * @version : SchedulerEventDispatcher.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 public interface SchedulerEventDispatcher {
 

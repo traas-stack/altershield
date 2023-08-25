@@ -54,10 +54,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The type Scheduler event handler service.
- *
- * @author shuo.qius
- * @version Jun 1, 2018
+ * @author jinyalong
+ * @version : SchedulerEventHandlerServiceImpl.java, v 0.1 2023-08-25 xiangyue Exp $$
  */
 @Service
 public class SchedulerEventHandlerServiceImpl implements SchedulerEventHandlerService {
