@@ -30,6 +30,7 @@
         <module>src/altershield-plugin-market</module>
         <module>src/altershield-common</module>
         <module>src/altershield-shared</module>
+        <module>src/altershield-web</module>
     </modules>
 
     <dependencyManagement>
@@ -54,6 +55,26 @@
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>2.2.1</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>5.3.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>2.5.6</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>1.5.20</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.alipay</groupId>
@@ -69,6 +90,11 @@
                 <groupId>com.alipay</groupId>
                 <artifactId>altershield-framework-sdk</artifactId>
                 <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alipay</groupId>
+                <artifactId>altershield-web</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

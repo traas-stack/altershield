@@ -9,4 +9,14 @@
     </parent>
     <artifactId>altershield-change</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>altershield-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>altershield-shared</artifactId>
+        </dependency>
+    </dependencies>
 </project>

@@ -63,4 +63,22 @@ public class AlterShieldConstant {
      * 切换scheduler的暂停态
      */
     public static volatile boolean SWITCH_SCHEDULER_PAUSE = false;
+
+    /**
+     * 工单详情页URL
+     */
+    public static volatile String ALTER_SHIELD_ORDER_DETAIL_URL = "";
+
+    /**
+     * 防御执行详情页URL
+     */
+    public static volatile String ALTER_SHIELD_NODE_DETAIL_URL = "";
+    /**
+     * kvRef字段是否采用变长模式(仅发布期间兼容用，永远保持true即可)
+     */
+    public static volatile boolean SWITCH_KV_REF_WRITE_VAR_LEN        = true;
+    /**
+     * The constant DAL_KV_VALUE_COLUMN_SIZE.
+     */
+    public static final int     DAL_KV_VALUE_COLUMN_SIZE = 200 * 1024;
 }

@@ -131,7 +131,7 @@ public class ChangeClientFactory {
         riskDefenseCheckRuleFacade =
                 createOpsCloudRiskDefenseCheckRuleFacade(httpAlterShieldClient);
         ChangeInnerClient changeInnerClient =
-                createOpsCloudChangeInnerClient(heartbeatUtil, changeFacade);
+                createChangeInnerClient(heartbeatUtil, changeFacade);
 
         changeClient = createOpsCloudChangeClient(changeInnerClient);
         simpleChangeClient = createOpsCloudSimpleChangeClient(changeInnerClient);
@@ -256,16 +256,16 @@ public class ChangeClientFactory {
      * Create ops cloud change inner client ops cloud change inner client.
      *
      * @param heartbeatUtil the heartbeat util
-     * @param opsCloudChangeFacade the ops cloud change facade
+     * @param alterShieldChangeFacade the ops cloud change facade
      * @return the ops cloud change inner client
      */
-    protected ChangeInnerClient createOpsCloudChangeInnerClient(HeartbeatUtil heartbeatUtil,
-            ChangeFacade opsCloudChangeFacade) {
+    protected ChangeInnerClient createChangeInnerClient(HeartbeatUtil heartbeatUtil,
+                                                        ChangeFacade alterShieldChangeFacade) {
         ChangeInnerClientImpl innerClient =
                 new ChangeInnerClientImpl();
         innerClient.setHeartbeatUtil(heartbeatUtil);
         innerClient.setHiddenServerError(hiddenServerError);
-        innerClient.setOpsCloudChangeFacade(opsCloudChangeFacade);
+        innerClient.setChangeFacade(alterShieldChangeFacade);
         return innerClient;
     }
 
@@ -287,13 +287,13 @@ public class ChangeClientFactory {
     /**
      * Create ops cloud change client ops cloud change client.
      *
-     * @param opsCloudChangeInnerClient the ops cloud change inner client
+     * @param changeInnerClient the ops cloud change inner client
      * @return the ops cloud change client
      */
     protected ChangeClient createOpsCloudChangeClient(
-            ChangeInnerClient opsCloudChangeInnerClient) {
+            ChangeInnerClient changeInnerClient) {
         ChangeClientImpl changeClient = new ChangeClientImpl();
-        changeClient.setOpsCloudChangeInnerClient(opsCloudChangeInnerClient);
+        changeClient.setChangeInnerClient(changeInnerClient);
         return changeClient;
     }
 

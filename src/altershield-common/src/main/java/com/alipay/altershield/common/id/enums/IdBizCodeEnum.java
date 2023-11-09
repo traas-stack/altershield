@@ -69,7 +69,7 @@ public enum IdBizCodeEnum {
     /**
      * 变更场景步骤业务码
      */
-    OPSCLD_META_CHANGE_STEP("021", "opscld_meta_change_scene"),
+    OPSCLD_META_CHANGE_STEP("021", "opscld_meta_change_step"),
 
     /**
      * 变更类型
@@ -94,34 +94,6 @@ public enum IdBizCodeEnum {
     OPSCLD_EXE_ORDER("100", "opscld_exe_order"),
 
     OPSCLD_EXE_NODE("101", "opscld_exe_node"),
-
-    // ---------------- plan ------------------------------------------------
-    // TODO 表替换
-    OPSPLAN_RECORD_LOG("201", "opsplan_record_log"),
-
-    OPSPLAN_CHANGE_ORDER("202", "opsplan_change_order"),
-
-    OPSPLAN_CHANGE_INSTANCE("203", "opsplan_change_instance"),
-
-    OPSPLAN_CHANGE_STEP("204", "opsplan_change_tep"),
-
-    OPSPLAN_CHANGE_PLAN("205", "opsplan_change_plan"),
-
-    OPSPLAN_RELATED_PERSONNEL("206", "opsplan_related_personnel"),
-
-    OPSPLAN_CHANGE_REPORT("207", "opsplan_change_report"),
-
-    OPSPLAN_OPERATION_LOG("208", "opsplan_operation_log"),
-
-    OPSPLAN_CHANGE_SUPPORT_SCOPE("209", "opsplan_change_support_scope"),
-
-    OPSPLAN_EXE_DRM_STRATEGY("210", "opsplan_exe_drm_strategy"),
-
-    OPSPLAN_EXE_RELEASE_STRATEGY("211", "opsplan_exe_release_strategy"),
-
-    OPSPLAN_META_PERSON_RECEIVE("212", "opsplan_meta_person_receive"),
-
-    OPSPLAN_SYNC_CHANGE_EVENT("213", "opsplan_sync_change_event"),
 
     //---------------- decision ---------------------------------------------
     OPSCLD_META_DECISION_SCENE("301", "opscld_meta_decision_scene"),

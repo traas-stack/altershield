@@ -23,7 +23,6 @@
  */
 package com.alipay.altershiled.schedule.model;
 
-import com.alipay.altershield.common.util.CommonUtil;
 import com.alipay.altershiled.schedule.enums.SchedulePointStatusEnum;
 import lombok.Getter;
 import lombok.Setter;

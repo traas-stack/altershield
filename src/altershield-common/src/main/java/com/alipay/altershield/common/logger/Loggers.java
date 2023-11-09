@@ -21,9 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-/**
- * Alipay.com Inc. Copyright (c) 2004-2023 All Rights Reserved.
- */
 package com.alipay.altershield.common.logger;
 
 import org.slf4j.Logger;
@@ -56,4 +53,8 @@ public interface Loggers {
      * DAL日志
      */
     Logger DAL = LoggerFactory.getLogger("ALTERSHIELD-DAL");
+    /**
+     * DAO日志
+     */
+    Logger DAO_DIGEST = LoggerFactory.getLogger("ALTERSHIELD_DAO_DIGEST");
 }
