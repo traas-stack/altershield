@@ -22,5 +22,11 @@
             <groupId>com.alipay</groupId>
             <artifactId>altershield-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>altershield-framework-spi</artifactId>
+            <version>0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

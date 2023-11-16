@@ -1,80 +1,63 @@
 /*
- * MIT License
- *
- * Copyright (c) [2023]
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * Ant Group
+ * Copyright (c) 2004-2022 All Rights Reserved.
  */
 package com.alipay.altershield.framework.core.risk.model.enums;
 
 /**
- * 反馈状态
+ * Change defense result feedback status enumeration
  *
- * @author yuefan.wyf
- * @version $Id: FeedbackStatusEnum.java, v 0.1 2019年09月04日 上午11:43 yuefan.wyf Exp $
+ * @author yhaoxuan
+ * @version FeedbackStatusEnum.java, v 0.1 2022年07月21日 8:38 下午 yhaoxuan
  */
 public enum FeedbackStatusEnum {
+
     /**
-     * 误报
+     * False positive
      */
     INVALID("INVALID"),
     /**
-     * 漏过
+     * Missed
      */
     MISSED("MISSED"),
     /**
-     * 正常拦截
+     * Correct interception
      */
     EXACTLY("EXACTLY"),
     /**
-     * 正常拦截
+     * Some exception events happened
      */
     EXCEPTION("EXCEPTION"),
+    ;
+
     /**
-     * 演练导致
+     * Feedback status
      */
-    @Deprecated
-    DRILL("DRILL");
+    private final String status;
 
-    private final String type;
-
-    private FeedbackStatusEnum(String type) {
-        this.type = type;
+    FeedbackStatusEnum(String status) {
+        this.status = status;
     }
 
     /**
-     * @return property value of {@link #type}
+     * Getter method for property <tt>status</tt>.
+     *
+     * @return property value of status
      */
-    public String getType() {
-        return type;
+    public String getStatus() {
+        return status;
     }
 
     /**
-     * @param type
-     * @return
+     * get enum value by status.
+     *
+     * @param status the status
+     * @return the target enum value
      */
-    public static FeedbackStatusEnum getByType(String type) {
-        for (FeedbackStatusEnum e : FeedbackStatusEnum.values()) {
-            if (e.type.equalsIgnoreCase(type)) {
-                return e;
-            }
-            if (e.name().equalsIgnoreCase(type)) {
+    public static FeedbackStatusEnum getByStatus(String status) {
+        for (FeedbackStatusEnum e : FeedbackStatusEnum
+                .values()) {
+            if (e.getStatus().equalsIgnoreCase(status)) {
                 return e;
             }
         }

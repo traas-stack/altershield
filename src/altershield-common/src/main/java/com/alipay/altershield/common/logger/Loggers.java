@@ -31,30 +31,39 @@ import org.slf4j.LoggerFactory;
  * @version : Loggers.java, v 0.1 2023-05-29 15:41 xiangyue Exp $$
  */
 public interface Loggers {
+
     /**
      * default
      */
     Logger DEFAULT = LoggerFactory.getLogger("ALTERSHIELD-FRAMEWORK");
 
     /**
-     * 变更线程信息
+     * local scheduler
      */
     Logger LOCAL_SCHEDULE = LoggerFactory.getLogger("ALTERSHIELD-LOCAL-SCHEDULE");
 
     /**
-     * point处理线程
+     * event schedule point
      */
     Logger SCHEDULE_POINT = LoggerFactory.getLogger("ALTERSHIELD-SCHEDULE-POINT");
+
     /**
-     *
+     * digest log of schedule point
      */
     Logger SCHEDULE_POINT_DIGEST = LoggerFactory.getLogger("ALTERSHIELD-SCHEDULE-POINT-DIGEST");
+
     /**
-     * DAL日志
+     * DAL log
      */
     Logger DAL = LoggerFactory.getLogger("ALTERSHIELD-DAL");
+
     /**
-     * DAO日志
+     * DAO log
      */
     Logger DAO_DIGEST = LoggerFactory.getLogger("ALTERSHIELD_DAO_DIGEST");
+
+    /**
+     * defender log
+     */
+    Logger DEFENDER = LoggerFactory.getLogger("ALTERSHIELD_DEFENDER");
 }
