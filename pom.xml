@@ -75,7 +75,16 @@
                 <artifactId>swagger-annotations</artifactId>
                 <version>1.5.20</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.alipay</groupId>
+                <artifactId>altershield-change</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.toolkit.common</groupId>
+                <artifactId>toolkit-common-lang</artifactId>
+                <version>1.2.0</version>
+            </dependency>
             <dependency>
                 <groupId>com.alipay</groupId>
                 <artifactId>altershield-common</artifactId>

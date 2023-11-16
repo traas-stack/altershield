@@ -57,4 +57,16 @@ public interface Loggers {
      * DAO日志
      */
     Logger DAO_DIGEST = LoggerFactory.getLogger("ALTERSHIELD_DAO_DIGEST");
+    /**
+     * FACADE EXE日志
+     */
+    Logger FACADE_EXE = LoggerFactory.getLogger("ALTERSHIELD_FACADE_EXE");
+    Logger SERVICE_INFO = LoggerFactory.getLogger("ALTERSHIELD_SERVICE_INFO");
+    Logger CALL_BACK = LoggerFactory.getLogger("ALTERSHIELD_CALL_BACK");
+    Logger SERVICE_OPERATE_DIGEST = LoggerFactory.getLogger("ALTERSHIELD_SERVICE_OPERATE_DIGEST");
+    Logger SERVICE_QUERY_DIGEST = LoggerFactory.getLogger("ALTERSHIELD_SERVICE_QUERY_DIGEST");
+
+    Logger SERVICE_PROFILER  = LoggerFactory.getLogger("ALTERSHIELD-SERVICE-PROFILER");
+    Logger BIZ_SERVICE = LoggerFactory.getLogger("OPSCLOUD-BIZ-SERVICE");
+    Logger META_CACHE            = LoggerFactory.getLogger("OPSCLOUD-META-CACHE");
 }

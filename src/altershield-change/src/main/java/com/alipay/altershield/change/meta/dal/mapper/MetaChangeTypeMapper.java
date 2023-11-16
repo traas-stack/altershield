@@ -33,32 +33,6 @@ import org.apache.ibatis.annotations.Param;
  * @author xiangyue
  */
 public interface MetaChangeTypeMapper {
-    /**
-     * 根据WHERE条件COUNT
-     * @param metaChangeTypeParam
-     * @return
-     *
-     * @mbg.generated
-     */
-    long countByParam(MetaChangeTypeParam metaChangeTypeParam);
-
-    /**
-     * 根据WHERE条件删除
-     * @param metaChangeTypeParam
-     * @return
-     *
-     * @mbg.generated
-     */
-    int deleteByParam(MetaChangeTypeParam metaChangeTypeParam);
-
-    /**
-     * 根据主键删除
-     * @param id
-     * @return
-     *
-     * @mbg.generated
-     */
-    int deleteByPrimaryKey(String id);
 
     /**
      * 插入单条记录
@@ -69,77 +43,33 @@ public interface MetaChangeTypeMapper {
      */
     int insert(MetaChangeTypeDO record);
 
-    /**
-     * 根据字段选择性插入单条记录
-     * @param record
-     * @return
-     *
-     * @mbg.generated
-     */
-    int insertSelective(MetaChangeTypeDO record);
 
     /**
-     * 根据WHERE条件查询，返回不包含长文本字段
-     * @param metaChangeTypeParam
+     * 根据WHERE条件查询，
+     * @param
      * @return
      *
      * @mbg.generated
      */
-    List<MetaChangeTypeDO> selectByParam(MetaChangeTypeParam metaChangeTypeParam);
+    List<MetaChangeTypeDO> selectByParam(@Param("category") String category, @Param("type") String type, @Param("size") int size);
 
     /**
-     * 根据主键查询
-     * @param id
+     * 根据type查詢
+     * @param  category
+     * @param type
      * @return
      *
      * @mbg.generated
      */
-    MetaChangeTypeDO selectByPrimaryKey(String id);
+    MetaChangeTypeDO selectByType(@Param("category") String category, @Param("type") String type);
+
 
     /**
-     * 根据WHERE条件选择性更新
-     * @param record
-     * @param metaChangeTypeParam
+     * 根据type刪除
+     * @param type
      * @return
      *
      * @mbg.generated
      */
-    int updateByParamSelective(@Param("record") MetaChangeTypeDO record, @Param("metaChangeTypeParam") MetaChangeTypeParam metaChangeTypeParam);
-
-    /**
-     * 根据WHERE条件更新，不更新长文本字段
-     * @param record
-     * @param metaChangeTypeParam
-     * @return
-     *
-     * @mbg.generated
-     */
-    int updateByParam(@Param("record") MetaChangeTypeDO record, @Param("metaChangeTypeParam") MetaChangeTypeParam metaChangeTypeParam);
-
-    /**
-     * 根据主键选择性更新
-     * @param record
-     * @return
-     *
-     * @mbg.generated
-     */
-    int updateByPrimaryKeySelective(MetaChangeTypeDO record);
-
-    /**
-     * 根据主键更新，不更新长文本字段
-     * @param record
-     * @return
-     *
-     * @mbg.generated
-     */
-    int updateByPrimaryKey(MetaChangeTypeDO record);
-
-    /**
-     * 批量插入
-     * @param records
-     * @return
-     *
-     * @mbg.generated
-     */
-    int batchInsert(List<MetaChangeTypeDO> records);
+    int deleteByType(@Param("category") String category, @Param("type") String type);
 }

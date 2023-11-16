@@ -23,9 +23,9 @@
  */
 package com.alipay.altershield.change.meta.model;
 
+import com.alipay.altershield.common.largefield.kv.KeyValueStorage;
 import com.alipay.altershield.framework.core.base.AbstractBasicEntity;
 import com.alipay.altershield.framework.core.risk.config.RiskDefenseConfig;
-import com.alipay.altershield.shared.common.largefield.kv.KeyValueStorage;
 import com.alipay.altershield.shared.common.largefield.ref.KvRef;
 import com.alipay.altershield.shared.common.largefield.ref.KvRefCodec;
 import lombok.Data;

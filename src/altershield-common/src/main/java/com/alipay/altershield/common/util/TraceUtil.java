@@ -44,6 +44,7 @@
 package com.alipay.altershield.common.util;
 
 
+import com.alipay.altershield.framework.common.util.CommonUtil;
 import com.alipay.altershield.framework.core.change.model.trace.OpsChngCoord;
 import com.alipay.altershield.framework.core.change.model.trace.OpsChngTrace;
 import org.apache.commons.lang3.StringUtils;

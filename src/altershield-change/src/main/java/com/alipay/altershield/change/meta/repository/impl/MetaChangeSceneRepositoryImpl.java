@@ -44,11 +44,14 @@
 package com.alipay.altershield.change.meta.repository.impl;
 
 import com.alipay.altershield.change.meta.dal.dataobject.*;
+import com.alipay.altershield.change.meta.dal.mapper.MetaChangeSceneMapper;
+import com.alipay.altershield.change.meta.dal.mapper.MetaChangeStepMapper;
 import com.alipay.altershield.change.meta.model.MetaBaseChangeSceneEntity;
 import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
 import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
 import com.alipay.altershield.change.meta.repository.MetaChangeSceneRepository;
 import com.alipay.altershield.change.meta.repository.converter.MetaChangeSceneConverter;
+import com.alipay.altershield.common.cache.MetaCache;
 import com.alipay.altershield.shared.change.exe.entity.MetaChangeSceneBatchEntity;
 import com.alipay.altershield.shared.change.exe.entity.MetaChangeSceneQueryEntity;
 import com.alipay.altershield.shared.change.meta.model.enums.MetaChangeStepTypeEnum;
@@ -241,12 +244,6 @@ public class MetaChangeSceneRepositoryImpl implements MetaChangeSceneRepository 
             return false;
         }
         return metaChangeStepMapper.selectCountByChangeKeyAndType(changeKey, null) == 1;
-    }
-
-    @Override
-    public List<MetaChangeSceneBatchEntity> queryAllScene() {
-        List<MetaChangeSceneBatchDO> metaChangeSceneBatchDOS = metaChangeSceneMapper.queryAllScene();
-        return metaChangeSceneConverter.DOSToEntities(metaChangeSceneBatchDOS);
     }
 
     @Override

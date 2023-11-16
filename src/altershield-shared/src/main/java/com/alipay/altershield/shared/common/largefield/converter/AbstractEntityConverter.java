@@ -45,7 +45,7 @@ package com.alipay.altershield.shared.common.largefield.converter;
 
 import com.alibaba.fastjson.TypeReference;
 import com.alipay.altershield.common.largefield.kv.KeyValueStorage;
-import com.alipay.altershield.common.largefield.ref.KvRef;
+import com.alipay.altershield.shared.common.largefield.ref.KvRef;
 import com.alipay.altershield.framework.common.util.JSONUtil;
 import com.alipay.altershield.shared.common.largefield.ref.KvRefCodec;
 import org.apache.commons.lang3.StringUtils;

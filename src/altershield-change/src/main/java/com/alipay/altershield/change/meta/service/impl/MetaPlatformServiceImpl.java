@@ -26,15 +26,15 @@
  */
 package com.alipay.altershield.change.meta.service.impl;
 
-import com.alipay.opscloud.change.meta.model.MetaPlatformEntity;
-import com.alipay.opscloud.change.meta.repository.MetaChangePlatformRepository;
-import com.alipay.opscloud.change.meta.service.MetaPlatformService;
-import com.alipay.opscloud.change.meta.service.request.CreateMetaPlatformRequest;
-import com.alipay.opscloud.change.meta.service.request.converter.MetaPlatformRequestConverter;
-import com.alipay.opscloud.common.id.IdGenerator;
-import com.alipay.opscloud.common.service.ServiceProcessTemplate;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.tools.common.id.IdBizCodeEnum;
+import com.alipay.altershield.change.meta.model.MetaChangePlatformEntity;
+import com.alipay.altershield.change.meta.repository.MetaChangePlatformRepository;
+import com.alipay.altershield.change.meta.service.MetaPlatformService;
+import com.alipay.altershield.change.meta.service.request.CreateMetaPlatformRequest;
+import com.alipay.altershield.change.meta.service.request.converter.MetaPlatformRequestConverter;
+import com.alipay.altershield.common.id.IdGenerator;
+import com.alipay.altershield.common.id.enums.IdBizCodeEnum;
+import com.alipay.altershield.common.service.ServiceProcessTemplate;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,18 +57,18 @@ public class MetaPlatformServiceImpl implements MetaPlatformService {
     private MetaPlatformRequestConverter reqConverter;
 
     @Override
-    public OpsCloudResult<List<String>> queryAllPlatform() {
+    public AlterShieldResult<List<String>> queryAllPlatform() {
 
         return ServiceProcessTemplate.wrapTryCatch(() -> {
             List<String> platforms = metaChangePlatformRepository.getAllPlatform();
-            return OpsCloudResult.succeed("query success", platforms);
+            return AlterShieldResult.succeed("query success", platforms);
         });
     }
 
     @Override
-    public OpsCloudResult<String> create(CreateMetaPlatformRequest request) {
-        MetaPlatformEntity metaPlatform = reqConverter.convert2Entity(request);
+    public AlterShieldResult<String> create(CreateMetaPlatformRequest request) {
+        MetaChangePlatformEntity metaPlatform = reqConverter.convert2Entity(request);
         metaPlatform.setId(idGenerator.generateIdWithNoSharding(IdBizCodeEnum.OPSCLD_META_PLATFORM));
-        return OpsCloudResult.succeed("create success", metaChangePlatformRepository.create(metaPlatform));
+        return AlterShieldResult.succeed("create success", metaChangePlatformRepository.create(metaPlatform));
     }
 }

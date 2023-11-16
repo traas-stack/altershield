@@ -44,44 +44,34 @@
 package com.alipay.altershield.change.meta.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alipay.opscloud.api.change.exe.entity.MetaChangeSceneBatchEntity;
-import com.alipay.opscloud.api.change.exe.entity.MetaChangeSceneQueryEntity;
-import com.alipay.opscloud.api.change.meta.model.enums.MetaChangeStepTypeEnum;
-import com.alipay.opscloud.api.change.meta.service.MetaChangeSceneQueryService;
-import com.alipay.opscloud.api.scheduler.event.change.OpsCloudMetaChangeSceneCreateEvent;
-import com.alipay.opscloud.api.scheduler.event.publish.OpsCloudSchedulerEventPublisher;
-import com.alipay.opscloud.change.meta.dal.dataobject.MetaChangeSceneQueryParam;
-import com.alipay.opscloud.change.meta.model.MetaBaseChangeSceneEntity;
-import com.alipay.opscloud.change.meta.model.MetaChangeEffectiveConfigEntity;
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneCallbackConfigEntity;
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeBatchStepEntity;
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeOrderStepEntity;
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeProgressEntity;
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeStepEntity;
-import com.alipay.opscloud.change.meta.model.enums.MetaChangeGrayModeTypeEnum;
-import com.alipay.opscloud.change.meta.model.enums.MetaChangeSceneStatus;
-import com.alipay.opscloud.change.meta.repository.MetaChangeSceneRepository;
-import com.alipay.opscloud.change.meta.service.MetaChangeSceneService;
-import com.alipay.opscloud.change.meta.service.OpsCloudGenerationTransfer;
-import com.alipay.opscloud.change.meta.service.OpsCloudGenerationTransferManager;
-import com.alipay.opscloud.change.meta.service.request.*;
-import com.alipay.opscloud.change.meta.service.request.converter.MetaChangeSceneRequestConverter;
-import com.alipay.opscloud.change.meta.service.request.converter.MetaChangeStepRequestConverter;
-import com.alipay.opscloud.change.util.EntityUtil;
-import com.alipay.opscloud.common.id.IdGenerator;
-import com.alipay.opscloud.common.result.OpsCloudPageResult;
-import com.alipay.opscloud.common.service.ServicePageProcessTemplate;
-import com.alipay.opscloud.common.service.ServicePageQuery;
-import com.alipay.opscloud.common.service.ServiceProcessTemplate;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.meta.change.facade.request.CreateMetaChangeSceneRequest;
-import com.alipay.opscloud.framework.core.meta.change.facade.result.CreateMetaChangeSceneResult;
-import com.alipay.opscloud.framework.core.meta.change.model.enums.MetaChangeSceneGenerationEnum;
-import com.alipay.opscloud.tools.common.id.IdBizCodeEnum;
-import com.alipay.opscloud.tools.common.logger.Loggers;
-import com.alipay.opscloud.tools.common.logger.OpsCloudLoggerUtil;
+import com.alipay.altershield.change.meta.dal.dataobject.MetaChangeSceneQueryParam;
+import com.alipay.altershield.change.meta.model.MetaBaseChangeSceneEntity;
+import com.alipay.altershield.change.meta.model.MetaChangeEffectiveConfigEntity;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeBatchStepEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeProgressEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
+import com.alipay.altershield.change.meta.model.enums.MetaChangeSceneStatus;
+import com.alipay.altershield.change.meta.repository.MetaChangeSceneRepository;
+import com.alipay.altershield.change.meta.service.MetaChangeSceneService;
+import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransfer;
+import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransferManager;
+import com.alipay.altershield.change.meta.service.request.*;
+import com.alipay.altershield.change.meta.service.request.converter.MetaChangeSceneRequestConverter;
+import com.alipay.altershield.common.id.IdGenerator;
+import com.alipay.altershield.common.id.enums.IdBizCodeEnum;
+import com.alipay.altershield.common.service.ServicePageProcessTemplate;
+import com.alipay.altershield.common.service.ServicePageQuery;
+import com.alipay.altershield.common.service.ServiceProcessTemplate;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldPageResult;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.core.change.facade.result.CreateMetaChangeSceneResult;
+import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
+import com.alipay.altershield.shared.change.exe.entity.MetaChangeSceneBatchEntity;
+import com.alipay.altershield.shared.change.exe.entity.MetaChangeSceneQueryEntity;
+import com.alipay.altershield.shared.change.meta.service.MetaChangeSceneQueryService;
+import com.alipay.altershield.shared.schedule.event.publish.AlterShieldSchedulerEventPublisher;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
@@ -114,7 +104,7 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
     private IdGenerator idGenerator;
 
     @Autowired
-    private OpsCloudSchedulerEventPublisher opsCloudSchedulerEventPublisher;
+    private AlterShieldSchedulerEventPublisher opsCloudSchedulerEventPublisher;
 
     @Autowired
     private OpsCloudGenerationTransferManager opsCloudGenerationTransferManager;
@@ -124,9 +114,9 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
     private static final Logger logger = Loggers.META_CHANGE;
 
     @Override
-    public OpsCloudResult<MetaChangeSceneEntity> getMetaChangeSceneById(String id) {
+    public AlterShieldResult<MetaChangeSceneEntity> getMetaChangeSceneById(String id) {
         return ServiceProcessTemplate.wrapTryCatch(() ->
-                OpsCloudResult.succeed("success", metaChangeSceneRepository.getChangeSceneDetailsById(id)));
+                AlterShieldResult.succeed("success", metaChangeSceneRepository.getChangeSceneDetailsById(id)));
     }
 
     @Override
@@ -156,15 +146,15 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
     }
 
 
-    public OpsCloudResult<CreateMetaChangeSceneResult> createTempChangeScene(CreateMetaChangeSceneRequest request) {
+    public AlterShieldResult<CreateMetaChangeSceneResult> createTempChangeScene(CreateMetaChangeSceneRequest request) {
         return createOrUpdateChangeScene(null, request, MetaChangeSceneStatus.TEMP);
     }
 
-    public OpsCloudResult<CreateMetaChangeSceneResult> createOrUpdateChangeScene(String id, CreateMetaChangeSceneRequest request) {
+    public AlterShieldResult<CreateMetaChangeSceneResult> createOrUpdateChangeScene(String id, CreateMetaChangeSceneRequest request) {
         return createOrUpdateChangeScene(id, request, MetaChangeSceneStatus.TEMP);
     }
 
-    public OpsCloudResult<CreateMetaChangeSceneResult> createReleaseChangeScene(CreateMetaChangeSceneRequest request) {
+    public AlterShieldResult<CreateMetaChangeSceneResult> createReleaseChangeScene(CreateMetaChangeSceneRequest request) {
         return createOrUpdateChangeScene(null, request, MetaChangeSceneStatus.RELEASE);
     }
 
@@ -180,22 +170,22 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
      * @param metaChangeSceneStatus
      * @return
      */
-    private OpsCloudResult<CreateMetaChangeSceneResult> createOrUpdateChangeScene(final String id, CreateMetaChangeSceneRequest request,
+    private AlterShieldResult<CreateMetaChangeSceneResult> createOrUpdateChangeScene(final String id, CreateMetaChangeSceneRequest request,
                                                                                   MetaChangeSceneStatus metaChangeSceneStatus) {
         return ServiceProcessTemplate.wrapTryCatch(() ->
                 confTransactionTemplate.execute(status -> {
                     doCheck(request);
-                    OpsCloudLoggerManager.log("debug", logger, "start create change scene :", request);
+                    AlterShieldLoggerManager.log("debug", logger, "start create change scene :", request);
                     MetaChangeSceneEntity metaChangeSceneEntity = null;
                     if (StringUtils.isNotBlank(id)) {
                         metaChangeSceneEntity = metaChangeSceneRepository.getChangeSceneDetailsById(id);
                         if (metaChangeSceneEntity == null) {
-                            return OpsCloudResult.illegalArgument("update changeScene fail, change scene not found:" + id);
+                            return AlterShieldResult.illegalArgument("update changeScene fail, change scene not found:" + id);
                         }
                     } else {
                         metaChangeSceneEntity = metaChangeSceneRepository.getChangeSceneByChangeSceneKey(request.getChangeSceneKey());
                         if (metaChangeSceneEntity != null) {
-                            return OpsCloudResult.illegalArgument("创建场景失败, 场景码 :" + request.getChangeSceneKey() + "已经存在");
+                            return AlterShieldResult.illegalArgument("创建场景失败, 场景码 :" + request.getChangeSceneKey() + "已经存在");
                         }
                     }
 
@@ -206,7 +196,7 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
                         updateBaseChangeScene(request, metaChangeSceneEntity);
                         CreateMetaChangeSceneResult createMetaChangeSceneResult = new CreateMetaChangeSceneResult();
                         createMetaChangeSceneResult.setId(id);
-                        return OpsCloudResult.succeed("create changeScene Success", createMetaChangeSceneResult);
+                        return AlterShieldResult.succeed("create changeScene Success", createMetaChangeSceneResult);
                     }
                     //如果是暂存态，则直接先删除了之前的信息，复用id而已
                     if (metaChangeSceneEntity != null && metaChangeSceneEntity.getStatus() == MetaChangeSceneStatus.TEMP) {
@@ -265,7 +255,7 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
         }
     }
 
-    private OpsCloudResult<CreateMetaChangeSceneResult> createMetaChangeScene(CreateMetaChangeSceneRequest request,
+    private AlterShieldResult<CreateMetaChangeSceneResult> createMetaChangeScene(CreateMetaChangeSceneRequest request,
                                                                               MetaChangeSceneStatus metaChangeSceneStatus, String id) {
         MetaChangeSceneEntity metaChangeSceneEntity;
         //1、先创建出对象
@@ -295,20 +285,20 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
         }
         CreateMetaChangeSceneResult createMetaChangeSceneResult = new CreateMetaChangeSceneResult();
         createMetaChangeSceneResult.setId(id);
-        return OpsCloudResult.succeed("create changeScene Success", createMetaChangeSceneResult);
+        return AlterShieldResult.succeed("create changeScene Success", createMetaChangeSceneResult);
     }
 
 
-    public OpsCloudResult<String> importChangeScene(JSONObject json) {
+    public AlterShieldResult<String> importChangeScene(JSONObject json) {
         return ServiceProcessTemplate.wrapTryCatch(() ->
                 confTransactionTemplate.execute(status -> {
                     if (json == null) {
-                        return OpsCloudResult.illegalArgument("change scene json is null");
+                        return AlterShieldResult.illegalArgument("change scene json is null");
                     }
                     MetaChangeSceneImportRequest metaChangeSceneImportRequest = json.toJavaObject(MetaChangeSceneImportRequest.class);
                     MetaChangeSceneEntity metaChangeSceneEntity = metaChangeSceneImportRequest.getMetaChangeSceneEntity();
                     if (metaChangeSceneEntity == null) {
-                        return OpsCloudResult.illegalArgument("change scene  is null");
+                        return AlterShieldResult.illegalArgument("change scene  is null");
                     }
                     String id = idGenerator.generateIdWithNoSharding(IdBizCodeEnum.OPSCLD_META_CHANGE_SCENE);
                     metaChangeSceneEntity.setId(id);
@@ -318,15 +308,15 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
                                 .setId(idGenerator.generateIdWithNoSharding(IdBizCodeEnum.OPSCLD_META_CHANGE_STEP)));
                     }
                     metaChangeSceneRepository.insert(metaChangeSceneEntity, metaChangeStepEntityList);
-                    return OpsCloudResult.succeed("import changeScene Success", id);
+                    return AlterShieldResult.succeed("import changeScene Success", id);
                 }));
     }
 
-    public OpsCloudResult<String> exportChangeScene(String changeSceneId) {
+    public AlterShieldResult<String> exportChangeScene(String changeSceneId) {
         return ServiceProcessTemplate.wrapTryCatch(() -> {
             MetaChangeSceneEntity metaChangeSceneEntity = metaChangeSceneRepository.getChangeSceneDetailsById(changeSceneId);
             if (metaChangeSceneEntity == null) {
-                return OpsCloudResult.illegalArgument("change scene not found");
+                return AlterShieldResult.illegalArgument("change scene not found");
             }
 
             List<MetaChangeStepEntity> metaChangeStepEntityList = null;
@@ -340,20 +330,20 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
             metaChangeSceneImportRequest.setMetaChangeSceneEntity(metaChangeSceneEntity);
             metaChangeSceneImportRequest.setMetaChangeStepEntityList(metaChangeStepEntityList);
             String json = EntityUtil.exportEntity(metaChangeSceneImportRequest);
-            return OpsCloudResult.succeed("create changeScene Success", json);
+            return AlterShieldResult.succeed("create changeScene Success", json);
         });
 
     }
 
     @Override
-    public OpsCloudResult<Boolean> createChangeScene(CreateMetaChangeScene2Request request) {
+    public AlterShieldResult<Boolean> createChangeScene(CreateMetaChangeScene2Request request) {
         return ServiceProcessTemplate.wrapTryCatch(() ->
 
                 confTransactionTemplate.execute(status -> {
-                    OpsCloudLoggerManager.log("debug", logger, "start create change scene step2:", request);
+                    AlterShieldLoggerManager.log("debug", logger, "start create change scene step2:", request);
                     MetaChangeSceneEntity metaChangeSceneEntity = metaChangeSceneRepository.getChangeSceneDetailsById(request.getId());
                     if (metaChangeSceneEntity == null) {
-                        return OpsCloudResult.illegalArgument("change scene not found");
+                        return AlterShieldResult.illegalArgument("change scene not found");
                     }
                     //1、先创建出对象
                     //2、校验各代G参数
@@ -374,7 +364,7 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
                     boolean syncNew = metaChangeSceneEntity.getStatus() == MetaChangeSceneStatus.TEMP;
                     metaChangeSceneEntity.setStatus(MetaChangeSceneStatus.RELEASE);
                     metaChangeSceneRepository.update(metaChangeSceneEntity);
-                    return OpsCloudResult.succeed("create changeScene Success", Boolean.TRUE);
+                    return AlterShieldResult.succeed("create changeScene Success", Boolean.TRUE);
                 })
         );
     }
@@ -431,32 +421,32 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
     }
 
     @Override
-    public OpsCloudResult<Boolean> updateBasicChangeScene(UpdateMetaChangeSceneRequest request) {
+    public AlterShieldResult<Boolean> updateBasicChangeScene(UpdateMetaChangeSceneRequest request) {
 
         return ServiceProcessTemplate.wrapTryCatch(() -> {
             MetaChangeSceneEntity metaChangeSceneEntity = MetaChangeSceneRequestConverter.INSTANCE.convertToEntity(request);
-            OpsCloudLoggerManager.log("debug", logger, "start update change scene :", metaChangeSceneEntity);
+            AlterShieldLoggerManager.log("debug", logger, "start update change scene :", metaChangeSceneEntity);
             boolean result = metaChangeSceneRepository.update(metaChangeSceneEntity);
-            return result ? OpsCloudResult.succeed("success", true) : OpsCloudResult.illegalArgument("change scene not found");
+            return result ? AlterShieldResult.succeed("success", true) : AlterShieldResult.illegalArgument("change scene not found");
         });
     }
 
     @Override
-    public OpsCloudResult<Boolean> updateChangeStep(UpdateMetaChangeStepRequest request) {
+    public AlterShieldResult<Boolean> updateChangeStep(UpdateMetaChangeStepRequest request) {
         return ServiceProcessTemplate.wrapTryCatch(() -> {
             MetaChangeStepEntity metaChangeStepEntity = MetaChangeStepRequestConverter.INSTANCE.convertToEntity(request);
             boolean result = metaChangeSceneRepository.updateStep(metaChangeStepEntity);
-            return result ? OpsCloudResult.succeed("success", true) : OpsCloudResult.illegalArgument("change step not found");
+            return result ? AlterShieldResult.succeed("success", true) : AlterShieldResult.illegalArgument("change step not found");
         });
     }
 
     @Override
-    public OpsCloudResult<Boolean> createChangeStep(CreateMetaChangeStepRequest request) {
+    public AlterShieldResult<Boolean> createChangeStep(CreateMetaChangeStepRequest request) {
         return ServiceProcessTemplate.wrapTryCatch(() -> {
 
                     MetaChangeStepTypeEnum metaChangeStepTypeEnum = MetaChangeStepTypeEnum.valueOf(request.getStepType());
                     if (metaChangeStepTypeEnum == null) {
-                        return OpsCloudResult.illegalArgument("invalid step type:" + request.getStepType());
+                        return AlterShieldResult.illegalArgument("invalid step type:" + request.getStepType());
                     }
                     if (metaChangeStepTypeEnum != MetaChangeStepTypeEnum.STEP_GRAY_BATCH_ACTION) {
                         int count = metaChangeSceneRepository.selectCountChangeStepByKeyAndType(request.getChangeKey(),
@@ -464,36 +454,36 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
                         if (count > 0) {
                             String message = String.format("change type : %s existed, in %s is only one", metaChangeStepTypeEnum.getStep(),
                                     request.getChangeKey());
-                            return OpsCloudResult.illegalArgument(message);
+                            return AlterShieldResult.illegalArgument(message);
                         }
                     }
                     MetaChangeStepEntity metaChangeStepEntity = MetaChangeStepRequestConverter.INSTANCE.convertToEntity(request);
                     String id = idGenerator.generateIdWithNoSharding(IdBizCodeEnum.OPSCLD_META_CHANGE_STEP);
                     metaChangeStepEntity.setId(id);
                     metaChangeSceneRepository.insertStep(metaChangeStepEntity);
-                    return OpsCloudResult.succeed("success", true);
+                    return AlterShieldResult.succeed("success", true);
                 }
         );
     }
 
     @Override
-    public OpsCloudResult<Boolean> removeChangeStep(String id) {
+    public AlterShieldResult<Boolean> removeChangeStep(String id) {
         return ServiceProcessTemplate.wrapTryCatch(() -> {
             metaChangeSceneRepository.deleteStep(id);
-            return OpsCloudResult.succeed("remove success", true);
+            return AlterShieldResult.succeed("remove success", true);
         });
     }
 
     @Override
-    public OpsCloudResult<Boolean> removeChangeScene(String id) {
+    public AlterShieldResult<Boolean> removeChangeScene(String id) {
         return ServiceProcessTemplate.wrapTryCatch(() -> {
             metaChangeSceneRepository.deleteChangeScene(id);
-            return OpsCloudResult.succeed("remove success", true);
+            return AlterShieldResult.succeed("remove success", true);
         });
     }
 
     @Override
-    public OpsCloudPageResult<List<MetaBaseChangeSceneEntity>> query(final QueryChangeSceneRequest request) {
+    public AlterShieldPageResult<List<MetaBaseChangeSceneEntity>> query(final QueryChangeSceneRequest request) {
 
         MetaChangeSceneQueryParam param = MetaChangeSceneRequestConverter.INSTANCE.convertQueryParam(request);
         return ServicePageProcessTemplate.process(request.getCurrent(), request.getPageSize(),
@@ -513,13 +503,13 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
     }
 
     @Override
-    public OpsCloudResult<Boolean> checkChangeKey(String changeKey) {
+    public AlterShieldResult<Boolean> checkChangeKey(String changeKey) {
 
         return ServiceProcessTemplate.process(() -> changeKeyExisted(changeKey));
     }
 
     @Override
-    public OpsCloudResult<Boolean> onlyCheckChangeKey(String changeKey) {
+    public AlterShieldResult<Boolean> onlyCheckChangeKey(String changeKey) {
         return ServiceProcessTemplate.process(() -> {
             MetaChangeSceneEntity metaChangeSceneEntity = metaChangeSceneRepository.getChangeSceneByChangeSceneKey(changeKey);
             if(Objects.nonNull(metaChangeSceneEntity)){
@@ -544,14 +534,14 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
         stepEntity.setId(id);
     }
 
-    private OpsCloudResult rebuildChangeStep(MetaChangeProgressEntity metaChangeProgressEntity,
-                                             MetaChangeEffectiveConfigEntity metaChangeEffectiveConfigEntity,
-                                             MetaChangeSceneEntity metaChangeSceneEntity) {
+    private AlterShieldResult rebuildChangeStep(MetaChangeProgressEntity metaChangeProgressEntity,
+                                                MetaChangeEffectiveConfigEntity metaChangeEffectiveConfigEntity,
+                                                MetaChangeSceneEntity metaChangeSceneEntity) {
         MetaChangeBatchStepEntity batchStepEntity = metaChangeProgressEntity.getBatchStep();
         if (batchStepEntity != null) {
             //检查是否支持分批
             if (!metaChangeEffectiveConfigEntity.getChangeGrayModeType().isBatchEnable()) {
-                return OpsCloudResult.illegalArgument(
+                return AlterShieldResult.illegalArgument(
                         String.format("变更场景 %s 的生效模型: %s 选择错误，请选择支持分批的模型", metaChangeSceneEntity.getName(),
                                 metaChangeEffectiveConfigEntity.getChangeGrayModeType()));
             }
@@ -636,22 +626,22 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
         return changeSteps.stream().filter(Objects::nonNull).map(MetaChangeStepEntity::getName).collect(Collectors.toList());
     }
 
-    public OpsCloudResult<String> alterGeneration(AlterChangeSceneGenerationRequest request) {
+    public AlterShieldResult<String> alterGeneration(AlterChangeSceneGenerationRequest request) {
 
         MetaChangeSceneGenerationEnum metaChangeSceneGenerationEnum = MetaChangeSceneGenerationEnum.getByName(request.getGeneration());
         if (metaChangeSceneGenerationEnum == null) {
-            return OpsCloudResult.illegalArgument("错误的代G码：" + request.getGeneration());
+            return AlterShieldResult.illegalArgument("错误的代G码：" + request.getGeneration());
         }
         MetaChangeSceneEntity metaChangeSceneEntity = metaChangeSceneRepository.getChangeSceneDetailsById(request.getId());
         if (metaChangeSceneEntity == null) {
-            return OpsCloudResult.illegalArgument("变更场景不存在");
+            return AlterShieldResult.illegalArgument("变更场景不存在");
         }
         if (metaChangeSceneEntity.getStatus() != MetaChangeSceneStatus.RELEASE) {
-            return OpsCloudResult.illegalArgument("变更场景还未发布，不支持代G调整");
+            return AlterShieldResult.illegalArgument("变更场景还未发布，不支持代G调整");
         }
         OpsCloudGenerationTransfer opsCloudGenerationTransfer = opsCloudGenerationTransferManager.getOpsCloudGenerationTransfer(metaChangeSceneEntity.getGeneration());
         if (opsCloudGenerationTransfer == null) {
-            return OpsCloudResult.illegalArgument("不支持" + metaChangeSceneEntity.getGeneration() + "调整到：" + metaChangeSceneGenerationEnum.name());
+            return AlterShieldResult.illegalArgument("不支持" + metaChangeSceneEntity.getGeneration() + "调整到：" + metaChangeSceneGenerationEnum.name());
         }
 
         switch (metaChangeSceneGenerationEnum) {
@@ -665,35 +655,28 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
             case G3:
                 return opsCloudGenerationTransfer.toG3(metaChangeSceneEntity);
         }
-        return OpsCloudResult.illegalArgument("不支持" + metaChangeSceneEntity.getGeneration() + "调整到：" + metaChangeSceneGenerationEnum.name());
-
+        return AlterShieldResult.illegalArgument("不支持" + metaChangeSceneEntity.getGeneration() + "调整到：" + metaChangeSceneGenerationEnum.name());
     }
 
-    @Override
-    public List<MetaChangeSceneBatchEntity> queryAllScene() {
-        OpsCloudLoggerUtil.log("info", logger, "全量的场景批次数据开始");
-        List<MetaChangeSceneBatchEntity> metaChangeSceneBatchEntities = metaChangeSceneRepository.queryAllScene();
-        OpsCloudLoggerUtil.log("info", logger, "全量的场景批次数据结束  metaChangeSceneBatchEntities");
-        return metaChangeSceneBatchEntities;
-    }
+
 
     @Override
-    public OpsCloudResult<Boolean> syncServiceKey(SyncMetaChangeSceneRequest request) {
+    public AlterShieldResult<Boolean> syncServiceKey(SyncMetaChangeSceneRequest request) {
         return ServiceProcessTemplate.wrapTryCatch(() ->
 
                 confTransactionTemplate.execute(status -> {
-                    OpsCloudLoggerManager.log("debug", logger, "start create change scene step2:", request);
+                    AlterShieldLoggerManager.log("debug", logger, "start create change scene step2:", request);
                     MetaChangeSceneEntity metaChangeSceneEntity = metaChangeSceneRepository.getChangeSceneByChangeSceneKey(request.getChangeSecneKey());
                     if (metaChangeSceneEntity == null) {
-                        return OpsCloudResult.illegalArgument("change scene not found");
+                        return AlterShieldResult.illegalArgument("change scene not found");
                     }
                     //serviceKey同步的场景应该是serviceKey<->changeScene<->changeKey一一对应。
                     MetaChangeStepEntity metaChangeStepEntity = metaChangeSceneRepository.getChangeStepEntity(request.getChangeSecneKey());
                     if (metaChangeStepEntity == null) {
-                        return OpsCloudResult.illegalArgument("change key not found");
+                        return AlterShieldResult.illegalArgument("change key not found");
                     }
                     if(CollectionUtils.isEmpty(request.getDefenceConfigs()) || request.getDefenceConfigs().size() != 1){
-                        return OpsCloudResult.illegalArgument("change key in change scene more than one");
+                        return AlterShieldResult.illegalArgument("change key in change scene more than one");
                     }
 
                     //设置changeKey的id
@@ -708,7 +691,7 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
                         metaChangeSceneRepository.batchUpdateChangeStep(metaChangeStepEntityList);
                     }
                     metaChangeSceneRepository.update(metaChangeSceneEntity);
-                    return OpsCloudResult.succeed("create changeScene Success", Boolean.TRUE);
+                    return AlterShieldResult.succeed("create changeScene Success", Boolean.TRUE);
                 })
         );
     }

@@ -44,7 +44,8 @@
 package com.alipay.altershield.shared.change.exe.node.entity;
 
 
-import com.alipay.altershield.common.largefield.ref.KvRef;
+import com.alipay.altershield.common.largefield.kv.KeyValueStorage;
+import com.alipay.altershield.shared.common.largefield.ref.KvRef;
 import com.alipay.altershield.framework.core.change.model.ChangeContent;
 import com.alipay.altershield.framework.core.change.model.ChangeTarget;
 import com.alipay.altershield.framework.core.change.model.enums.ChangePhaseEnum;

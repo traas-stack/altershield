@@ -44,11 +44,11 @@
 package com.alipay.altershield.shared.change.exe.node.ref;
 
 import com.alibaba.fastjson.JSON;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeChangeBatchEffectiveInfoEntity;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeChangeEffectiveInfoEntity;
-import com.alipay.opscloud.common.largefield.ref.KvRefCodec;
-import com.alipay.opscloud.framework.common.util.CommonUtil;
-import com.alipay.opscloud.framework.common.util.JSONUtil;
+import com.alipay.altershield.framework.common.util.CommonUtil;
+import com.alipay.altershield.framework.common.util.JSONUtil;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeChangeBatchEffectiveInfoEntity;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeChangeEffectiveInfoEntity;
+import com.alipay.altershield.shared.common.largefield.ref.KvRefCodec;
 
 /**
  * @author yuanji
@@ -57,7 +57,7 @@ import com.alipay.opscloud.framework.common.util.JSONUtil;
 public class ExeChangeRefCodec {
 
     /***/
-   public static  KvRefCodec<ExeChangeBatchEffectiveInfoEntity> BATCH_CHANGE_EFFECTIVE_INFO = new KvRefCodec<ExeChangeBatchEffectiveInfoEntity>() {
+   public static KvRefCodec<ExeChangeBatchEffectiveInfoEntity> BATCH_CHANGE_EFFECTIVE_INFO = new KvRefCodec<ExeChangeBatchEffectiveInfoEntity>() {
         @Override
         public ExeChangeBatchEffectiveInfoEntity decode(String value) {
             if (CommonUtil.isBlank(value)) {

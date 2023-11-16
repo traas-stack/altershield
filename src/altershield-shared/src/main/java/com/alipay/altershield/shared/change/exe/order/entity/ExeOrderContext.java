@@ -43,7 +43,7 @@
  */
 package com.alipay.altershield.shared.change.exe.order.entity;
 
-import com.alipay.opscloud.framework.core.change.model.trace.OpsChngTrace;
+import com.alipay.altershield.framework.core.change.model.trace.OpsChngTrace;
 import lombok.Data;
 
 /**

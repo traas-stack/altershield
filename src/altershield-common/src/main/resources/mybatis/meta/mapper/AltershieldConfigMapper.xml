@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alipay.altershield.common.backconfig.dal.mapper.MetaConfigMapper">
+  <resultMap id="BaseResultMap" type="com.alipay.altershield.common.backconfig.dal.dataobject.MetaConfigDO">
+
+    <id column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+    <result column="value" jdbcType="BIGINT" property="value"/>
+    <result column="name" jdbcType="BIGINT" property="name"/>
+    <result column="cfg_desc" jdbcType="BIGINT" property="cfgDesc"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    gmt_create ,gmt_modified ,name ,value ,cfg_desc
+  </sql>
+  <insert id="insert" parameterType="com.alipay.altershield.common.backconfig.dal.dataobject.MetaConfigDO">
+    insert into opscld_config (name, value, cfg_desc, gmt_create, gmt_modified) VALUES (#{name}, #{value}, #{cfgDesc}, now(), now())
+  </insert>
+  <select id="lockByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from opscld_config where name = #{name}
+    FOR UPDATE
+  </select>
+
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from opscld_config where name = #{name}
+  </select>
+
+  <update id="saveByName">
+    UPDATE opscld_config
+    <set>
+      name = #{name},
+      value = #{value},
+      cfg_desc = #{cfgDesc},
+      gmt_modified = now()
+    </set>
+    WHERE name = #{name}
+  </update>
+
+
+  <select id="selectTotalCount"  resultType="long">
+    select COUNT(*) from opscld_config
+  </select>
+
+
+  <select id="selectByPage"  parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from opscld_config limit #{start} , #{size}
+    <where>
+      <if test="name != null">
+        name like CONCAT('%s', #{name}, '%s')
+      </if>
+    </where>
+  </select>
+
+  <delete id="deleteByName" parameterType="string">
+    delete from opscld_config WHERE name = #{name}
+  </delete>
+
+</mapper>

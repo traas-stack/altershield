@@ -73,16 +73,16 @@ import java.util.List;
  */
 @Configuration
 @MapperScan(value = {
-        "com.alipay.opscloud.common.largefield.dal.mapper",
-        "com.alipay.opscloud.common.id.sequence.dal.mapper",
-        "com.alipay.opscloud.common.base.backconfig.dal.mapper",
-        "com.alipay.opscloud.common.ability.mapper",
-        "com.alipay.opscloud.change.meta.dal.mapper",
-        "com.alipay.opscloud.defender.meta.dal.mapper",
-        "com.alipay.opscloud.common.ability.dal.mapper",
-        "com.alipay.opscloud.change.search.dal.mapper",
-        "com.alipay.opscloud.smart.meta.dal.mapper",
-        "com.alipay.opscloud.smart.exe.dal.mapper"
+        "com.alipay.altershield.common.largefield.dal.mapper",
+        "com.alipay.altershield.common.id.sequence.dal.mapper",
+        "com.alipay.altershield.common.base.backconfig.dal.mapper",
+        "com.alipay.altershield.common.ability.mapper",
+        "com.alipay.altershield.change.meta.dal.mapper",
+        "com.alipay.altershield.defender.meta.dal.mapper",
+        "com.alipay.altershield.common.ability.dal.mapper",
+        "com.alipay.altershield.change.search.dal.mapper",
+        "com.alipay.altershield.smart.meta.dal.mapper",
+        "com.alipay.altershield.smart.exe.dal.mapper"
 },
         sqlSessionFactoryRef = "confSqlSessionFactory")
 public class AlterShieldDataSourceConfig {

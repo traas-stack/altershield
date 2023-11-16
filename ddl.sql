@@ -69,3 +69,12 @@ CREATE TABLE `altershield_meta_change_type` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_type` (`category`, `type`)
 ) DEFAULT CHARSET = utf8mb4 COMMENT = '变更类型';
+
+CREATE TABLE `altershield_config` (
+  `name` varchar(256) NOT NULL COMMENT '名称',
+  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `value` varchar(10240) DEFAULT NULL COMMENT '值',
+  `cfg_desc` varchar(4096) NOT NULL COMMENT '描述',
+  PRIMARY KEY (`name`)
+) DEFAULT CHARSET = utf8mb4 COMMENT = '后台配置表';
