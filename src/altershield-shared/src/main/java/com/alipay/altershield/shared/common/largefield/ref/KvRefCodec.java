@@ -49,10 +49,8 @@ import com.alipay.altershield.framework.common.util.JSONUtil;
 import com.alipay.altershield.framework.core.change.model.ChangeContent;
 import com.alipay.altershield.framework.core.change.model.ChangeParentOrderInfo;
 import com.alipay.altershield.framework.core.change.model.ChangeTarget;
-import com.alipay.altershield.framework.core.risk.config.DefenseRelationConfig;
 import com.alipay.altershield.framework.core.risk.config.RiskDefenseConfig;
-import com.alipay.altershield.framework.core.risk.entity.DefenseArgumentAssignments;
-import com.alipay.altershield.framework.core.risk.query.RiskDefenseApprovalInfoRequest;
+import com.alipay.altershield.shared.defender.model.ChangeFilter;
 
 import java.util.HashSet;
 import java.util.List;
@@ -80,71 +78,23 @@ public interface KvRefCodec<T> {
     };
 
     /**
-     * 规则的静态参数，为json
+     * defender change filter
      */
-    KvRefCodec<DefenseArgumentAssignments> DEFENSE_ARG_ASSIGN = new KvRefCodec<DefenseArgumentAssignments>() {
+    KvRefCodec<ChangeFilter> CHANGE_FILTER = new KvRefCodec<ChangeFilter>() {
         @Override
-        public DefenseArgumentAssignments decode(String value) {
+        public ChangeFilter decode(String value) {
             return JSONUtil.parseJSONToObj(value,
-                    DefenseArgumentAssignments.class);
+                    ChangeFilter.class);
         }
 
         @Override
-        public String encode(DefenseArgumentAssignments obj) {
+        public String encode(ChangeFilter obj) {
             return JSONUtil.toJSONString(obj, false);
         }
     };
 
     /**
-     * 规则配置，为json
-     */
-    KvRefCodec<DefenseRelationConfig> DEFENSE_RELATION_CONF = new KvRefCodec<DefenseRelationConfig>() {
-        @Override
-        public DefenseRelationConfig decode(String value) {
-            return JSONUtil.parseJSONToObj(value,
-                    DefenseRelationConfig.class);
-        }
-
-        @Override
-        public String encode(DefenseRelationConfig obj) {
-            return JSONUtil.toJSONString(obj, false);
-        }
-    };
-
-//    /**
-//     * 新防御规则实体使用的过滤条件
-//     */
-//    KvRefCodec<ChangeFilter> CHANGE_FILTER = new KvRefCodec<ChangeFilter>() {
-//        @Override
-//        public ChangeFilter decode(String value) {
-//            return JSONUtil.parseJSONToObj(value,
-//                    ChangeFilter.class);
-//        }
-//
-//        @Override
-//        public String encode(ChangeFilter obj) {
-//            return JSONUtil.toJSONString(obj, false);
-//        }
-//    };
-
-    /**
-     * 规则审批 信息
-     */
-    KvRefCodec<List<RiskDefenseApprovalInfoRequest>> DEFENSE_APPROVAL_INFO = new KvRefCodec<List<RiskDefenseApprovalInfoRequest>>() {
-        @Override
-        public List<RiskDefenseApprovalInfoRequest> decode(String value) {
-            return JSONUtil.parseJSONToObjList(value,
-                    RiskDefenseApprovalInfoRequest.class);
-        }
-
-        @Override
-        public String encode(List<RiskDefenseApprovalInfoRequest> obj) {
-            return JSONUtil.toJSONString(obj, false);
-        }
-    };
-
-    /**
-     * 防御服务配置
+     * defender rule configuration
      */
     KvRefCodec<RiskDefenseConfig> DEFENSE_CONF = new KvRefCodec<RiskDefenseConfig>() {
         @Override

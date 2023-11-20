@@ -5,10 +5,10 @@
 package com.alipay.altershield.defender.framework.meta.entity;
 
 import com.alipay.altershield.common.largefield.kv.KeyValueStorage;
-import com.alipay.altershield.common.largefield.ref.KvRef;
 import com.alipay.altershield.defender.framework.enums.DefenseRangeTypeEnum;
 import com.alipay.altershield.defender.framework.enums.ExceptionStrategyEnum;
 import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.common.largefield.ref.KvRef;
 import com.alipay.altershield.shared.common.largefield.ref.KvRefCodec;
 import com.alipay.altershield.shared.defender.entity.DefenderBaseEntity;
 import com.alipay.altershield.shared.defender.enums.DefenderIgnoreTypeEnum;
