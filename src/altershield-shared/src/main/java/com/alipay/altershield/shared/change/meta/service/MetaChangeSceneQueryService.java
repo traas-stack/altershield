@@ -26,8 +26,7 @@
  */
 package com.alipay.altershield.shared.change.meta.service;
 
-import com.alipay.opscloud.api.change.exe.entity.MetaChangeSceneBatchEntity;
-import com.alipay.opscloud.api.change.exe.entity.MetaChangeSceneQueryEntity;
+import com.alipay.altershield.shared.change.exe.entity.MetaChangeSceneQueryEntity;
 
 import java.util.List;
 
@@ -89,14 +88,4 @@ public interface MetaChangeSceneQueryService {
      **/
     MetaChangeSceneQueryEntity getFullEntity(String changeSceneKey);
 
-
-    /**
-     * 获取所有的场景数据
-     *
-     * @param
-     * @return java.util.List<MetaChangeSceneBatchEntity>
-     * @author gaofeng.pan
-     * @date 2022/12/27 16:19
-     **/
-    List<MetaChangeSceneBatchEntity> queryAllScene();
 }

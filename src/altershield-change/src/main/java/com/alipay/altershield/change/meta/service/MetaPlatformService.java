@@ -26,8 +26,8 @@
  */
 package com.alipay.altershield.change.meta.service;
 
-import com.alipay.opscloud.change.meta.service.request.CreateMetaPlatformRequest;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
+import com.alipay.altershield.change.meta.service.request.CreateMetaPlatformRequest;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 
 import java.util.List;
 
@@ -42,12 +42,12 @@ public interface MetaPlatformService {
      * 查询所有的变更平台
      * @return
      */
-    OpsCloudResult<List<String>> queryAllPlatform();
+    AlterShieldResult<List<String>> queryAllPlatform();
 
     /**
      * 新建平台
      * @param request
      * @return
      */
-    OpsCloudResult<String> create(CreateMetaPlatformRequest request);
+    AlterShieldResult<String> create(CreateMetaPlatformRequest request);
 }

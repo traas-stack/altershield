@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield.common.largefield.ref;
+package com.alipay.altershield.shared.common.largefield.ref;
 
 import com.alipay.altershield.common.constant.AlterShieldConstant;
 import com.alipay.altershield.common.largefield.kv.KeyValueStorage;

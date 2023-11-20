@@ -26,10 +26,10 @@
  */
 package com.alipay.altershield.shared.change.exe.service;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeBaseNodeEntity;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.framework.core.common.result.OpsCloudChangeCheckVerdict;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.framework.core.change.facade.result.ChangeCheckVerdict;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeBaseNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
 
 import java.util.List;
 
@@ -102,5 +102,5 @@ public interface ExeChangeNodeService {
      * @param returnDetails
      * @return
      */
-    OpsCloudChangeCheckVerdict queryChangeVerdict(ExeNodeEntity exeNodeEntity,DefenseStageEnum defenseStageEnum,boolean returnDetails,boolean changeSuccess);
+    ChangeCheckVerdict queryChangeVerdict(ExeNodeEntity exeNodeEntity, DefenseStageEnum defenseStageEnum, boolean returnDetails, boolean changeSuccess);
 }

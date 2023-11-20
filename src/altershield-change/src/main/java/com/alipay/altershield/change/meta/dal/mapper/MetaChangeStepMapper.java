@@ -33,23 +33,6 @@ import org.apache.ibatis.annotations.Param;
  * @author xiangyue
  */
 public interface MetaChangeStepMapper {
-    /**
-     * 根据WHERE条件COUNT
-     * @param metaChangeStepParam
-     * @return
-     *
-     * @mbg.generated
-     */
-    long countByParam(MetaChangeStepParam metaChangeStepParam);
-
-    /**
-     * 根据WHERE条件删除
-     * @param metaChangeStepParam
-     * @return
-     *
-     * @mbg.generated
-     */
-    int deleteByParam(MetaChangeStepParam metaChangeStepParam);
 
     /**
      * 根据主键删除
@@ -60,6 +43,16 @@ public interface MetaChangeStepMapper {
      */
     int deleteByPrimaryKey(String id);
 
+
+    /**
+     * 根据changeSceneKey删除
+     * @param changeSceneKey
+     * @return
+     *
+     * @mbg.generated
+     */
+    int deleteByChangeSceneKey(String changeSceneKey);
+
     /**
      * 插入单条记录
      * @param record
@@ -69,23 +62,23 @@ public interface MetaChangeStepMapper {
      */
     int insert(MetaChangeStepDO record);
 
-    /**
-     * 根据字段选择性插入单条记录
-     * @param record
-     * @return
-     *
-     * @mbg.generated
-     */
-    int insertSelective(MetaChangeStepDO record);
 
     /**
-     * 根据WHERE条件查询，返回不包含长文本字段
-     * @param metaChangeStepParam
+     * 根据changeSceneKey查询
+     * @param changeSceneKey
      * @return
      *
      * @mbg.generated
      */
-    List<MetaChangeStepDO> selectByParam(MetaChangeStepParam metaChangeStepParam);
+    List<MetaChangeStepDO> selectByChangeSceneKey(String changeSceneKey);
+
+    /**
+     * 根据changeKey来查询
+     * @param changeKey
+     * @return
+     */
+    MetaChangeStepDO selectByChangeKey(String changeKey);
+
 
     /**
      * 根据主键查询
@@ -96,34 +89,6 @@ public interface MetaChangeStepMapper {
      */
     MetaChangeStepDO selectByPrimaryKey(String id);
 
-    /**
-     * 根据WHERE条件选择性更新
-     * @param record
-     * @param metaChangeStepParam
-     * @return
-     *
-     * @mbg.generated
-     */
-    int updateByParamSelective(@Param("record") MetaChangeStepDO record, @Param("metaChangeStepParam") MetaChangeStepParam metaChangeStepParam);
-
-    /**
-     * 根据WHERE条件更新，不更新长文本字段
-     * @param record
-     * @param metaChangeStepParam
-     * @return
-     *
-     * @mbg.generated
-     */
-    int updateByParam(@Param("record") MetaChangeStepDO record, @Param("metaChangeStepParam") MetaChangeStepParam metaChangeStepParam);
-
-    /**
-     * 根据主键选择性更新
-     * @param record
-     * @return
-     *
-     * @mbg.generated
-     */
-    int updateByPrimaryKeySelective(MetaChangeStepDO record);
 
     /**
      * 根据主键更新，不更新长文本字段
@@ -142,4 +107,28 @@ public interface MetaChangeStepMapper {
      * @mbg.generated
      */
     int batchInsert(List<MetaChangeStepDO> records);
+
+    /**
+     * 根据changeKey查询指定type的数量
+     * @param changeKey
+     * @param type
+     * @return
+     */
+    int selectCountByChangeKeyAndType(@Param("changeKey") String changeKey, @Param("stepType") String type);
+
+
+    /**
+     * 根据changeSceneKey查询指定type
+     * @param changeSceneKey
+     * @param type
+     * @return
+     */
+
+    List<MetaChangeStepDO> selectChangeStepByChangeSceneKeyAndType(@Param("changeSceneKey") String changeSceneKey, @Param("stepType") String type);
+
+    /**
+     * 根据id批量更新step
+     * @param stepList
+     */
+    int batchUpdate(List<MetaChangeStepDO> stepList);
 }

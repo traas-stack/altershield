@@ -111,21 +111,21 @@ public interface KvRefCodec<T> {
         }
     };
 
-    /**
-     * 新防御规则实体使用的过滤条件
-     */
-    KvRefCodec<ChangeFilter> CHANGE_FILTER = new KvRefCodec<ChangeFilter>() {
-        @Override
-        public ChangeFilter decode(String value) {
-            return JSONUtil.parseJSONToObj(value,
-                    ChangeFilter.class);
-        }
-
-        @Override
-        public String encode(ChangeFilter obj) {
-            return JSONUtil.toJSONString(obj, false);
-        }
-    };
+//    /**
+//     * 新防御规则实体使用的过滤条件
+//     */
+//    KvRefCodec<ChangeFilter> CHANGE_FILTER = new KvRefCodec<ChangeFilter>() {
+//        @Override
+//        public ChangeFilter decode(String value) {
+//            return JSONUtil.parseJSONToObj(value,
+//                    ChangeFilter.class);
+//        }
+//
+//        @Override
+//        public String encode(ChangeFilter obj) {
+//            return JSONUtil.toJSONString(obj, false);
+//        }
+//    };
 
     /**
      * 规则审批 信息

@@ -43,14 +43,14 @@
  */
 package com.alipay.altershield.web.common.interceptor;
 
-import com.alipay.opscloud.change.meta.repository.MetaChangePlatformRepository;
-import com.alipay.opscloud.framework.common.httpclient.HttpOpsCloudClient;
-import com.alipay.opscloud.framework.common.util.SignUtil;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResultCodeEnum;
-import com.alipay.opscloud.tools.common.logger.Loggers;
-import com.alipay.opscloud.tools.common.openapi.OpenApiRequestThreadLocal;
+import com.alipay.altershield.change.meta.repository.MetaChangePlatformRepository;
+import com.alipay.altershield.common.openapi.OpenApiRequestThreadLocal;
+import com.alipay.altershield.framework.common.httpclient.HttpAlterShieldClient;
+import com.alipay.altershield.framework.common.util.SignUtil;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResultCodeEnum;
+import com.alipay.altershield.common.logger.Loggers;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -93,27 +93,27 @@ public class ApiSecurityInterceptor {
      * @return the ops cloud result
      * @throws Throwable the throwable
      */
-    @Around("execution(* com.alipay.opscloud.web.openapi.change.v1..*.*(..))")
-    public OpsCloudResult doCheck(ProceedingJoinPoint point) throws Throwable {
+    @Around("execution(* com.alipay.altershield.web.openapi.change.v1..*.*(..))")
+    public AlterShieldResult doCheck(ProceedingJoinPoint point) throws Throwable {
 
-        OpsCloudLoggerManager.log("debug", logger, "start check authentication", point.getTarget(),point.getSignature().getName());
+        AlterShieldLoggerManager.log("debug", logger, "start check authentication", point.getTarget(),point.getSignature().getName());
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String platform = null;
         String signResult = null;
         long t = 0l;
         String content = null;
         try {
-            platform = request.getHeader(HttpOpsCloudClient.H_PLATFORM);
-            signResult = request.getHeader(HttpOpsCloudClient.H_PLTF_SIGN);
-            String tString = request.getHeader(HttpOpsCloudClient.H_PLTF_TIMESTAMP);
+            platform = request.getHeader(HttpAlterShieldClient.H_PLATFORM);
+            signResult = request.getHeader(HttpAlterShieldClient.H_PLATFORM_SIGN);
+            String tString = request.getHeader(HttpAlterShieldClient.H_PLATFORM_TIMESTAMP);
             if(StringUtils.isBlank(platform) || StringUtils.isBlank(signResult) || StringUtils.isBlank(tString) )
             {
-                return new OpsCloudResult(OpsCloudResultCodeEnum.PERMISSION_DENIED, "authentication request fail");
+                return new AlterShieldResult(AlterShieldResultCodeEnum.PERMISSION_DENIED, "authentication request fail");
             }
             //TODO 后期 增加重放校验
             t = Long.parseLong(tString);
             String token = metaChangePlatformRepository.getPlatformToken(platform);
-            OpsCloudLoggerManager.log("debug", logger, "get token from platform=" + platform, token);
+            AlterShieldLoggerManager.log("debug", logger, "get token from platform=" + platform, token);
 
             content = getContent(request);
             boolean result = SignUtil.verifySign(t, content, signResult, token);
@@ -121,20 +121,20 @@ public class ApiSecurityInterceptor {
                 String msg = String.format("check authentication fail, platform=%s, signResult=%s, t =%d, content=%s", platform, signResult,
                         t,
                         content);
-                OpsCloudLoggerManager.log("warn", logger, msg);
-                return new OpsCloudResult(OpsCloudResultCodeEnum.PERMISSION_DENIED, "authentication request fail");
+                AlterShieldLoggerManager.log("warn", logger, msg);
+                return new AlterShieldResult(AlterShieldResultCodeEnum.PERMISSION_DENIED, "authentication request fail");
             }
         } catch (Exception e) {
             String msg = String.format("check authentication fail, platform=%s, signResult=%s, t =%d, content=%s", platform, signResult, t,
                     content);
-            OpsCloudLoggerManager.log("error", logger, e, msg);
-            return new OpsCloudResult(OpsCloudResultCodeEnum.PERMISSION_DENIED, "authentication request fail " + e.getMessage());
+            AlterShieldLoggerManager.log("error", logger, e, msg);
+            return new AlterShieldResult<>(AlterShieldResultCodeEnum.PERMISSION_DENIED, "authentication request fail " + e.getMessage());
         }
-        OpsCloudLoggerManager.log("debug", logger, "check authentication success", point.getTarget());
+        AlterShieldLoggerManager.log("debug", logger, "check authentication success", point.getTarget());
         OpenApiRequestThreadLocal.setPlatform(platform);
         try
         {
-            return (OpsCloudResult) point.proceed();
+            return (AlterShieldResult) point.proceed();
         }
         finally {
             OpenApiRequestThreadLocal.clear();
@@ -143,7 +143,7 @@ public class ApiSecurityInterceptor {
 
     private String getContent(HttpServletRequest request) throws IOException {
         if ("POST".equalsIgnoreCase(request.getMethod())) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), HttpOpsCloudClient.charSet));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), HttpAlterShieldClient.CHAR_SET));
             StringBuilder builder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {

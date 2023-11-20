@@ -43,27 +43,27 @@
  */
 package com.alipay.altershield.change.exe.service.check.impl;
 
-import com.alipay.opscloud.api.change.exe.order.entity.ExeChangeOrderEntity;
-import com.alipay.opscloud.api.change.exe.order.entity.ExeOrderContext;
-import com.alipay.opscloud.api.change.exe.order.enums.ExeOrderStatusEnum;
-import com.alipay.opscloud.api.change.exe.service.ExeChangeOrderQueryService;
-import com.alipay.opscloud.api.scheduler.event.change.OpsCloudChangeExecOrderCreateEvent;
-import com.alipay.opscloud.change.exe.repository.ExeChangeOrderRepository;
-import com.alipay.opscloud.change.exe.service.check.ExeChangeOrderService;
-import com.alipay.opscloud.change.exe.service.check.model.OpsCloudChangeExecOrderSubmitRequestModel;
-import com.alipay.opscloud.change.exe.service.check.model.OpsTraceStack;
-import com.alipay.opscloud.change.exe.service.convert.ExeChangeOrderRequestConverter;
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.common.id.IdGenerator;
-import com.alipay.opscloud.common.service.OpsCloudGroupService;
-import com.alipay.opscloud.framework.core.change.facade.request.OpsCloudChangeExecOrderFinishRequest;
-import com.alipay.opscloud.framework.core.change.model.trace.OpsChngTrace;
-import com.alipay.opscloud.framework.core.common.result.OpsCloudChangeFinishStateEnum;
-import com.alipay.opscloud.tools.common.id.IdBizCodeEnum;
-import com.alipay.opscloud.tools.common.id.IdUtil;
-import com.alipay.opscloud.tools.common.logger.intercept.DetailLogTypeEnum;
-import com.alipay.opscloud.tools.common.logger.intercept.DigestLogTypeEnum;
-import com.alipay.opscloud.tools.common.logger.intercept.OpsCloudLogAnnotation;
+import com.alipay.altershield.change.exe.repository.ExeChangeOrderRepository;
+import com.alipay.altershield.change.exe.service.check.ExeChangeOrderService;
+import com.alipay.altershield.change.exe.service.check.model.ChangeExecOrderSubmitRequestModel;
+import com.alipay.altershield.change.exe.service.check.model.OpsTraceStack;
+import com.alipay.altershield.change.exe.service.convert.ExeChangeOrderRequestConverter;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.common.id.IdGenerator;
+import com.alipay.altershield.common.id.enums.IdBizCodeEnum;
+import com.alipay.altershield.common.logger.intercept.AlterShieldLogAnnotation;
+import com.alipay.altershield.common.logger.intercept.DetailLogTypeEnum;
+import com.alipay.altershield.common.logger.intercept.DigestLogTypeEnum;
+import com.alipay.altershield.common.service.AlterShieldGroupService;
+import com.alipay.altershield.common.util.IdUtil;
+import com.alipay.altershield.framework.core.change.facade.request.ChangeExecOrderFinishRequest;
+import com.alipay.altershield.framework.core.change.facade.result.ChangeFinishStateEnum;
+import com.alipay.altershield.framework.core.change.model.trace.OpsChngTrace;
+import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
+import com.alipay.altershield.shared.change.exe.order.entity.ExeOrderContext;
+import com.alipay.altershield.shared.change.exe.order.enums.ExeOrderStatusEnum;
+import com.alipay.altershield.shared.change.exe.service.ExeChangeOrderQueryService;
+import com.alipay.altershield.shared.schedule.event.change.ChangeExecOrderCreateEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,7 +88,7 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
     private ExeChangeOrderRequestConverter exeChangeOrderRequestConverter;
 
     @Autowired
-    private OpsCloudGroupService opsCloudGroupService;
+    private AlterShieldGroupService opsCloudGroupService;
 
     @Value("${opscloud.framework.server.common.cloudId}")
     private String cloudId;
@@ -100,12 +100,12 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
      * @return
      */
     @Override
-    @OpsCloudLogAnnotation(serviceDesc = "createExeChangeOrder", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "createExeChangeOrder", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 1, keyProps = "bizExecOrderId")
     public ExeChangeOrderEntity createExeChangeOrder(
-            MetaChangeSceneEntity metaChangeSceneEntity, OpsCloudChangeExecOrderSubmitRequestModel request) {
+            MetaChangeSceneEntity metaChangeSceneEntity, ChangeExecOrderSubmitRequestModel request) {
         ExeChangeOrderEntity entity = convertToOrder(cloudId, request);
-        entity.setTldcTenantCode(metaChangeSceneEntity.getTldcTenantCode());
+        entity.setTldcTenantCode(metaChangeSceneEntity.getTenantCode());
         exeChangeOrderRepository.insert(entity);
         publishChangeExecOrderCreateEvent(metaChangeSceneEntity, entity);
         return entity;
@@ -113,7 +113,7 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
 
     private void publishChangeExecOrderCreateEvent(MetaChangeSceneEntity metaChangeSceneEntity, ExeChangeOrderEntity entity)
     {
-        OpsCloudChangeExecOrderCreateEvent opsCloudChangeExecOrderCreateEvent = new OpsCloudChangeExecOrderCreateEvent();
+        ChangeExecOrderCreateEvent opsCloudChangeExecOrderCreateEvent = new ChangeExecOrderCreateEvent();
         opsCloudChangeExecOrderCreateEvent.setChangeExecOrderId(entity.getOrderId());
         opsCloudChangeExecOrderCreateEvent.setChangeSceneKey(entity.getChangeSceneKey());
         opsCloudChangeExecOrderCreateEvent.setPlatform(entity.getPlatform());
@@ -152,13 +152,13 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
      * @return the get change order
      */
     @Override
-    @OpsCloudLogAnnotation(serviceDesc = "getChangeOrder", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "getChangeOrder", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 1, keyProps = "bizExecOrderId")
     public ExeChangeOrderEntity getChangeOrder(String platform, String bizExecOrderId) {
         return exeChangeOrderRepository.getChangeOrder(platform, bizExecOrderId);
     }
 
-    private ExeChangeOrderEntity convertToOrder(String fromCloudId, OpsCloudChangeExecOrderSubmitRequestModel request) {
+    private ExeChangeOrderEntity convertToOrder(String fromCloudId, ChangeExecOrderSubmitRequestModel request) {
         ExeChangeOrderEntity entity = exeChangeOrderRequestConverter.createChangeOrder();
         exeChangeOrderRequestConverter.convert(request, entity);
         String orderId = idGenerator.generateIdByRelatedId(IdBizCodeEnum.OPSCLD_EXE_ORDER, request.getTrace().getTraceId());
@@ -178,9 +178,9 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
      * @param request              the request
      */
     @Override
-    public void updateEntity(ExeChangeOrderEntity exeChangeOrderEntity, OpsCloudChangeExecOrderFinishRequest request) {
+    public void updateEntity(ExeChangeOrderEntity exeChangeOrderEntity, ChangeExecOrderFinishRequest request) {
         exeChangeOrderEntity.setMsg(request.getMsg());
-        exeChangeOrderEntity.setStatus(convert(OpsCloudChangeFinishStateEnum.getByCode(request.getFinishState())));
+        exeChangeOrderEntity.setStatus(convert(ChangeFinishStateEnum.getByCode(request.getFinishState())));
         exeChangeOrderEntity.setFinishTime(request.getFinishTime());
         if(StringUtils.isNotBlank(request.getChangeResultJsn()))
         {
@@ -189,21 +189,21 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
         exeChangeOrderRepository.update(exeChangeOrderEntity);
     }
 
-    private ExeOrderStatusEnum convert(OpsCloudChangeFinishStateEnum finishStateEnum)
+    private ExeOrderStatusEnum convert(ChangeFinishStateEnum finishStateEnum)
     {
         if(finishStateEnum == null)
         {
             return null;
         }
-        if(finishStateEnum == OpsCloudChangeFinishStateEnum.CANCEL)
+        if(finishStateEnum == ChangeFinishStateEnum.CANCEL)
         {
             return ExeOrderStatusEnum.CANCEL;
         }
-        if(finishStateEnum == OpsCloudChangeFinishStateEnum.ROLLBACK)
+        if(finishStateEnum == ChangeFinishStateEnum.ROLLBACK)
         {
             return ExeOrderStatusEnum.ROLLBACK;
         }
-        if(finishStateEnum == OpsCloudChangeFinishStateEnum.SUCCESS)
+        if(finishStateEnum == ChangeFinishStateEnum.SUCCESS)
         {
             return ExeOrderStatusEnum.SUCCESS;
         }

@@ -26,7 +26,7 @@
  */
 package com.alipay.altershield.change.meta.service.impl;
 
-import com.alipay.opscloud.framework.core.meta.change.model.enums.MetaChangeSceneGenerationEnum;
+import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
 import org.springframework.stereotype.Component;
 
 /**

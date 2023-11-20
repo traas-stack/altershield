@@ -43,9 +43,9 @@
  */
 package com.alipay.altershield.shared.change.exe.node.entity;
 
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
-import com.alipay.opscloud.api.change.meta.model.enums.MetaChangeStepTypeEnum;
-import com.alipay.opscloud.framework.core.change.model.enums.OpsCloudChangePhaseEnum;
+import com.alipay.altershield.framework.core.change.model.enums.ChangePhaseEnum;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
+import com.alipay.altershield.shared.change.meta.model.enums.MetaChangeStepTypeEnum;
 import lombok.Data;
 
 import java.util.Date;
@@ -148,7 +148,7 @@ public class ExeBaseNodeEntity {
      *
      * @mbg.generated
      */
-    private OpsCloudChangePhaseEnum changePhase;
+    private ChangePhaseEnum changePhase;
 
 
     /**

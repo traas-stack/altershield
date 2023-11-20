@@ -44,7 +44,7 @@
 package com.alipay.altershield.shared.change.exe.node.entity;
 
 import com.alipay.altershield.common.largefield.kv.KeyValueStorage;
-import com.alipay.altershield.common.largefield.ref.KvRef;
+import com.alipay.altershield.shared.common.largefield.ref.KvRef;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

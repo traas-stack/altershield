@@ -27,12 +27,18 @@
  */
 package com.alipay.altershield.web.common.config;
 
+import com.alipay.altershield.common.backconfig.request.QueryConfigRequest;
+import com.alipay.altershield.common.backconfig.result.QueryConfigResult;
+import com.alipay.altershield.common.backconfig.service.ConfigService;
+import com.alipay.altershield.framework.common.util.exception.AlterShieldInternalErrorCode;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+
 
 /**
  * 后台配置管理接口
@@ -50,11 +56,11 @@ public class ConfigController {
 
     @ResponseBody
     @RequestMapping(value = "/queryConfigByPage", method = RequestMethod.POST)
-    public OpsCloudPageResult<List<QueryConfigResult>> queryConfigByPage(@NotNull @RequestBody QueryConfigRequest request) {
+    public AlterShieldResult<List<QueryConfigResult>> queryConfigByPage(@NotNull @RequestBody QueryConfigRequest request) {
         try {
             return configService.queryConfigList(request);
         } catch (Exception e) {
-            return new OpsCloudPageResult<>(OpsCloudInternalErrorCode.SYSTEM_ERROR.getCode(), "未知异常");
+            return new AlterShieldResult<>(AlterShieldInternalErrorCode.SYSTEM_ERROR.getCode(), "未知异常");
         }
     }
 }

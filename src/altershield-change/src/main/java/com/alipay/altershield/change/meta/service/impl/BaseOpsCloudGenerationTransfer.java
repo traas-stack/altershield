@@ -26,15 +26,15 @@
  */
 package com.alipay.altershield.change.meta.service.impl;
 
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeOrderStepEntity;
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeStepEntity;
-import com.alipay.opscloud.change.meta.repository.MetaChangeSceneRepository;
-import com.alipay.opscloud.change.meta.service.OpsCloudGenerationTransfer;
-import com.alipay.opscloud.change.meta.service.OpsCloudGenerationTransferManager;
-import com.alipay.opscloud.common.service.ServiceProcessTemplate;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.meta.change.model.enums.MetaChangeSceneGenerationEnum;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeOrderStepEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
+import com.alipay.altershield.change.meta.repository.MetaChangeSceneRepository;
+import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransfer;
+import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransferManager;
+import com.alipay.altershield.common.service.ServiceProcessTemplate;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -79,7 +79,7 @@ public abstract class BaseOpsCloudGenerationTransfer implements OpsCloudGenerati
     }
 
     @Override
-    public OpsCloudResult<String> toG0(MetaChangeSceneEntity metaChangeSceneEntity) {
+    public AlterShieldResult<String> toG0(MetaChangeSceneEntity metaChangeSceneEntity) {
 
         return doProcess(metaChangeSceneEntity, () -> {
             buildG0Status(metaChangeSceneEntity);
@@ -94,7 +94,7 @@ public abstract class BaseOpsCloudGenerationTransfer implements OpsCloudGenerati
     }
 
     @Override
-    public OpsCloudResult<String> toG1(MetaChangeSceneEntity metaChangeSceneEntity,
+    public AlterShieldResult<String> toG1(MetaChangeSceneEntity metaChangeSceneEntity,
                                        Function<MetaChangeSceneEntity, MetaChangeStepEntity> orderStepCreateFunction) {
         return doProcess(metaChangeSceneEntity, () -> toG0G1(metaChangeSceneEntity, MetaChangeSceneGenerationEnum.G1, new TransferHelp() {
             @Override
@@ -119,7 +119,7 @@ public abstract class BaseOpsCloudGenerationTransfer implements OpsCloudGenerati
 
     }
 
-    private OpsCloudResult<String> toG0G1(MetaChangeSceneEntity metaChangeSceneEntity, MetaChangeSceneGenerationEnum targetGeneration,
+    private AlterShieldResult<String> toG0G1(MetaChangeSceneEntity metaChangeSceneEntity, MetaChangeSceneGenerationEnum targetGeneration,
                                           G2OpsCloudGenerationTransfer.TransferHelp transferHelp) {
 
 
@@ -145,35 +145,35 @@ public abstract class BaseOpsCloudGenerationTransfer implements OpsCloudGenerati
                     for (String stepId : deletedIdList) {
                         metaChangeSceneRepository.deleteStep(stepId);
                     }
-                    return OpsCloudResult.succeed("降级到" + targetGeneration.getName() + "成功", metaChangeSceneEntity.getId());
+                    return AlterShieldResult.succeed("降级到" + targetGeneration.getName() + "成功", metaChangeSceneEntity.getId());
                 }));
 
     }
 
     @Override
-    public OpsCloudResult<String> toG2(MetaChangeSceneEntity metaChangeSceneEntity) {
+    public AlterShieldResult<String> toG2(MetaChangeSceneEntity metaChangeSceneEntity) {
         return doProcess(metaChangeSceneEntity, () -> ServiceProcessTemplate.wrapTryCatch(() -> {
             metaChangeSceneEntity.setGeneration(MetaChangeSceneGenerationEnum.G3);
             metaChangeSceneRepository.updateGeneration(metaChangeSceneEntity);
-            return OpsCloudResult.succeed("升级到G2成功", metaChangeSceneEntity.getId());
+            return AlterShieldResult.succeed("升级到G2成功", metaChangeSceneEntity.getId());
         }));
 
     }
 
     @Override
-    public OpsCloudResult<String> toG3(MetaChangeSceneEntity metaChangeSceneEntity) {
+    public AlterShieldResult<String> toG3(MetaChangeSceneEntity metaChangeSceneEntity) {
 
         return doProcess(metaChangeSceneEntity, () -> ServiceProcessTemplate.wrapTryCatch(() -> {
             metaChangeSceneEntity.setGeneration(MetaChangeSceneGenerationEnum.G3);
             metaChangeSceneRepository.updateGeneration(metaChangeSceneEntity);
-            return OpsCloudResult.succeed("升级到G3成功", metaChangeSceneEntity.getId());
+            return AlterShieldResult.succeed("升级到G3成功", metaChangeSceneEntity.getId());
         }));
 
     }
 
-    private OpsCloudResult<String> doProcess(MetaChangeSceneEntity metaChangeSceneEntity, Supplier<OpsCloudResult<String>> supplier) {
+    private AlterShieldResult<String> doProcess(MetaChangeSceneEntity metaChangeSceneEntity, Supplier<AlterShieldResult<String>> supplier) {
         if (metaChangeSceneEntity.getGeneration() == getChangeSceneGeneration()) {
-            OpsCloudResult.illegalArgument("当前场景是" + getChangeSceneGeneration().getName() + "，不需要转换");
+            AlterShieldResult.illegalArgument("当前场景是" + getChangeSceneGeneration().getName() + "，不需要转换");
         }
         return supplier.get();
     }

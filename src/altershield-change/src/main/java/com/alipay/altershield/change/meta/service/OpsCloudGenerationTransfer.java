@@ -26,10 +26,11 @@
  */
 package com.alipay.altershield.change.meta.service;
 
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeStepEntity;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.meta.change.model.enums.MetaChangeSceneGenerationEnum;
+
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
 
 import java.util.function.Function;
 
@@ -50,27 +51,27 @@ public interface OpsCloudGenerationTransfer {
      * @param metaChangeSceneEntity
      * @return
      */
-    OpsCloudResult<String> toG0(MetaChangeSceneEntity metaChangeSceneEntity);
+    AlterShieldResult<String> toG0(MetaChangeSceneEntity metaChangeSceneEntity);
 
     /**
      * 到g1
      * @param metaChangeSceneEntity
      * @return
      */
-    OpsCloudResult<String> toG1(MetaChangeSceneEntity metaChangeSceneEntity, Function<MetaChangeSceneEntity, MetaChangeStepEntity> orderStepCreateFunction);
+    AlterShieldResult<String> toG1(MetaChangeSceneEntity metaChangeSceneEntity, Function<MetaChangeSceneEntity, MetaChangeStepEntity> orderStepCreateFunction);
 
     /**
      * 到g2
      * @param metaChangeSceneEntity
      * @return
      */
-    OpsCloudResult<String> toG2(MetaChangeSceneEntity metaChangeSceneEntity);
+    AlterShieldResult<String> toG2(MetaChangeSceneEntity metaChangeSceneEntity);
 
     /**
      * 到g3
      * @param metaChangeSceneEntity
      * @return
      */
-    OpsCloudResult<String> toG3(MetaChangeSceneEntity metaChangeSceneEntity);
+    AlterShieldResult<String> toG3(MetaChangeSceneEntity metaChangeSceneEntity);
 
 }

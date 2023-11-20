@@ -26,8 +26,8 @@
  */
 package com.alipay.altershield.change.meta.service.request;
 
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeStepEntity;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
 
 import java.util.List;
 

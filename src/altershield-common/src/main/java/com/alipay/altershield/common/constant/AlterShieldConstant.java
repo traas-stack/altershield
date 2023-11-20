@@ -81,4 +81,42 @@ public class AlterShieldConstant {
      * The constant DAL_KV_VALUE_COLUMN_SIZE.
      */
     public static final int     DAL_KV_VALUE_COLUMN_SIZE = 200 * 1024;
+
+    /**
+     * 每个参数允许的最大长度
+     */
+    public static volatile int     LOG_PARAM_MAX_SIZE             = 4096;
+    /**
+     * 日志脱敏组件总开关
+     */
+    public static volatile boolean SWITCH_ENABLE_LOG_DE_SENSITIVE = true;
+    /**
+     * profiler的阀值
+     */
+    public static volatile long PROFILER_THRESHOLD = 5000;
+
+    /**
+     * 配置中 refresh_by_ip_ 后缀的最大值
+     */
+    public static volatile int REFRESH_BY_IP_MAX = 3;
+    /**
+     * 客户端配置
+     */
+    public static volatile boolean OPSCLOUD_CLIENT_SWITCH_CHG_SRV_CHECK         = true;
+    /**
+     * The constant OPSCLOUD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS.
+     */
+    public static volatile String  OPSCLOUD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS = "";
+    /**
+     * The constant META_CACHE_TIMEOUT_MILLI.
+     */
+    public static volatile long    META_CACHE_TIMEOUT_MILLI                     = 20 * 1000L;
+    /**
+     * The constant META_CACHE_INTERVAL_MILLI.
+     */
+    public static volatile long    META_CACHE_INTERVAL_MILLI                    = 5 * 1000L;
+    /**
+     * The constant SWITCH_META_CACHE.
+     */
+    public static volatile boolean SWITCH_META_CACHE                            = true;
 }

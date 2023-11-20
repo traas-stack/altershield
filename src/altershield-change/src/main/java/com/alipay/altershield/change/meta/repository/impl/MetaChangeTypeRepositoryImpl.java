@@ -43,6 +43,8 @@
  */
 package com.alipay.altershield.change.meta.repository.impl;
 
+import com.alipay.altershield.change.meta.dal.dataobject.MetaChangeTypeDO;
+import com.alipay.altershield.change.meta.dal.mapper.MetaChangeTypeMapper;
 import com.alipay.altershield.change.meta.model.MetaChangeTypeEntity;
 import com.alipay.altershield.change.meta.repository.MetaChangeTypeRepository;
 import com.alipay.altershield.change.meta.repository.converter.MetaChangeTypeConverter;

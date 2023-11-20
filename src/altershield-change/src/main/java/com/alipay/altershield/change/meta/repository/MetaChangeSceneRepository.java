@@ -44,6 +44,7 @@
 package com.alipay.altershield.change.meta.repository;
 
 
+import com.alipay.altershield.change.meta.dal.dataobject.MetaChangeSceneQueryParam;
 import com.alipay.altershield.change.meta.model.MetaBaseChangeSceneEntity;
 import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
 import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
@@ -213,15 +214,6 @@ public interface MetaChangeSceneRepository {
      * @return
      */
     boolean changeKeyExisted(String changeKey);
-
-    /**
-     * 獲取場景數據
-     *
-     * @return java.util.List<com.alipay.opscloud.change.meta.model.effective.MetaChangeSceneBatchEntity>
-     * @author gaofeng.pan
-     * @date 2022/10/24 19:00
-     **/
-    List<MetaChangeSceneBatchEntity> queryAllScene();
 
 
     /**

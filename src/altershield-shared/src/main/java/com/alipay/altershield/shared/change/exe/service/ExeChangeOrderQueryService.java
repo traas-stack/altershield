@@ -26,7 +26,8 @@
  */
 package com.alipay.altershield.shared.change.exe.service;
 
-import com.alipay.opscloud.api.change.exe.order.entity.ExeChangeOrderEntity;
+
+import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
 
 /**
  *
