@@ -67,6 +67,8 @@ public interface Loggers {
     Logger SERVICE_QUERY_DIGEST = LoggerFactory.getLogger("ALTERSHIELD_SERVICE_QUERY_DIGEST");
 
     Logger SERVICE_PROFILER  = LoggerFactory.getLogger("ALTERSHIELD-SERVICE-PROFILER");
-    Logger BIZ_SERVICE = LoggerFactory.getLogger("OPSCLOUD-BIZ-SERVICE");
-    Logger META_CACHE            = LoggerFactory.getLogger("OPSCLOUD-META-CACHE");
+    Logger BIZ_SERVICE = LoggerFactory.getLogger("ALTERSHIELD_BIZ_SERVICE");
+    Logger META_CACHE            = LoggerFactory.getLogger("ALTERSHIELD_META_CACHE");
+    Logger META_CHANGE            = LoggerFactory.getLogger("ALTERSHIELD_META_CHANGE");
+    Logger EXE_STATE_MACHINE            = LoggerFactory.getLogger("ALTERSHIELD_EXE_STATE_MACHINE");
 }

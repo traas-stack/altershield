@@ -41,42 +41,73 @@
  *   4) distribute, lease, rent, sub-license, demise or transfer any rights in relation to this software, or authorize
  *    the reproduction of this software on other’s computers.
  */
-package com.alipay.altershield.change.meta.service.request;
+package com.alipay.altershield.framework.core.change.facade.request;
 
-import com.alipay.altershield.change.meta.service.request.group.ChangeSceneBatchGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.io.Serializable;
 
 /**
- *
- * @author yuanji
- * @version : MetaChangeSceneCreate2Request.java, v 0.1 2022年04月15日 11:20 上午 yuanji Exp $
+ * @author xiangyue
+ * @version : OpsCloudPageRequest.java, v 0.1 2022-07-23 23:54 xiangyue Exp $$
  */
-@Data
-@ApiModel(value = "变更场景详情设置")
-public class CreateMetaChangeScene2Request {
+public class AlterShieldPageRequest implements Serializable {
 
-    @NotNull
-    @ApiModelProperty(required = true, value = "场景id")
-    private String id;
+    private static final long serialVersionUID = -2525301394695754835L;
+    /**
+     * 当前页
+     */
+    private int current = 1;
 
     /**
-     * 变更回调配置
+     * 每页大小
      */
-    @Valid
-    private CreateMetaChangeSceneCallbackConfigRequest callbackConfig;
+    private int pageSize = 20;
 
     /**
-     * 变更防御配置
+     * Gets get current.
+     *
+     * @return the get current
      */
-    @Valid
-    @NotNull(groups = ChangeSceneBatchGroup.class)
-    private List<UpdateDefenceConfigRequest> defenceConfigs;
+    public int getCurrent() {
+        return current;
+    }
 
+    /**
+     * Sets set current.
+     *
+     * @param current the current
+     */
+    public void setCurrent(int current) {
+        this.current = current;
+    }
 
+    /**
+     * Gets get page size.
+     *
+     * @return the get page size
+     */
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    /**
+     * Sets set page size.
+     *
+     * @param pageSize the page size
+     */
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
+    @Override
+    public String toString() {
+        return "OpsCloudPageRequest{" +
+                "current=" + current +
+                ", pageSize=" + pageSize +
+                '}';
+    }
 }

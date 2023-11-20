@@ -43,7 +43,7 @@
  */
 package com.alipay.altershield.change.meta.service.request;
 
-import com.alipay.opscloud.common.request.OpsCloudPageRequest;
+import com.alipay.altershield.framework.core.change.facade.request.AlterShieldPageRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -57,7 +57,7 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "变更场景查询请求", description = "支持分页查询")
-public class QueryChangeSceneRequest extends OpsCloudPageRequest {
+public class QueryChangeSceneRequest extends AlterShieldPageRequest {
 
     @ApiModelProperty(value = "变更场景名", example = "变更场景测试")
     private String changeSceneName;

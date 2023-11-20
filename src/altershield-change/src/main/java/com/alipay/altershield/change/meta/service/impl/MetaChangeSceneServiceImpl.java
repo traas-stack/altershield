@@ -47,10 +47,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.alipay.altershield.change.meta.dal.dataobject.MetaChangeSceneQueryParam;
 import com.alipay.altershield.change.meta.model.MetaBaseChangeSceneEntity;
 import com.alipay.altershield.change.meta.model.MetaChangeEffectiveConfigEntity;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneCallbackConfigEntity;
 import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
 import com.alipay.altershield.change.meta.model.effective.MetaChangeBatchStepEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeOrderStepEntity;
 import com.alipay.altershield.change.meta.model.effective.MetaChangeProgressEntity;
 import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
+import com.alipay.altershield.change.meta.model.enums.MetaChangeGrayModeTypeEnum;
 import com.alipay.altershield.change.meta.model.enums.MetaChangeSceneStatus;
 import com.alipay.altershield.change.meta.repository.MetaChangeSceneRepository;
 import com.alipay.altershield.change.meta.service.MetaChangeSceneService;
@@ -58,19 +61,24 @@ import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransfer;
 import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransferManager;
 import com.alipay.altershield.change.meta.service.request.*;
 import com.alipay.altershield.change.meta.service.request.converter.MetaChangeSceneRequestConverter;
+import com.alipay.altershield.change.meta.service.request.converter.MetaChangeStepRequestConverter;
+import com.alipay.altershield.change.util.EntityUtil;
 import com.alipay.altershield.common.id.IdGenerator;
 import com.alipay.altershield.common.id.enums.IdBizCodeEnum;
 import com.alipay.altershield.common.service.ServicePageProcessTemplate;
 import com.alipay.altershield.common.service.ServicePageQuery;
 import com.alipay.altershield.common.service.ServiceProcessTemplate;
+import com.alipay.altershield.common.logger.Loggers;
 import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeSceneRequest;
 import com.alipay.altershield.framework.core.change.facade.result.AlterShieldPageResult;
 import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import com.alipay.altershield.framework.core.change.facade.result.CreateMetaChangeSceneResult;
 import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
-import com.alipay.altershield.shared.change.exe.entity.MetaChangeSceneBatchEntity;
 import com.alipay.altershield.shared.change.exe.entity.MetaChangeSceneQueryEntity;
+import com.alipay.altershield.shared.change.meta.model.enums.MetaChangeStepTypeEnum;
 import com.alipay.altershield.shared.change.meta.service.MetaChangeSceneQueryService;
+import com.alipay.altershield.shared.schedule.event.change.MetaChangeSceneCreateEvent;
 import com.alipay.altershield.shared.schedule.event.publish.AlterShieldSchedulerEventPublisher;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -236,7 +244,7 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
      */
     private void doCheck(CreateMetaChangeSceneRequest request) {
         if (request.getChangeEffectiveConfig() != null && request.getChangeEffectiveConfig().getChangeProgress() != null) {
-            com.alipay.opscloud.framework.core.meta.change.facade.request.CreateMetaChangeProgressRequest progressRequest = request.getChangeEffectiveConfig().getChangeProgress();
+            com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeProgressRequest progressRequest = request.getChangeEffectiveConfig().getChangeProgress();
             Set<String> keySet = new HashSet<>();
             doCheck(keySet, progressRequest.getAfterGrayFinishStep());
             doCheck(keySet, progressRequest.getBeforeGrayStartStep());
@@ -246,7 +254,7 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
         }
     }
 
-    private void doCheck(Set<String> keySet, com.alipay.opscloud.framework.core.meta.change.facade.request.CreateActionChangeStepRequest changeStepRequest) {
+    private void doCheck(Set<String> keySet, com.alipay.altershield.framework.core.change.facade.request.CreateActionChangeStepRequest changeStepRequest) {
         if (changeStepRequest != null) {
             if (keySet.contains(changeStepRequest.getChangeKey())) {
                 throw new IllegalArgumentException("duplicated change key:" + changeStepRequest.getChangeKey());
@@ -389,8 +397,8 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
 
 
     private MetaChangeStepEntity buildG1OrderStep(MetaChangeSceneEntity metaChangeSceneEntity, Function<String, String> function) {
-        com.alipay.opscloud.framework.core.meta.change.facade.request.CreateMetaChangeStepRequest changeStepRequest
-                = new com.alipay.opscloud.framework.core.meta.change.facade.request.CreateMetaChangeStepRequest(true, 10000, true, 10000);
+        com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeStepRequest changeStepRequest
+                = new com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeStepRequest(true, 10000, true, 10000);
         MetaChangeStepEntity metaChangeStepEntity = MetaChangeSceneRequestConverter.INSTANCE.buildMetaChangeOrderStepEntity(
                 metaChangeSceneEntity, changeStepRequest, function);
         return metaChangeStepEntity;
@@ -560,7 +568,7 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
 
     private void sendEvent(MetaChangeSceneEntity metaChangeSceneEntity) {
         if (metaChangeSceneEntity != null) {
-            OpsCloudMetaChangeSceneCreateEvent event = new OpsCloudMetaChangeSceneCreateEvent();
+            MetaChangeSceneCreateEvent event = new MetaChangeSceneCreateEvent();
             event.setChangeSceneKey(metaChangeSceneEntity.getChangeSceneKey());
             event.setPlatform(metaChangeSceneEntity.getPlatformName());
             event.setId(metaChangeSceneEntity.getId());

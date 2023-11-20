@@ -26,10 +26,10 @@
  */
 package com.alipay.altershield.change.exe.service.execute.statemachine.impl;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeCheckInfo;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeCheckInfo;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
 import org.springframework.stereotype.Component;
 
 /**

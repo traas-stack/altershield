@@ -43,16 +43,16 @@
  */
 package com.alipay.altershield.change.meta.service.impl;
 
-import com.alipay.opscloud.change.meta.model.MetaChangeTypeEntity;
-import com.alipay.opscloud.change.meta.repository.MetaChangeTypeRepository;
-import com.alipay.opscloud.change.meta.repository.converter.MetaChangeTypeConverter;
-import com.alipay.opscloud.change.meta.service.MetaChangeTypeService;
-import com.alipay.opscloud.change.meta.service.request.CreateMetaChangeTypeRequest;
-import com.alipay.opscloud.change.meta.service.request.QueryChangeTypeRequest;
-import com.alipay.opscloud.common.id.IdGenerator;
-import com.alipay.opscloud.common.service.ServiceProcessTemplate;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.tools.common.id.IdBizCodeEnum;
+import com.alipay.altershield.change.meta.model.MetaChangeTypeEntity;
+import com.alipay.altershield.change.meta.repository.MetaChangeTypeRepository;
+import com.alipay.altershield.change.meta.repository.converter.MetaChangeTypeConverter;
+import com.alipay.altershield.change.meta.service.MetaChangeTypeService;
+import com.alipay.altershield.change.meta.service.request.CreateMetaChangeTypeRequest;
+import com.alipay.altershield.change.meta.service.request.QueryChangeTypeRequest;
+import com.alipay.altershield.common.id.IdGenerator;
+import com.alipay.altershield.common.id.enums.IdBizCodeEnum;
+import com.alipay.altershield.common.service.ServiceProcessTemplate;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -72,12 +72,12 @@ public class MetaChangeTypeServiceImpl implements MetaChangeTypeService {
     @Autowired
     private IdGenerator idGenerator;
 
-    public OpsCloudResult<List<MetaChangeTypeEntity>> queryChangeType(QueryChangeTypeRequest request) {
+    public AlterShieldResult<List<MetaChangeTypeEntity>> queryChangeType(QueryChangeTypeRequest request) {
         return ServiceProcessTemplate.wrapTryCatch(() -> {
 
             List<MetaChangeTypeEntity> metaChangeTypeEntities = metaChangeTypeRepository.query(request.getCategory(), request.getType(),
                     request.getPageSize());
-            return OpsCloudResult.succeed("success", metaChangeTypeEntities);
+            return AlterShieldResult.succeed("success", metaChangeTypeEntities);
         });
     }
 
@@ -87,14 +87,14 @@ public class MetaChangeTypeServiceImpl implements MetaChangeTypeService {
     }
 
     @Override
-    public OpsCloudResult<String> insert(CreateMetaChangeTypeRequest request) {
+    public AlterShieldResult<String> insert(CreateMetaChangeTypeRequest request) {
         return ServiceProcessTemplate.wrapTryCatch(() -> {
             Assert.notNull(request, "metaChangeType is null");
             MetaChangeTypeEntity metaChangeTypeEntity = MetaChangeTypeConverter.INSTANCE.mapToEntity(request);
             String id = idGenerator.generateIdWithNoSharding(IdBizCodeEnum.OPSCLD_META_CHANGE_TYPE);
             metaChangeTypeEntity.setId(id);
             metaChangeTypeRepository.insert(metaChangeTypeEntity);
-            return OpsCloudResult.succeed("success", id);
+            return AlterShieldResult.succeed("success", id);
         });
 
     }

@@ -26,18 +26,18 @@
  */
 package com.alipay.altershield.change.exe.service.check.impl;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.scheduler.event.change.OpsCloudNodeCheckPoolingEvent;
-import com.alipay.opscloud.api.scheduler.event.listener.OpsCloudSchedulerEventContext;
-import com.alipay.opscloud.api.scheduler.event.listener.OpsCloudSchedulerEventListener;
-import com.alipay.opscloud.api.scheduler.event.result.OpsCloudSchedulerEventExecuteResult;
-import com.alipay.opscloud.change.exe.repository.ExeChangeNodeRepository;
-import com.alipay.opscloud.change.exe.service.check.ChangeNodeStatusCheckService;
-import com.alipay.opscloud.change.exe.service.execute.statemachine.ExeNodeStateMachine;
-import com.alipay.opscloud.change.exe.service.execute.statemachine.ExeNodeStateMachineManager;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
-import com.alipay.opscloud.tools.common.logger.Loggers;
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.change.exe.repository.ExeChangeNodeRepository;
+import com.alipay.altershield.change.exe.service.check.ChangeNodeStatusCheckService;
+import com.alipay.altershield.change.exe.service.execute.statemachine.ExeNodeStateMachine;
+import com.alipay.altershield.change.exe.service.execute.statemachine.ExeNodeStateMachineManager;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.schedule.event.change.NodeCheckPoolingEvent;
+import com.alipay.altershield.shared.schedule.event.listener.AlterShieldSchedulerEventContext;
+import com.alipay.altershield.shared.schedule.event.listener.AlterShieldSchedulerEventListener;
+import com.alipay.altershield.shared.schedule.event.result.AlterShieldSchedulerEventExecuteResult;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +49,7 @@ import org.springframework.stereotype.Service;
  * @version : ChangeNodeStatusCheckServiceImpl.java, v 0.1 2022年10月19日 17:44 yuanji Exp $
  */
 @Service
-public class ChangeNodeStatusCheckServiceImpl implements ChangeNodeStatusCheckService, OpsCloudSchedulerEventListener<OpsCloudNodeCheckPoolingEvent> {
+public class ChangeNodeStatusCheckServiceImpl implements ChangeNodeStatusCheckService, AlterShieldSchedulerEventListener<NodeCheckPoolingEvent> {
 
     @Autowired
     private ExeChangeNodeRepository exeChangeNodeRepository;
@@ -71,7 +71,7 @@ public class ChangeNodeStatusCheckServiceImpl implements ChangeNodeStatusCheckSe
 
         ExeNodeEntity entity = exeChangeNodeRepository.getNodeEntity(nodeExeId);
         if (entity == null) {
-            OpsCloudLoggerManager.log("warn", logger, "check.exception", "exeNode is null", nodeExeId);
+            AlterShieldLoggerManager.log("warn", logger, "check.exception", "exeNode is null", nodeExeId);
             return;
         }
         ExeNodeStateMachine exeNodeStateMachine = exeNodeStateMachineManager.getExeNodeStateMachine(entity.getStatus());
@@ -86,9 +86,9 @@ public class ChangeNodeStatusCheckServiceImpl implements ChangeNodeStatusCheckSe
      * @return the ops cloud scheduler event execute result
      */
     @Override
-    public OpsCloudSchedulerEventExecuteResult onEvent(OpsCloudSchedulerEventContext context, OpsCloudNodeCheckPoolingEvent event) {
+    public AlterShieldSchedulerEventExecuteResult onEvent(AlterShieldSchedulerEventContext context, NodeCheckPoolingEvent event) {
         checkNodeStatus(event.getChangeKey(), event.getDefenseStage(), event.getExeNodeId());
-        return OpsCloudSchedulerEventExecuteResult.success("check node success");
+        return AlterShieldSchedulerEventExecuteResult.success("check node success");
     }
 
 }

@@ -43,18 +43,17 @@
  */
 package com.alipay.altershield.change.meta.service.request.converter;
 
-import com.alipay.opscloud.api.change.meta.model.enums.MetaChangeStepTypeEnum;
-import com.alipay.opscloud.change.meta.dal.dataobject.MetaChangeSceneQueryParam;
-import com.alipay.opscloud.change.meta.model.MetaChangeDefenceConfigEntity;
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.change.meta.model.effective.*;
-import com.alipay.opscloud.change.meta.model.enums.MetaChangeGrayModeTypeEnum;
-import com.alipay.opscloud.change.meta.repository.converter.MetaChangeSceneEnumMapper;
-import com.alipay.opscloud.change.meta.service.request.QueryChangeSceneRequest;
-import com.alipay.opscloud.change.meta.service.request.UpdateDefenceConfigRequest;
-import com.alipay.opscloud.change.meta.service.request.UpdateMetaChangeSceneRequest;
-import com.alipay.opscloud.framework.core.meta.change.facade.request.*;
-import com.alipay.opscloud.framework.core.meta.change.model.enums.MetaChangeSceneGenerationEnum;
+import com.alipay.altershield.change.meta.dal.dataobject.MetaChangeSceneQueryParam;
+import com.alipay.altershield.change.meta.model.MetaChangeDefenceConfigEntity;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.change.meta.model.effective.*;
+import com.alipay.altershield.change.meta.model.enums.MetaChangeGrayModeTypeEnum;
+import com.alipay.altershield.change.meta.repository.converter.MetaChangeSceneEnumMapper;
+import com.alipay.altershield.change.meta.service.request.*;
+import com.alipay.altershield.framework.core.change.facade.request.CreateActionChangeStepRequest;
+import com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeSceneRequest;
+import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
+import com.alipay.altershield.shared.change.meta.model.enums.MetaChangeStepTypeEnum;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -184,7 +183,7 @@ public abstract class MetaChangeSceneRequestConverter {
      * @param function              the function
      * @return the meta change order step entity
      */
-    public MetaChangeOrderStepEntity buildMetaChangeOrderStepEntity(MetaChangeSceneEntity metaChangeSceneEntity,CreateMetaChangeStepRequest changeStepRequest,
+    public MetaChangeOrderStepEntity buildMetaChangeOrderStepEntity(MetaChangeSceneEntity metaChangeSceneEntity, CreateMetaChangeStepRequest changeStepRequest,
                                                                     Function<String, String> function) {
         MetaChangeOrderStepEntity orderStepEntity = new MetaChangeOrderStepEntity();
         buildStep(metaChangeSceneEntity, changeStepRequest, orderStepEntity, function);

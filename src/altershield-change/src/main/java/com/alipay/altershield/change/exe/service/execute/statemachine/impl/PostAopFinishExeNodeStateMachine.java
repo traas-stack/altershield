@@ -26,11 +26,11 @@
  */
 package com.alipay.altershield.change.exe.service.execute.statemachine.impl;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeCheckInfo;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.framework.core.change.facade.request.OpsCloudChangeFinishNotifyRequest;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.framework.core.change.facade.request.ChangeFinishNotifyRequest;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeCheckInfo;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -52,7 +52,7 @@ public class PostAopFinishExeNodeStateMachine extends CheckFinishNodeStateMachin
 
 
     @Override
-    public void submitNodePostStartCheck(ExeNodeEntity exeNodeEntity, OpsCloudChangeFinishNotifyRequest request, MetaChangeSceneEntity metaChangeSceneEntity) {
+    public void submitNodePostStartCheck(ExeNodeEntity exeNodeEntity, ChangeFinishNotifyRequest request, MetaChangeSceneEntity metaChangeSceneEntity) {
         exeNodeEntity.setFinishTime(request.getFinishTime());
         exeNodeEntity.setMsg(request.getMsg());
         if (StringUtils.isNotBlank(request.getServiceResult())) {

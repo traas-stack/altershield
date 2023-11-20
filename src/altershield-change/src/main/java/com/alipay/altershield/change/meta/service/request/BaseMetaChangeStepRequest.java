@@ -43,7 +43,7 @@
  */
 package com.alipay.altershield.change.meta.service.request;
 
-import com.alipay.opscloud.framework.common.validate.StringLength;
+import com.alipay.altershield.framework.common.validate.StringLength;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

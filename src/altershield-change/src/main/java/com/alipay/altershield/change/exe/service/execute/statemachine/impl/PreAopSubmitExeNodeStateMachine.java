@@ -26,14 +26,14 @@
  */
 package com.alipay.altershield.change.exe.service.execute.statemachine.impl;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeCheckInfo;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
-import com.alipay.opscloud.api.change.exe.order.entity.ExeChangeOrderEntity;
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.framework.core.common.result.OpsCloudChangeCheckVerdict;
-import com.alipay.opscloud.framework.core.meta.change.model.enums.MetaChangeSceneGenerationEnum;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.framework.core.change.facade.result.ChangeCheckVerdict;
+import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeCheckInfo;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
+import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
 import org.springframework.stereotype.Component;
 
 /**
@@ -53,12 +53,12 @@ public class PreAopSubmitExeNodeStateMachine extends AopExeNodeStateMachine{
     }
 
     @Override
-    public OpsCloudChangeCheckVerdict setNodeSyncPreStartCheck(long checkTimeOut, ExeChangeOrderEntity changeOrder, ExeNodeEntity entity, MetaChangeSceneEntity metaChangeSceneEntity) {
+    public ChangeCheckVerdict setNodeSyncPreStartCheck(long checkTimeOut, ExeChangeOrderEntity changeOrder, ExeNodeEntity entity, MetaChangeSceneEntity metaChangeSceneEntity) {
         if(metaChangeSceneEntity.getGeneration() != MetaChangeSceneGenerationEnum.G1)
         {
             unsupportedOperation(entity);
         }
-        OpsCloudChangeCheckVerdict opsCloudChangeCheckVerdict = changeSyncCheckService.syncCheck(checkTimeOut, changeOrder, entity, metaChangeSceneEntity);
+        ChangeCheckVerdict opsCloudChangeCheckVerdict = changeSyncCheckService.syncCheck(checkTimeOut, changeOrder, entity, metaChangeSceneEntity);
         return opsCloudChangeCheckVerdict;
     }
 

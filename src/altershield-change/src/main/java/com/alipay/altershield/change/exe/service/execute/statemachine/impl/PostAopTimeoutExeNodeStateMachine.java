@@ -26,12 +26,12 @@
  */
 package com.alipay.altershield.change.exe.service.execute.statemachine.impl;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeCheckInfo;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
-import com.alipay.opscloud.common.service.ServiceProcessor;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.common.service.ServiceProcessor;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeCheckInfo;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
 import org.springframework.stereotype.Component;
 
 /**
@@ -87,7 +87,7 @@ public class PostAopTimeoutExeNodeStateMachine extends PostAopFinishExeNodeState
     {
         if(defenseStageEnum == DefenseStageEnum.PRE)
         {
-            OpsCloudLoggerManager.log("warn", logger, "state.transfer.ignore","defense stage is not match:" + defenseStageEnum, getExeState());
+            AlterShieldLoggerManager.log("warn", logger, "state.transfer.ignore","defense stage is not match:" + defenseStageEnum, getExeState());
             return;
         }
         processor.process();

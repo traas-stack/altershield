@@ -43,10 +43,11 @@
  */
 package com.alipay.altershield.change.meta.service;
 
-import com.alipay.opscloud.change.meta.model.MetaChangeTypeEntity;
-import com.alipay.opscloud.change.meta.service.request.CreateMetaChangeTypeRequest;
-import com.alipay.opscloud.change.meta.service.request.QueryChangeTypeRequest;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
+
+import com.alipay.altershield.change.meta.model.MetaChangeTypeEntity;
+import com.alipay.altershield.change.meta.service.request.CreateMetaChangeTypeRequest;
+import com.alipay.altershield.change.meta.service.request.QueryChangeTypeRequest;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 
 import java.util.List;
 
@@ -64,7 +65,7 @@ public interface MetaChangeTypeService {
      * @param request
      * @return
      */
-    OpsCloudResult<List<MetaChangeTypeEntity>> queryChangeType(QueryChangeTypeRequest request);
+    AlterShieldResult<List<MetaChangeTypeEntity>> queryChangeType(QueryChangeTypeRequest request);
 
     /**
      * 获取分类详情
@@ -80,5 +81,5 @@ public interface MetaChangeTypeService {
      * @param request
      * @return
      */
-    OpsCloudResult<String> insert(CreateMetaChangeTypeRequest request);
+    AlterShieldResult<String> insert(CreateMetaChangeTypeRequest request);
 }

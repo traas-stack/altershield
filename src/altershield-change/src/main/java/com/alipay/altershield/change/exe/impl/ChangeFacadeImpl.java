@@ -47,8 +47,24 @@ import com.alipay.altershield.change.exe.service.check.ChangeTraceService;
 import com.alipay.altershield.change.exe.service.check.ExeChangeAsyncCheckService;
 import com.alipay.altershield.change.exe.service.check.ExeChangeOrderService;
 import com.alipay.altershield.change.exe.service.check.ExeChangeSyncCheckService;
+import com.alipay.altershield.change.exe.service.check.model.ChangeExecOrderSubmitRequestModel;
+import com.alipay.altershield.change.exe.service.check.model.ChangeStartNotifyRequestModel;
+import com.alipay.altershield.change.exe.service.check.model.OpsTraceStack;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
 import com.alipay.altershield.change.meta.service.MetaChangeSceneService;
+import com.alipay.altershield.change.util.EntityUtil;
+import com.alipay.altershield.common.logger.intercept.AlterShieldLogAnnotation;
+import com.alipay.altershield.common.logger.intercept.DetailLogTypeEnum;
+import com.alipay.altershield.common.logger.intercept.DigestLogTypeEnum;
+import com.alipay.altershield.common.service.ServiceProcessTemplate;
 import com.alipay.altershield.framework.core.change.facade.ChangeFacade;
+import com.alipay.altershield.framework.core.change.facade.request.*;
+import com.alipay.altershield.framework.core.change.facade.result.*;
+import com.alipay.altershield.framework.core.change.model.enums.ChangeScenarioEnum;
+import com.alipay.altershield.framework.core.change.model.trace.OpsChngTrace;
+import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
+import com.alipay.altershield.shared.change.exe.order.enums.ExeOrderStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,98 +98,98 @@ public class ChangeFacadeImpl implements ChangeFacade {
      * @param request
      * @return
      */
-    @LogAnnotation(serviceDesc = "submitChangeEvent", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "submitChangeEvent", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 0, keyProps = "platform|bizExecOrderId")
-    public OpsCloudResult<OpsCloudSubmitChangeEventResult> submitChangeEvent(OpsCloudChangeEventRequest request) {
+    public AlterShieldResult<SubmitChangeEventResult> submitChangeEvent(ChangeEventRequest request) {
         return ServiceProcessTemplate.wrapTryCatch(() -> {
             generateOrderTrace(request);
             return exeChangeSyncCheckService.startNotifyService(request);
         });
     }
 
-    @OpsCloudLogAnnotation(serviceDesc = "submitChangeExeOrder", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "submitChangeExeOrder", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 0, keyProps = "platform|bizExecOrderId")
-    public OpsCloudResult<OpsCloudSubmitChangeExeOrderResult> submitChangeExeOrder(OpsCloudChangeExecOrderSubmitRequest request) {
+    public AlterShieldResult<SubmitChangeExeOrderResult> submitChangeExeOrder(ChangeExecOrderSubmitRequest request) {
 
         return ServiceProcessTemplate.wrapTryCatch(() -> {
 
             MetaChangeSceneEntity metaChangeSceneEntity = metaChangeSceneService.getMetaChangeSceneByChangeSceneKey(
                     request.getChangeSceneKey());
             if (metaChangeSceneEntity == null) {
-                return OpsCloudResult.illegalArgument("change scene:" + request.getChangeSceneKey() + " not found");
+                return AlterShieldResult.illegalArgument("change scene:" + request.getChangeSceneKey() + " not found");
             }
             generateOrderTrace(request);
-            OpsCloudChangeExecOrderSubmitRequestModel model = new OpsCloudChangeExecOrderSubmitRequestModel(request);
+            ChangeExecOrderSubmitRequestModel model = new ChangeExecOrderSubmitRequestModel(request);
             model.setStatus(ExeOrderStatusEnum.INIT);
             ExeChangeOrderEntity exeChangeOrderEntity = exeChangeOrderService.createExeChangeOrder(metaChangeSceneEntity, model);
 
-            return OpsCloudResult.succeed("create exec order success",  new OpsCloudSubmitChangeExeOrderResult(exeChangeOrderEntity.getOrderId(),
+            return AlterShieldResult.succeed("create exec order success",  new SubmitChangeExeOrderResult(exeChangeOrderEntity.getOrderId(),
                     EntityUtil.buildOrderDetailUrl(exeChangeOrderEntity.getOrderId())));
         });
     }
 
-    @OpsCloudLogAnnotation(serviceDesc = "submitChangeStartNotify-createAndStart", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "submitChangeStartNotify-createAndStart", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 0, keyProps = "platform|bizExecOrderId")
-    public OpsCloudResult<OpsCloudChangeExecOrderSubmitAndStartResult> submitChangeStartNotify(
-            OpsCloudChangeExecOrderSubmitAndStartRequest request) {
+    public AlterShieldResult<ChangeExecOrderSubmitAndStartResult> submitChangeStartNotify(
+            ChangeExecOrderSubmitAndStartRequest request) {
 
         return exeChangeSyncCheckService.startCheckService(request);
     }
 
     @Override
-    @OpsCloudLogAnnotation(serviceDesc = "G2-submitChangeStartNotify", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "G2-submitChangeStartNotify", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 0, keyProps = "platform|bizExecOrderId")
-    public OpsCloudResult<OpsCloudChangeNotifySubmitResult> submitChangeStartNotify(
-            OpsCloudChangeStartNotifyRequest request) {
+    public AlterShieldResult<ChangeNotifySubmitResult> submitChangeStartNotify(
+            ChangeStartNotifyRequest request) {
 
         return ServiceProcessTemplate.wrapTryCatch(() -> {
             MetaChangeStepEntity metaChangeStepEntity = queryMetaChangeStepEntity(request);
             generateTrace(request, metaChangeStepEntity);
-            return exeChangeAsyncCheckService.startPreCheck(new OpsCloudChangeStartNotifyRequestModel(request, metaChangeStepEntity));
+            return exeChangeAsyncCheckService.startPreCheck(new ChangeStartNotifyRequestModel(request, metaChangeStepEntity));
         });
     }
 
     @Override
-    @OpsCloudLogAnnotation(serviceDesc = "retrieveChangeCheckResult", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "retrieveChangeCheckResult", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 0, keyProps = "platform|bizExecOrderId|nodeId|defenseStage")
-    public OpsCloudResult<OpsCloudChangeCheckProgressResult> retrieveChangeCheckResult(
-            OpsCloudChangeRetrieveCheckRequest request) {
+    public AlterShieldResult<ChangeCheckProgressResult> retrieveChangeCheckResult(
+            ChangeRetrieveCheckRequest request) {
         return exeChangeAsyncCheckService.retrieveChangeCheckResult(request);
     }
 
     @Override
-    @OpsCloudLogAnnotation(serviceDesc = "submitChangeFinishNotify", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "submitChangeFinishNotify", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 0, keyProps = "platform|bizExecOrderId|nodeId")
-    public OpsCloudResult<OpsCloudChangeNotifySubmitResult> submitChangeFinishNotify(
-            OpsCloudChangeFinishNotifyRequest request) {
+    public AlterShieldResult<ChangeNotifySubmitResult> submitChangeFinishNotify(
+            ChangeFinishNotifyRequest request) {
         return exeChangeAsyncCheckService.starPostCheck(request);
     }
 
     @Override
-    @OpsCloudLogAnnotation(serviceDesc = "resubmitChangeStartNotify", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "resubmitChangeStartNotify", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 0, keyProps = "platform|bizExecOrderId|nodeId")
-    public OpsCloudResult<OpsCloudChangeNotifySubmitResult> resubmitChangeStartNotify(OpsCloudChangeResumbitStartNotifyRequest request) {
+    public AlterShieldResult<ChangeNotifySubmitResult> resubmitChangeStartNotify(ChangeResubmitStartNotifyRequest request) {
         return exeChangeAsyncCheckService.resubmitChangeCheck(request);
     }
 
     @Override
-    @OpsCloudLogAnnotation(serviceDesc = "finishChangeExecOrder", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "finishChangeExecOrder", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 0, keyProps = "platform|bizExecOrderId|nodeId")
-    public OpsCloudResult<OpsCloudFinishChangeExecOrderResult> finishChangeExecOrder(OpsCloudChangeExecOrderFinishRequest request) {
+    public AlterShieldResult<FinishChangeExecOrderResult> finishChangeExecOrder(ChangeExecOrderFinishRequest request) {
         return exeChangeSyncCheckService.changeFinish(request);
     }
 
     @Override
-    @OpsCloudLogAnnotation(serviceDesc = "skipChangeCheck", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "skipChangeCheck", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 0, keyProps = "platform|bizExecOrderId|nodeId")
-    public OpsCloudResult<OpsCloudChangeSkipCheckResult> skipChangeCheck(OpsCloudChangeSkipCheckRequest request) {
+    public AlterShieldResult<ChangeSkipCheckResult> skipChangeCheck(ChangeSkipCheckRequest request) {
         return exeChangeAsyncCheckService.skipChangeCheck(request);
     }
 
-    private void generateOrderTrace(OpsCloudChangeExecOrderRequest request) {
+    private void generateOrderTrace(ChangeExecOrderRequest request) {
         OpsChngTrace trace = request.getTrace();
         if (trace == null) {
-            OpsCloudChangeScenarioEnum opsCloudChangeScenarioEnum = OpsCloudChangeScenarioEnum.getByCode(request.getChangeScenarioCode());
+            ChangeScenarioEnum opsCloudChangeScenarioEnum = ChangeScenarioEnum.getByCode(request.getChangeScenarioCode());
             if (opsCloudChangeScenarioEnum == null) {
                 throw new IllegalArgumentException("unknown changeScenarioCode:" + request.getChangeScenarioCode());
             }
@@ -182,14 +198,14 @@ public class ChangeFacadeImpl implements ChangeFacade {
         }
     }
 
-    private MetaChangeStepEntity queryMetaChangeStepEntity(OpsCloudChangeStartNotifyRequest request) {
+    private MetaChangeStepEntity queryMetaChangeStepEntity(ChangeStartNotifyRequest request) {
         MetaChangeStepEntity metaChangeStepEntity = null;
-        if (request instanceof OpsCloudChangeActionStartNotifyRequest) {
+        if (request instanceof ChangeActionStartNotifyRequest) {
             metaChangeStepEntity = metaChangeSceneService.getMetaChangeStepByChangeKey(
-                    ((OpsCloudChangeActionStartNotifyRequest) request).getChangeKey());
-        } else if (request instanceof OpsCloudChangeExecOrderStartNotifyRequest) {
+                    ((ChangeActionStartNotifyRequest) request).getChangeKey());
+        } else if (request instanceof ChangeExecOrderStartNotifyRequest) {
             metaChangeStepEntity = metaChangeSceneService.getOrderMetaChangeStep(request.getChangeSceneKey());
-        } else if (request instanceof OpsCloudChangeExecBatchStartNotifyRequest) {
+        } else if (request instanceof ChangeExecBatchStartNotifyRequest) {
             metaChangeStepEntity = metaChangeSceneService.getBatchMetaChangeStep(request.getChangeSceneKey());
         }
 
@@ -201,7 +217,7 @@ public class ChangeFacadeImpl implements ChangeFacade {
         return metaChangeStepEntity;
     }
 
-    private void generateTrace(OpsCloudChangeStartNotifyRequest request, MetaChangeStepEntity metaChangeStepEntity) {
+    private void generateTrace(ChangeStartNotifyRequest request, MetaChangeStepEntity metaChangeStepEntity) {
         if (request.getTrace() != null) {
             return;
         }
