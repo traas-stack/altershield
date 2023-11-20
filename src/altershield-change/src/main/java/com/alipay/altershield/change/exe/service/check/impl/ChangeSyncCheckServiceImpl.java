@@ -26,30 +26,17 @@
  */
 package com.alipay.altershield.change.exe.service.check.impl;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeBatchNodeEntity;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeChangeBatchEffectiveInfoEntity;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
-import com.alipay.opscloud.api.change.exe.order.entity.ExeChangeOrderEntity;
-import com.alipay.opscloud.api.change.meta.model.enums.MetaChangeStepTypeEnum;
-import com.alipay.opscloud.api.defender.DefenderDetectService;
-import com.alipay.opscloud.api.defender.ExeDefenderDetectService;
-import com.alipay.opscloud.api.defender.request.DefenderDetectRequest;
-import com.alipay.opscloud.api.defender.result.DefenderDetectResult;
-import com.alipay.opscloud.change.exe.repository.ExeChangeNodeRepository;
-import com.alipay.opscloud.change.exe.service.check.ChangeSyncCheckService;
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.framework.core.change.model.OpsCloudChangeContent;
-import com.alipay.opscloud.framework.core.change.model.enums.OpsCloudChangePhaseLastBatchEnum;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.common.result.OpsCloudChangeCheckVerdict;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
-import com.alipay.opscloud.spi.defender.model.request.ChangeBaseInfo;
-import com.alipay.opscloud.spi.defender.model.request.ChangeContent;
-import com.alipay.opscloud.spi.defender.model.request.ChangeExecuteInfo;
-import com.alipay.opscloud.tools.common.constant.OpsCloudConstant;
-import com.alipay.opscloud.tools.common.logger.Loggers;
+import com.alipay.altershield.change.exe.repository.ExeChangeNodeRepository;
+import com.alipay.altershield.change.exe.service.check.ChangeSyncCheckService;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.common.constant.AlterShieldConstant;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.core.change.facade.result.ChangeCheckVerdict;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
+import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -91,10 +78,10 @@ public class ChangeSyncCheckServiceImpl implements ChangeSyncCheckService, Initi
     protected static final Logger logger = Loggers.DEFENDER;
 
     @Override
-    public OpsCloudChangeCheckVerdict syncCheck(long checkTimeOut, ExeChangeOrderEntity changeOrder, ExeNodeEntity entity,
-                                                MetaChangeSceneEntity metaChangeSceneEntity) {
+    public ChangeCheckVerdict syncCheck(long checkTimeOut, ExeChangeOrderEntity changeOrder, ExeNodeEntity entity,
+                                        MetaChangeSceneEntity metaChangeSceneEntity) {
 
-        OpsCloudChangeCheckVerdict verdict = new OpsCloudChangeCheckVerdict();
+        ChangeCheckVerdict verdict = new ChangeCheckVerdict();
         verdict.setAllFinish(true);
         ExeNodeStateEnum status;
         if(!entity.isEmergency())
@@ -102,20 +89,20 @@ public class ChangeSyncCheckServiceImpl implements ChangeSyncCheckService, Initi
             long syncCheckTimeout = checkTimeOut;
             if(syncCheckTimeout <= 0)
             {
-                syncCheckTimeout = OpsCloudConstant.SYNC_CHNG_CHECK_TIMEOUT;
+                syncCheckTimeout = AlterShieldConstant.SYNC_CHNG_CHECK_TIMEOUT;
             }
-            Future<OpsCloudChangeCheckVerdict> syncCheckFuture = syncCheckThreadPool.submit(() -> doSyncCheck(changeOrder, entity));
+            Future<ChangeCheckVerdict> syncCheckFuture = syncCheckThreadPool.submit(() -> doSyncCheck(changeOrder, entity));
             try {
                 verdict = syncCheckFuture.get(syncCheckTimeout, TimeUnit.MILLISECONDS);
                 status = ExeNodeStateEnum.PRE_AOP_FINISH;
             } catch (TimeoutException e) {
-                verdict.setMsg(String.format("获取校验结果超过最大校验时间:%d", OpsCloudConstant.G1_SYNC_DECISION_TAG_TIMEOUT_MS));
-                OpsCloudLoggerManager.log("error", logger, e, "异步校验线程执行时异常", "nodeId=" + entity.getNodeExeId());
+                verdict.setMsg(String.format("获取校验结果超过最大校验时间:%d", AlterShieldConstant.G1_SYNC_DECISION_TAG_TIMEOUT_MS));
+                AlterShieldLoggerManager.log("error", logger, e, "异步校验线程执行时异常", "nodeId=" + entity.getNodeExeId());
                 status = ExeNodeStateEnum.PRE_AOP_TIMEOUT;
             } catch (Exception e) {
                 //检查失败
                 verdict.setMsg("check fail, paas all");
-                OpsCloudLoggerManager.log("error", logger, e, "异步校验线程执行时异常", "nodeId=" + entity.getNodeExeId());
+                AlterShieldLoggerManager.log("error", logger, e, "异步校验线程执行时异常", "nodeId=" + entity.getNodeExeId());
                 status = ExeNodeStateEnum.PRE_AOP_FAIL;
             }
         }
@@ -136,10 +123,10 @@ public class ChangeSyncCheckServiceImpl implements ChangeSyncCheckService, Initi
         return verdict;
     }
 
-    private OpsCloudChangeCheckVerdict doSyncCheck(ExeChangeOrderEntity changeOrder, ExeNodeEntity entity) {
-        OpsCloudResult<DefenderDetectResult> defenderResult = defenderDetectService.syncDetect(
+    private ChangeCheckVerdict doSyncCheck(ExeChangeOrderEntity changeOrder, ExeNodeEntity entity) {
+        AlterShieldResult<DefenderDetectResult> defenderResult = defenderDetectService.syncDetect(
                 buildPreCheckRequest(entity, null, changeOrder));
-        OpsCloudChangeCheckVerdict result = exeDefenderDetectService.convert2VerdictResult(defenderResult, entity.isEmergency());
+        ChangeCheckVerdict result = exeDefenderDetectService.convert2VerdictResult(defenderResult, entity.isEmergency());
         entity.getExeNodeCheckInfo().setPreCheckPass(Boolean.TRUE);
         entity.getExeNodeCheckInfo().markFinish(DefenseStageEnum.PRE);
         return result;

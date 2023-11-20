@@ -43,7 +43,7 @@
  */
 package com.alipay.altershield.change.meta.service.request;
 
-import com.alipay.opscloud.change.meta.service.request.group.ChangeSceneBatchGroup;
+import com.alipay.altershield.change.meta.service.request.group.ChangeSceneBatchGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

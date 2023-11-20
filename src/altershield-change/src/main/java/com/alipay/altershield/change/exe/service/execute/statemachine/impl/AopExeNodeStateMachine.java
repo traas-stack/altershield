@@ -26,15 +26,15 @@
  */
 package com.alipay.altershield.change.exe.service.execute.statemachine.impl;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeCheckInfo;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
-import com.alipay.opscloud.api.scheduler.event.change.OpsCloudNodeCheckPoolingEvent;
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeStepEntity;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
-import com.alipay.opscloud.tools.common.constant.OpsCloudConstant;
-import com.alipay.opscloud.tools.common.logger.Loggers;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
+import com.alipay.altershield.common.constant.AlterShieldConstant;
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeCheckInfo;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
+import com.alipay.altershield.shared.schedule.event.change.NodeCheckPoolingEvent;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,7 +52,7 @@ public abstract class AopExeNodeStateMachine extends CheckFinishNodeStateMachine
     public void pollingCheckStatus(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum) {
         MetaChangeStepEntity metaChangeStepEntity = metaChangeSceneRepository.getChangeStepEntity(entity.getChangeKey());
         if (metaChangeStepEntity == null) {
-            OpsCloudLoggerManager.log("warn", logger, "check.exception", "meta ChangeStep is null", entity.getChangeKey());
+            AlterShieldLoggerManager.log("warn", logger, "check.exception", "meta ChangeStep is null", entity.getChangeKey());
             return;
         }
         checkStatus(metaChangeStepEntity, defenseStageEnum, entity);
@@ -77,7 +77,7 @@ public abstract class AopExeNodeStateMachine extends CheckFinishNodeStateMachine
             {
                 prefix = "exeState.transfer.fail";
             }
-            OpsCloudLoggerManager.log("info", logger, prefix, entity.getNodeExeId(), result);
+            AlterShieldLoggerManager.log("info", logger, prefix, entity.getNodeExeId(), result);
 
             checkCallback(metaChangeStepEntity, defenseStageEnum, entity);
         } else {
@@ -97,12 +97,12 @@ public abstract class AopExeNodeStateMachine extends CheckFinishNodeStateMachine
     protected boolean isCheckTimeout(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum, MetaChangeStepEntity metaChangeStepEntity) {
         ExeNodeCheckInfo exeNodeCheckInfo = entity.getExeNodeCheckInfo();
         if (exeNodeCheckInfo == null) {
-            OpsCloudLoggerManager.log("warn", logger, "check.exception", "checkId is null invalid status.", entity.getNodeExeId());
+            AlterShieldLoggerManager.log("warn", logger, "check.exception", "checkId is null invalid status.", entity.getNodeExeId());
             return true;
         }
         long startTime;
         long maxTimeout;
-        OpsCloudLoggerManager.log("debug", logger, "start.check.timeout",  entity.getNodeExeId(), defenseStageEnum);
+        AlterShieldLoggerManager.log("debug", logger, "start.check.timeout",  entity.getNodeExeId(), defenseStageEnum);
         if (defenseStageEnum == DefenseStageEnum.PRE) {
             startTime = exeNodeCheckInfo.getPreCheckStartTime();
             maxTimeout = metaChangeStepEntity.getDefenceConfig().getPreCheckTimeout();
@@ -115,22 +115,22 @@ public abstract class AopExeNodeStateMachine extends CheckFinishNodeStateMachine
         if(logger.isDebugEnabled())
         {
             String msg = String.format("current:%d, start:%d, cost:%d，maxTimeOut:%d", currentTime, startTime, cost, maxTimeout);
-            OpsCloudLoggerManager.log("debug", logger, "check.timeout.timeout",  entity.getNodeExeId(), msg);
+            AlterShieldLoggerManager.log("debug", logger, "check.timeout.timeout",  entity.getNodeExeId(), msg);
         }
 
         return cost >= maxTimeout;
     }
 
     private void sendPoolingEvent(DefenseStageEnum defenseStage, ExeNodeEntity entity) {
-        OpsCloudNodeCheckPoolingEvent event = new OpsCloudNodeCheckPoolingEvent();
+        NodeCheckPoolingEvent event = new NodeCheckPoolingEvent();
         event.setChangeKey(entity.getChangeKey());
         event.setDefenseStage(defenseStage);
         event.setExeNodeId(entity.getNodeExeId());
-        long planTime = System.currentTimeMillis() + OpsCloudConstant.DEFENSE_SUBMIT_CHECK_INTERVAL;
+        long planTime = System.currentTimeMillis() + AlterShieldConstant.DEFENSE_SUBMIT_CHECK_INTERVAL;
         //设置延时时间
         event.setGmtPlan(new Date(planTime));
         opsCloudSchedulerEventPublisher.publish(entity.getNodeExeId(), event);
-        OpsCloudLoggerManager.log("info", logger, "polling check", "resubmit polling event", entity.getNodeExeId(), defenseStage);
+        AlterShieldLoggerManager.log("info", logger, "polling check", "resubmit polling event", entity.getNodeExeId(), defenseStage);
     }
 
 
@@ -144,7 +144,7 @@ public abstract class AopExeNodeStateMachine extends CheckFinishNodeStateMachine
         {
             entity.setStatus(defenseStageEnum == DefenseStageEnum.PRE ? ExeNodeStateEnum.PRE_AOP_FINISH : ExeNodeStateEnum.POST_AOP_FINISH);
         }
-        OpsCloudLoggerManager.log("info", Loggers.EXE_STATE_MACHINE, "AopExeNodeStateMachine$setNodeDefenseFinish",entity.getNodeExeId(), entity, defenseStageEnum, checkPaas);
+        AlterShieldLoggerManager.log("info", Loggers.EXE_STATE_MACHINE, "AopExeNodeStateMachine$setNodeDefenseFinish",entity.getNodeExeId(), entity, defenseStageEnum, checkPaas);
         exeChangeNodeRepository.updateNodeStatus(entity);
     }
 

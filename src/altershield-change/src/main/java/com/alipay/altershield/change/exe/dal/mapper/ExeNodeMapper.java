@@ -43,8 +43,9 @@
  */
 package com.alipay.altershield.change.exe.dal.mapper;
 
-import com.alipay.opscloud.change.exe.dal.dataobject.ExeNodeDO;
-import com.alipay.opscloud.change.exe.dal.dataobject.ExeNodeParam;
+
+import com.alipay.altershield.change.exe.dal.dataobject.ExeNodeDO;
+import com.alipay.altershield.change.exe.dal.dataobject.ExeNodeParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

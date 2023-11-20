@@ -43,9 +43,9 @@
  */
 package com.alipay.altershield.change.meta.service.request.converter;
 
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeStepEntity;
-import com.alipay.opscloud.change.meta.service.request.CreateMetaChangeStepRequest;
-import com.alipay.opscloud.change.meta.service.request.UpdateMetaChangeStepRequest;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
+import com.alipay.altershield.change.meta.service.request.CreateMetaChangeStepRequest;
+import com.alipay.altershield.change.meta.service.request.UpdateMetaChangeStepRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -69,7 +69,7 @@ public abstract class MetaChangeStepRequestConverter {
      * @param createMetaChangeStepRequest the create meta change step request
      * @return the meta change step entity
      */
-    abstract  public  MetaChangeStepEntity convertToEntity(CreateMetaChangeStepRequest createMetaChangeStepRequest);
+    abstract  public MetaChangeStepEntity convertToEntity(CreateMetaChangeStepRequest createMetaChangeStepRequest);
 
     /**
      * Convert to entity meta change step entity.

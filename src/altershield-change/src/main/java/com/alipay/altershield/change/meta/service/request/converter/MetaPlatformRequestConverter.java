@@ -26,8 +26,8 @@
  */
 package com.alipay.altershield.change.meta.service.request.converter;
 
-import com.alipay.opscloud.change.meta.model.MetaPlatformEntity;
-import com.alipay.opscloud.change.meta.service.request.CreateMetaPlatformRequest;
+import com.alipay.altershield.change.meta.model.MetaChangePlatformEntity;
+import com.alipay.altershield.change.meta.service.request.CreateMetaPlatformRequest;
 import org.mapstruct.Mapper;
 
 /**
@@ -43,5 +43,5 @@ public interface MetaPlatformRequestConverter {
      * @param request the request
      * @return the meta platform entity
      */
-    MetaPlatformEntity convert2Entity(CreateMetaPlatformRequest request);
+    MetaChangePlatformEntity convert2Entity(CreateMetaPlatformRequest request);
 }

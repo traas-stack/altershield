@@ -26,15 +26,14 @@
  */
 package com.alipay.altershield.change.exe.service.execute.statemachine.impl;
 
-import com.alipay.opscloud.api.change.exe.node.entity.*;
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
-import com.alipay.opscloud.api.change.exe.order.entity.ExeChangeOrderEntity;
-import com.alipay.opscloud.api.scheduler.event.change.OpsCloudChangeNodeCheckStartEvent;
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.framework.core.change.facade.request.OpsCloudChangeFinishNotifyRequest;
-import com.alipay.opscloud.framework.core.common.result.OpsCloudChangeCheckVerdict;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
-import com.alipay.opscloud.spi.util.MiscUtil;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.framework.core.change.facade.request.ChangeFinishNotifyRequest;
+import com.alipay.altershield.framework.core.change.facade.result.ChangeCheckVerdict;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.*;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
+import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
+import com.alipay.altershield.shared.schedule.event.change.ChangeNodeCheckStartEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -68,8 +67,8 @@ public class PreAopFinishExeNodeStateMachine extends CheckFinishNodeStateMachine
     }
 
     @Override
-    public OpsCloudChangeCheckVerdict setNodeSyncPreStartCheck(long checkTimeOut, ExeChangeOrderEntity changeOrder, ExeNodeEntity entity,
-                                                               MetaChangeSceneEntity metaChangeSceneEntity) {
+    public ChangeCheckVerdict setNodeSyncPreStartCheck(long checkTimeOut, ExeChangeOrderEntity changeOrder, ExeNodeEntity entity,
+                                                       MetaChangeSceneEntity metaChangeSceneEntity) {
         return changeSyncCheckService.syncCheck(checkTimeOut, changeOrder, entity, metaChangeSceneEntity);
     }
 
@@ -83,7 +82,7 @@ public class PreAopFinishExeNodeStateMachine extends CheckFinishNodeStateMachine
     }
 
     @Override
-    public void submitNodePostStartCheck(ExeNodeEntity exeNodeEntity, OpsCloudChangeFinishNotifyRequest request,
+    public void submitNodePostStartCheck(ExeNodeEntity exeNodeEntity, ChangeFinishNotifyRequest request,
                                          MetaChangeSceneEntity metaChangeSceneEntity) {
         exeNodeEntity.setFinishTime(request.getFinishTime());
         exeNodeEntity.setMsg(request.getMsg());
@@ -104,7 +103,7 @@ public class PreAopFinishExeNodeStateMachine extends CheckFinishNodeStateMachine
         publishChangeNodeCheckStartEvent(exeNodeEntity, DefenseStageEnum.POST, metaChangeSceneEntity, influenceInfoChanged);
     }
 
-    private boolean mergeEffectiveTargetLocations(ExeNodeEntity exeNodeEntity, OpsCloudChangeFinishNotifyRequest request) {
+    private boolean mergeEffectiveTargetLocations(ExeNodeEntity exeNodeEntity, ChangeFinishNotifyRequest request) {
         if (!CollectionUtils.isEmpty(request.getEffectiveTargetLocations())) {
             switch (exeNodeEntity.getChangeStepType()) {
                 case STEP_GRAY_BATCH:
@@ -131,7 +130,7 @@ public class PreAopFinishExeNodeStateMachine extends CheckFinishNodeStateMachine
         return false;
     }
 
-    private boolean mergeExtentInfo(ExeNodeEntity exeNodeEntity, OpsCloudChangeFinishNotifyRequest request) {
+    private boolean mergeExtentInfo(ExeNodeEntity exeNodeEntity, ChangeFinishNotifyRequest request) {
 
         if (!CollectionUtils.isEmpty(request.getExtensionInfo())) {
             Map<String, Object> extension =  MiscUtil.mergeExtension(exeNodeEntity.getSearchExtRef().readObject(), request.getExtensionInfo());
@@ -150,7 +149,7 @@ public class PreAopFinishExeNodeStateMachine extends CheckFinishNodeStateMachine
     private void publishChangeNodeCheckStartEvent(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum,
                                                   MetaChangeSceneEntity metaChangeSceneEntity, boolean influenceChanged) {
         if (entity != null && metaChangeSceneEntity != null) {
-            OpsCloudChangeNodeCheckStartEvent event = new OpsCloudChangeNodeCheckStartEvent();
+            ChangeNodeCheckStartEvent event = new ChangeNodeCheckStartEvent();
             event.setChangeKey(entity.getChangeKey());
             event.setChangeSceneKey(entity.getChangeSceneKey());
             event.setDefenseStage(defenseStageEnum);
@@ -165,5 +164,4 @@ public class PreAopFinishExeNodeStateMachine extends CheckFinishNodeStateMachine
         }
 
     }
-
 }

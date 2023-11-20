@@ -43,7 +43,7 @@
  */
 package com.alipay.altershield.change.meta.service.request;
 
-import com.alipay.opscloud.framework.common.validate.StringLength;
+import com.alipay.altershield.framework.common.validate.StringLength;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -69,14 +69,14 @@ public class BaseMetaChangeSceneRequest {
      */
     @Length(max = 64)
     @ApiModelProperty(value="场景归属可信租户编码", required = true)
-    private String tldcTenantCode;
+    private String tenantCode;
 
     /**
      * 服务租户；多个租户用逗号隔开
      */
     @Length(max = 4096)
     @ApiModelProperty(value="可以服务可信租户编码，多个用逗号隔开", required = true)
-    private String serverTldcTenantCode;
+    private String serverTenantCode;
 
     /**
      * 变更场景名

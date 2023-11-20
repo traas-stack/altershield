@@ -43,19 +43,20 @@
  */
 package com.alipay.altershield.change.exe.repository.impl;
 
-import com.alipay.opscloud.api.change.exe.order.entity.ExeChangeOrderEntity;
-import com.alipay.opscloud.api.change.exe.order.enums.ExeOrderStatusEnum;
-import com.alipay.opscloud.change.exe.dal.dataobject.ExeChangeOrderDO;
-import com.alipay.opscloud.change.exe.dal.mapper.ExeChangeOrderMapper;
-import com.alipay.opscloud.change.exe.repository.ExeChangeOrderRepository;
-import com.alipay.opscloud.change.exe.repository.converter.ExeChangeOrderEntityConverter;
-import com.alipay.opscloud.common.service.ServiceProcessTemplate;
+import com.alipay.altershield.change.exe.dal.dataobject.ExeChangeOrderDO;
+import com.alipay.altershield.change.exe.dal.mapper.ExeChangeOrderMapper;
+import com.alipay.altershield.change.exe.repository.ExeChangeOrderRepository;
+import com.alipay.altershield.change.exe.repository.converter.ExeChangeOrderEntityConverter;
+import com.alipay.altershield.common.service.ServiceProcessTemplate;
+import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
+import com.alipay.altershield.shared.change.exe.order.enums.ExeOrderStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import static com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResultCodeEnum.Duplicate_BIZ_ORDERID;
+import static com.alipay.altershield.framework.core.change.facade.result.AlterShieldResultCodeEnum.Duplicate_BIZ_ORDERID;
+
 
 /**
  * @author yuanji

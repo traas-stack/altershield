@@ -119,4 +119,26 @@ public class AlterShieldConstant {
      * The constant SWITCH_META_CACHE.
      */
     public static volatile boolean SWITCH_META_CACHE                            = true;
+    /**
+     * 场景key的格式
+     */
+    public static final String CHANGE_KEY_PATTERN = "^[a-zA-Z][a-zA-Z0-9\\.\\_]*[a-zA-Z0-9]$";
+    /**
+     * 风险防御校验详情连接
+     */
+    public static   volatile String OPSCLOUD_DEFENSE_CHECK_DETAIL_URL = "";
+
+    /**
+     * 风险防御提交异步check的第一次schdpoint轮询时间
+     */
+    public static volatile   long   DEFENSE_SUBMIT_CHECK_INTERVAL     = 2;
+
+    /**
+     * 同步纯管控获取校验数据超时时间(单位毫秒)
+     */
+    public static volatile long SYNC_CHNG_CHECK_TIMEOUT = 3000;
+    /**
+     * G1前置同步打标超时时间
+     */
+    public static volatile long G1_SYNC_DECISION_TAG_TIMEOUT_MS = 1000;
 }

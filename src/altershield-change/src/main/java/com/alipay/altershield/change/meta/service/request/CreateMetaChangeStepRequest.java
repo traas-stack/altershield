@@ -43,14 +43,15 @@
  */
 package com.alipay.altershield.change.meta.service.request;
 
-import com.alipay.opscloud.change.meta.service.request.group.CreateStepGroup;
-import com.alipay.opscloud.framework.common.validate.StringLength;
+import com.alipay.altershield.change.meta.service.request.group.CreateStepGroup;
+import com.alipay.altershield.framework.common.validate.StringLength;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import static com.alipay.opscloud.tools.common.constant.OpsCloudConstant.CHANGE_KEY_PATTERN;
+import static com.alipay.altershield.common.constant.AlterShieldConstant.CHANGE_KEY_PATTERN;
+
 
 /**
  *

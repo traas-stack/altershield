@@ -43,14 +43,15 @@
  */
 package com.alipay.altershield.change.exe.service.execute.exception;
 
-import com.alipay.opscloud.framework.common.util.exception.OpsCloudInternalErrorCode;
-import com.alipay.opscloud.framework.common.util.exception.OpsCloudInternalException;
+
+import com.alipay.altershield.framework.common.util.exception.AlterShieldInternalErrorCode;
+import com.alipay.altershield.framework.common.util.exception.AlterShieldInternalException;
 
 /**
  * @author shuo.qius
  * @version Jun 7, 2018
  */
-public class InvalidExeStatusException extends OpsCloudInternalException {
+public class InvalidExeStatusException extends AlterShieldInternalException {
 
     private static final long serialVersionUID = 7341625578617853692L;
 
@@ -58,7 +59,7 @@ public class InvalidExeStatusException extends OpsCloudInternalException {
      * @param message
      */
     public InvalidExeStatusException(String message) {
-        super(OpsCloudInternalErrorCode.EXECUTE_WRONG_STATE, message);
+        super(AlterShieldInternalErrorCode.EXECUTE_WRONG_STATE, message);
     }
 
 }

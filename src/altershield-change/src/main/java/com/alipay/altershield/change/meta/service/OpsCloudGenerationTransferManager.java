@@ -26,6 +26,8 @@
  */
 package com.alipay.altershield.change.meta.service;
 
+import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
+
 /**
  *
  * @author yuanji

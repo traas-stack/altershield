@@ -44,15 +44,16 @@
 package com.alipay.altershield.change.meta.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alipay.opscloud.api.change.exe.entity.MetaChangeSceneBatchEntity;
-import com.alipay.opscloud.change.meta.model.MetaBaseChangeSceneEntity;
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeStepEntity;
-import com.alipay.opscloud.change.meta.service.request.*;
-import com.alipay.opscloud.common.result.OpsCloudPageResult;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.meta.change.facade.request.CreateMetaChangeSceneRequest;
-import com.alipay.opscloud.framework.core.meta.change.facade.result.CreateMetaChangeSceneResult;
+import com.alipay.altershield.change.meta.model.MetaBaseChangeSceneEntity;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
+import com.alipay.altershield.change.meta.service.request.*;
+import com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeSceneRequest;
+import com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeStepRequest;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldPageResult;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.core.change.facade.result.CreateMetaChangeSceneResult;
+import com.alipay.altershield.shared.change.exe.entity.MetaChangeSceneBatchEntity;
 
 import java.util.List;
 
@@ -68,7 +69,7 @@ public interface MetaChangeSceneService {
      * @param id
      * @return
      */
-    OpsCloudResult<MetaChangeSceneEntity> getMetaChangeSceneById(String id);
+    AlterShieldResult<MetaChangeSceneEntity> getMetaChangeSceneById(String id);
 
     /**
      * 根据changeKey获取变更场景的完整对象
@@ -109,7 +110,7 @@ public interface MetaChangeSceneService {
      * @param createMetaChangeSceneRequest
      * @return 返回场景id
      */
-    OpsCloudResult<CreateMetaChangeSceneResult> createOrUpdateChangeScene(String id, CreateMetaChangeSceneRequest createMetaChangeSceneRequest);
+    AlterShieldResult<CreateMetaChangeSceneResult> createOrUpdateChangeScene(String id, CreateMetaChangeSceneRequest createMetaChangeSceneRequest);
 
     /**
      * 创建变更场景信息
@@ -117,7 +118,7 @@ public interface MetaChangeSceneService {
      * @param createMetaChangeSceneRequest
      * @return 返回场景id
      */
-    OpsCloudResult<CreateMetaChangeSceneResult> createTempChangeScene(CreateMetaChangeSceneRequest createMetaChangeSceneRequest);
+    AlterShieldResult<CreateMetaChangeSceneResult> createTempChangeScene(CreateMetaChangeSceneRequest createMetaChangeSceneRequest);
 
 
     /**
@@ -126,7 +127,7 @@ public interface MetaChangeSceneService {
      * @param createMetaChangeSceneRequest
      * @return
      */
-    OpsCloudResult<CreateMetaChangeSceneResult> createReleaseChangeScene(CreateMetaChangeSceneRequest createMetaChangeSceneRequest);
+    AlterShieldResult<CreateMetaChangeSceneResult> createReleaseChangeScene(CreateMetaChangeSceneRequest createMetaChangeSceneRequest);
 
     /**
      * 根据变更场景的基本信息
@@ -134,7 +135,7 @@ public interface MetaChangeSceneService {
      * @param updateMetaChangeSceneRequest
      * @return
      */
-    OpsCloudResult<Boolean> updateBasicChangeScene(UpdateMetaChangeSceneRequest updateMetaChangeSceneRequest);
+    AlterShieldResult<Boolean> updateBasicChangeScene(UpdateMetaChangeSceneRequest updateMetaChangeSceneRequest);
 
     /**
      * 更新变更步骤
@@ -142,7 +143,7 @@ public interface MetaChangeSceneService {
      * @param request
      * @return
      */
-    OpsCloudResult<Boolean> updateChangeStep(UpdateMetaChangeStepRequest request);
+    AlterShieldResult<Boolean> updateChangeStep(UpdateMetaChangeStepRequest request);
 
     /**
      * 创建变更步骤
@@ -150,7 +151,7 @@ public interface MetaChangeSceneService {
      * @param request
      * @return
      */
-    OpsCloudResult<Boolean> createChangeStep(CreateMetaChangeStepRequest request);
+    AlterShieldResult<Boolean> createChangeStep(CreateMetaChangeStepRequest request);
 
     /**
      * 删除变更步骤
@@ -158,7 +159,7 @@ public interface MetaChangeSceneService {
      * @param id
      * @return
      */
-    OpsCloudResult<Boolean> removeChangeStep(String id);
+    AlterShieldResult<Boolean> removeChangeStep(String id);
 
     /**
      * 根据id 删除场景
@@ -166,7 +167,7 @@ public interface MetaChangeSceneService {
      * @param id
      * @return
      */
-    OpsCloudResult<Boolean> removeChangeScene(String id);
+    AlterShieldResult<Boolean> removeChangeScene(String id);
 
 
     /**
@@ -175,7 +176,7 @@ public interface MetaChangeSceneService {
      * @param request
      * @return
      */
-    OpsCloudPageResult<List<MetaBaseChangeSceneEntity>> query(QueryChangeSceneRequest request);
+    AlterShieldPageResult<List<MetaBaseChangeSceneEntity>> query(QueryChangeSceneRequest request);
 
     /**
      * 第二步创建变更场景
@@ -183,7 +184,7 @@ public interface MetaChangeSceneService {
      * @param request
      * @return
      */
-    OpsCloudResult<Boolean> createChangeScene(CreateMetaChangeScene2Request request);
+    AlterShieldResult<Boolean> createChangeScene(CreateMetaChangeScene2Request request);
 
     /**
      * 导入变更场景配置
@@ -191,7 +192,7 @@ public interface MetaChangeSceneService {
      * @param config
      * @return
      */
-    OpsCloudResult<String> importChangeScene(JSONObject config);
+    AlterShieldResult<String> importChangeScene(JSONObject config);
 
     /**
      * 导出变更场景配置
@@ -199,7 +200,7 @@ public interface MetaChangeSceneService {
      * @param id
      * @return
      */
-    OpsCloudResult<String> exportChangeScene(String id);
+    AlterShieldResult<String> exportChangeScene(String id);
 
     /**
      * 检查changeKey是否存在
@@ -207,7 +208,7 @@ public interface MetaChangeSceneService {
      * @param changeKey
      * @return
      */
-    OpsCloudResult<Boolean> checkChangeKey(String changeKey);
+    AlterShieldResult<Boolean> checkChangeKey(String changeKey);
 
 
     /**
@@ -216,7 +217,7 @@ public interface MetaChangeSceneService {
      * @param changeKey
      * @return
      */
-    OpsCloudResult<Boolean> onlyCheckChangeKey(String changeKey);
+    AlterShieldResult<Boolean> onlyCheckChangeKey(String changeKey);
 
     /**
      * 变更场景代G
@@ -224,7 +225,7 @@ public interface MetaChangeSceneService {
      * @param request
      * @return
      */
-    OpsCloudResult<String> alterGeneration(AlterChangeSceneGenerationRequest request);
+    AlterShieldResult<String> alterGeneration(AlterChangeSceneGenerationRequest request);
 
     /**
      * 获取所有的场景数据
@@ -242,5 +243,5 @@ public interface MetaChangeSceneService {
      * @param request the request
      * @return the ops cloud result
      */
-    OpsCloudResult<Boolean> syncServiceKey(SyncMetaChangeSceneRequest request);
+    AlterShieldResult<Boolean> syncServiceKey(SyncMetaChangeSceneRequest request);
 }

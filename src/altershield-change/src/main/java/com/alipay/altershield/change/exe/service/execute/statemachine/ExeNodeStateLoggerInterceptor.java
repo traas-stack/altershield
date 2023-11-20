@@ -26,10 +26,10 @@
  */
 package com.alipay.altershield.change.exe.service.execute.statemachine;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.tools.common.logger.Loggers;
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -57,8 +57,8 @@ public class ExeNodeStateLoggerInterceptor {
      * @return the ops cloud result
      * @throws Throwable the throwable
      */
-    @Around("execution(public * com.alipay.opscloud.change.exe.service.execute.statemachine.ExeNodeStateMachine+.set*(..)) || execution"
-            + "(public * com.alipay.opscloud.change.exe.service.execute.statemachine.ExeNodeStateMachine+.submit*(..))")
+    @Around("execution(public * com.alipay.altershield.change.exe.service.execute.statemachine.ExeNodeStateMachine+.set*(..)) || execution"
+            + "(public * com.alipay.altershield.change.exe.service.execute.statemachine.ExeNodeStateMachine+.submit*(..))")
     public Object execute(ProceedingJoinPoint point) throws Throwable {
 
         Signature signature = point.getSignature();
@@ -77,15 +77,15 @@ public class ExeNodeStateLoggerInterceptor {
             Object object = point.proceed();
             if (entity != null) {
                 String result = formatMsg(msg, from, methodSignature, entity);
-                OpsCloudLoggerManager.log("info", logger, "exeState.transfer.success", entity.getNodeExeId(), result);
+                AlterShieldLoggerManager.log("info", logger, "exeState.transfer.success", entity.getNodeExeId(), result);
             }
             return object;
         } catch (Exception e) {
             String result =  formatMsg(msg, from, methodSignature, entity);;
             if (entity != null) {
-                OpsCloudLoggerManager.log("error", logger, e, "exeState.transfer.fail", entity.getNodeExeId(), result);
+                AlterShieldLoggerManager.log("error", logger, e, "exeState.transfer.fail", entity.getNodeExeId(), result);
             } else {
-                OpsCloudLoggerManager.log("error", logger, e, "exeState.transfer.fail, entity is null", result);
+                AlterShieldLoggerManager.log("error", logger, e, "exeState.transfer.fail, entity is null", result);
             }
             throw e;
         }

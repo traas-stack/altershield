@@ -46,24 +46,23 @@
 // */
 package com.alipay.altershield.change.exe.service.execute.statemachine;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
-import com.alipay.opscloud.api.change.exe.order.entity.ExeChangeOrderEntity;
-import com.alipay.opscloud.api.defender.ExeDefenderDetectService;
-import com.alipay.opscloud.change.exe.repository.ExeChangeNodeRepository;
-import com.alipay.opscloud.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.opscloud.change.meta.repository.MetaChangeSceneRepository;
-import com.alipay.opscloud.framework.common.util.exception.OpsCloudInternalErrorCode;
-import com.alipay.opscloud.framework.common.util.exception.OpsCloudInternalException;
-import com.alipay.opscloud.framework.core.change.facade.request.OpsCloudChangeFinishNotifyRequest;
-import com.alipay.opscloud.framework.core.change.facade.request.OpsCloudChangeSkipCheckRequest;
-import com.alipay.opscloud.framework.core.change.facade.result.OpsCloudChangeCheckProgressResult;
-import com.alipay.opscloud.framework.core.change.facade.result.OpsCloudChangeSkipCheckResult;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.common.result.OpsCloudChangeCheckVerdict;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
-import com.alipay.opscloud.tools.common.constant.OpsCloudConstant;
-import com.alipay.opscloud.tools.common.logger.Loggers;
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.change.exe.repository.ExeChangeNodeRepository;
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.change.meta.repository.MetaChangeSceneRepository;
+import com.alipay.altershield.common.constant.AlterShieldConstant;
+import com.alipay.altershield.framework.common.util.exception.AlterShieldInternalErrorCode;
+import com.alipay.altershield.framework.common.util.exception.AlterShieldInternalException;
+import com.alipay.altershield.framework.core.change.facade.request.ChangeFinishNotifyRequest;
+import com.alipay.altershield.framework.core.change.facade.request.ChangeSkipCheckRequest;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.core.change.facade.result.ChangeCheckProgressResult;
+import com.alipay.altershield.framework.core.change.facade.result.ChangeCheckVerdict;
+import com.alipay.altershield.framework.core.change.facade.result.ChangeSkipCheckResult;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
+import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -91,8 +90,8 @@ public abstract class ExeNodeStateMachine {
     protected ExeNodeStateEnum exeStateNode;
 
 
-    @Autowired
-    protected ExeDefenderDetectService exeDefenderDetectService;
+//    @Autowired
+//    protected ExeDefenderDetectService exeDefenderDetectService;
 
 
     /**
@@ -145,10 +144,10 @@ public abstract class ExeNodeStateMachine {
      * @param returnDetails    the return details
      * @return ops cloud result
      */
-    public OpsCloudResult<OpsCloudChangeCheckProgressResult> retrieveCheckResult(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum,
-                                                                                 boolean returnDetails) {
-        return new OpsCloudResult(new OpsCloudChangeCheckProgressResult(false, null,
-                OpsCloudConstant.OPSCLOUD_DEFENSE_CHECK_DETAIL_URL + entity.getNodeExeId()));
+    public AlterShieldResult<ChangeCheckProgressResult> retrieveCheckResult(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum,
+                                                                            boolean returnDetails) {
+        return new AlterShieldResult<>(new ChangeCheckProgressResult(false, null,
+                AlterShieldConstant.OPSCLOUD_DEFENSE_CHECK_DETAIL_URL + entity.getNodeExeId()));
     }
 
     /**
@@ -204,7 +203,7 @@ public abstract class ExeNodeStateMachine {
      * @param entity the entity
      * @param metaChangeSceneEntity
      */
-    public OpsCloudChangeCheckVerdict setNodeSyncPreStartCheck(long checkTimeOut, ExeChangeOrderEntity changeOrder,ExeNodeEntity entity, MetaChangeSceneEntity metaChangeSceneEntity) {
+    public ChangeCheckVerdict setNodeSyncPreStartCheck(long checkTimeOut, ExeChangeOrderEntity changeOrder, ExeNodeEntity entity, MetaChangeSceneEntity metaChangeSceneEntity) {
         unsupportedOperation(entity);
         return null;
     }
@@ -226,7 +225,7 @@ public abstract class ExeNodeStateMachine {
      * @param entity  the entity
      * @param request the request
      */
-    public void submitNodePostStartCheck(ExeNodeEntity entity, OpsCloudChangeFinishNotifyRequest request, MetaChangeSceneEntity metaChangeSceneEntity) {
+    public void submitNodePostStartCheck(ExeNodeEntity entity, ChangeFinishNotifyRequest request, MetaChangeSceneEntity metaChangeSceneEntity) {
         unsupportedOperation(entity);
     }
 
@@ -246,7 +245,7 @@ public abstract class ExeNodeStateMachine {
      * @param defenseStageEnum the defense stage enum
      * @param request              the request
      */
-    public OpsCloudResult<OpsCloudChangeSkipCheckResult> setIgnoreNodeCheck(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum, OpsCloudChangeSkipCheckRequest request) {
+    public AlterShieldResult<ChangeSkipCheckResult> setIgnoreNodeCheck(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum, ChangeSkipCheckRequest request) {
         unsupportedOperation(entity);
         return null;
     }
@@ -257,7 +256,7 @@ public abstract class ExeNodeStateMachine {
      * @param entity the entity
      */
     protected void unsupportedOperation(ExeNodeEntity entity) {
-        throw new OpsCloudInternalException(OpsCloudInternalErrorCode.CHNG_SRV_NOT_SUPPORT, "unsupported operation in " + exeStateNode + ", nodeId=" + entity.getNodeExeId());
+        throw new AlterShieldInternalException(AlterShieldInternalErrorCode.CHANGE_SERVICE_NOT_SUPPORT, "unsupported operation in " + exeStateNode + ", nodeId=" + entity.getNodeExeId());
     }
 
 }

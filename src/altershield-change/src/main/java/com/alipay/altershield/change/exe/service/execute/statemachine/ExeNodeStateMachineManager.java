@@ -26,7 +26,8 @@
  */
 package com.alipay.altershield.change.exe.service.execute.statemachine;
 
-import com.alipay.opscloud.api.change.exe.node.enums.ExeNodeStateEnum;
+
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
 
 /**
  * @author yuanji

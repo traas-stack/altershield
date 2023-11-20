@@ -43,8 +43,8 @@
  */
 package com.alipay.altershield.change.exe.service.check.model;
 
-import com.alipay.opscloud.change.meta.model.effective.MetaChangeStepEntity;
-import com.alipay.opscloud.framework.core.change.facade.request.OpsCloudChangeStartNotifyRequest;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
+import com.alipay.altershield.framework.core.change.facade.request.ChangeStartNotifyRequest;
 
 /**
  * The type Ops cloud change start notify request model.
@@ -52,9 +52,9 @@ import com.alipay.opscloud.framework.core.change.facade.request.OpsCloudChangeSt
  * @author yuanji
  * @version : OpsCloudChangeStartNotifyRequestModel.java, v 0.1 2022年04月05日 2:26 下午 yuanji Exp $
  */
-public class OpsCloudChangeStartNotifyRequestModel {
+public class ChangeStartNotifyRequestModel {
 
-    private OpsCloudChangeStartNotifyRequest opsCloudChangeStartNotifyRequest;
+    private ChangeStartNotifyRequest opsCloudChangeStartNotifyRequest;
 
     private MetaChangeStepEntity metaChangeStepEntity;
 
@@ -64,8 +64,8 @@ public class OpsCloudChangeStartNotifyRequestModel {
      * @param opsCloudChangeStartNotifyRequest the ops cloud change start notify request
      * @param metaChangeStepEntity             the meta change step entity
      */
-    public OpsCloudChangeStartNotifyRequestModel(
-            OpsCloudChangeStartNotifyRequest opsCloudChangeStartNotifyRequest,
+    public ChangeStartNotifyRequestModel(
+            ChangeStartNotifyRequest opsCloudChangeStartNotifyRequest,
             MetaChangeStepEntity metaChangeStepEntity) {
         this.opsCloudChangeStartNotifyRequest = opsCloudChangeStartNotifyRequest;
         this.metaChangeStepEntity = metaChangeStepEntity;
@@ -98,7 +98,7 @@ public class OpsCloudChangeStartNotifyRequestModel {
      *
      * @return the ops cloud change start notify request
      */
-    public OpsCloudChangeStartNotifyRequest getOpsCloudChangeStartNotifyRequest() {
+    public ChangeStartNotifyRequest getOpsCloudChangeStartNotifyRequest() {
         return opsCloudChangeStartNotifyRequest;
     }
 
