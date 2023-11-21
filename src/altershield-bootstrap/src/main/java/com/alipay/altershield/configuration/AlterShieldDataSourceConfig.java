@@ -75,7 +75,7 @@ import java.util.List;
 @MapperScan(value = {
         "com.alipay.altershield.common.largefield.dal.mapper",
         "com.alipay.altershield.common.id.sequence.dal.mapper",
-        "com.alipay.altershield.common.base.backconfig.dal.mapper",
+        "com.alipay.altershield.common.backconfig.dal.mapper",
         "com.alipay.altershield.common.ability.mapper",
         "com.alipay.altershield.change.meta.dal.mapper",
         "com.alipay.altershield.defender.meta.dal.mapper",

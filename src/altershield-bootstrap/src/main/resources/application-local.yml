@@ -13,3 +13,6 @@ spring:
     url: jdbc:mysql://rm-bp121clo2mdfhem90ho.mysql.rds.aliyuncs.com:3306/altershield
     username: altershield
     password: OpsCloud@123
+
+logging:
+  config : classpath:log4j2-spring-dev.xml

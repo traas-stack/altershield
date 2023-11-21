@@ -18,7 +18,7 @@
 
 
     <plugins>
-        <plugin interceptor="com.alipay.opscloud.tools.common.mybatis.SqlStatementInterceptor"></plugin>
+        <plugin interceptor="com.alipay.altershield.common.mybatis.SqlStatementInterceptor"></plugin>
     </plugins>
 
 </configuration>
