@@ -19,20 +19,20 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 变更防御校验记录实体转换器
+ * Change Defense Detection Record Entity Converter
  *
- * @author haoxuan
- * @version ExeDefenderDetectConvertor.java, v 0.1 2022年08月29日 3:28 下午 haoxuan
+ * @author yhaoxuan
+ * @version ExeDefenderDetectConvertor.java, v 0.1 2022年08月29日 3:28 下午 yhaoxuan
  */
 @Component("exeDefenderDetectConvertor")
 public class ExeDefenderDetectConvertor extends AbstractDefenderEntityConvertor {
 
     /**
-     * 实体DO对象转换为实体对象
+     * Convert data objects to entity objects
      * <p>
      *
-     * @param modelDO DO对象
-     * @return 实体对象
+     * @param modelDO Data object
+     * @return Entity object
      */
     public ExeDefenderDetectEntity convert2Model(OpsCloudExeDefenderDetectDO modelDO) {
         if (modelDO == null) {
@@ -77,11 +77,11 @@ public class ExeDefenderDetectConvertor extends AbstractDefenderEntityConvertor 
     }
 
     /**
-     * 实体对象转换为DO对象
+     * Convert entity object to data object
      * <p>
      *
-     * @param model 实体对象模型
-     * @return DO对象
+     * @param model Entity object
+     * @return Data object
      */
     public OpsCloudExeDefenderDetectDO convert2DO(ExeDefenderDetectEntity model) {
         if (model == null) {
@@ -127,11 +127,11 @@ public class ExeDefenderDetectConvertor extends AbstractDefenderEntityConvertor 
     }
 
     /**
-     * 实体DO对象转换为实体对象
+     * Convert data object list to entity object list
      * <p>
      *
-     * @param modelDOList DO对象
-     * @return 实体对象
+     * @param modelDOList Data object list
+     * @return Entity object list
      */
     public List<ExeDefenderDetectEntity> convert2ModelList(List<OpsCloudExeDefenderDetectDO> modelDOList) {
         if (modelDOList == null) {
@@ -148,11 +148,11 @@ public class ExeDefenderDetectConvertor extends AbstractDefenderEntityConvertor 
     }
 
     /**
-     * 实体对象为实体DO对象
+     * Convert entity object list to data object list
      * <p>
      *
-     * @param modelList DO对象
-     * @return 实体DO对象
+     * @param modelList Data object list
+     * @return Entity object list
      */
     public List<OpsCloudExeDefenderDetectDO> convert2DOList(List<ExeDefenderDetectEntity> modelList) {
         if (modelList == null) {

@@ -65,16 +65,16 @@ public class HeartbeatCheckImpl implements HeartbeatCheck {
     public AlterShieldResult<Map<String, String>> doCheck() {
         //心跳,可以通过配置推送,直接返回false.导致一键停止check操作
         Map<String, String> map = new HashMap<>();
-        map.put(OPSCLOUD_CLIENT_SWITCH_CHG_SRV_CHECK, String.valueOf(AlterShieldConstant.OPSCLOUD_CLIENT_SWITCH_CHG_SRV_CHECK));
-        map.put(OPSCLOUD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS, AlterShieldConstant.OPSCLOUD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS);
+        map.put(OPSCLOUD_CLIENT_SWITCH_CHG_SRV_CHECK, String.valueOf(AlterShieldConstant.ALTER_SHIELD_CLIENT_SWITCH_CHG_SRV_CHECK));
+        map.put(OPSCLOUD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS, AlterShieldConstant.ALTER_SHIELD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS);
         return AlterShieldResult.succeed("success", map);
     }
 
     @Override
     public AlterShieldResult<Map<String, String>> doCheck(String platform) {
         Map<String, String> map = new HashMap<>();
-        map.put(OPSCLOUD_CLIENT_SWITCH_CHG_SRV_CHECK, String.valueOf(AlterShieldConstant.OPSCLOUD_CLIENT_SWITCH_CHG_SRV_CHECK));
-        map.put(OPSCLOUD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS, AlterShieldConstant.OPSCLOUD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS);
+        map.put(OPSCLOUD_CLIENT_SWITCH_CHG_SRV_CHECK, String.valueOf(AlterShieldConstant.ALTER_SHIELD_CLIENT_SWITCH_CHG_SRV_CHECK));
+        map.put(OPSCLOUD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS, AlterShieldConstant.ALTER_SHIELD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS);
 
         //todo 完善控制
         return AlterShieldResult.succeed("success", map);

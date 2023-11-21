@@ -148,7 +148,7 @@ public abstract class ExeNodeStateMachine {
     public AlterShieldResult<ChangeCheckProgressResult> retrieveCheckResult(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum,
                                                                             boolean returnDetails) {
         return new AlterShieldResult<>(new ChangeCheckProgressResult(false, null,
-                AlterShieldConstant.OPSCLOUD_DEFENSE_CHECK_DETAIL_URL + entity.getNodeExeId()));
+                AlterShieldConstant.ALTER_SHIELD_DEFENSE_CHECK_DETAIL_URL + entity.getNodeExeId()));
     }
 
     /**

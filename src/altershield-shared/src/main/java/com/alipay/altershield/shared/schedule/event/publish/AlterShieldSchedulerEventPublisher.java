@@ -26,17 +26,17 @@ package com.alipay.altershield.shared.schedule.event.publish;
 import com.alipay.altershield.shared.schedule.event.AlterShieldSchedulerEvent;
 
 /**
- * 调度事件publisher
+ * Scheduling event publisher
  * @author yuanji
  * @version : OpsCloudEventPublisher.java, v 0.1 2022年08月12日 17:24 yuanji Exp $
  */
 public interface AlterShieldSchedulerEventPublisher {
 
     /**
-     * 提交事件
-     * @param sourceId 事件原id
-     * @param event 事件对象
-     * @return 返回 任务id
+     * Submit event
+     * @param sourceId event source id
+     * @param event event object
+     * @return event task id
      */
     String publish(String sourceId, AlterShieldSchedulerEvent event);
 }

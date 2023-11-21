@@ -43,8 +43,8 @@
  */
 package com.alipay.altershield.web.change.meta.vo;
 
-import com.alipay.opscloud.change.meta.model.enums.MetaChangeSceneStatus;
-import com.alipay.opscloud.framework.common.validate.StringLength;
+import com.alipay.altershield.change.meta.model.enums.MetaChangeSceneStatus;
+import com.alipay.altershield.framework.common.validate.StringLength;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

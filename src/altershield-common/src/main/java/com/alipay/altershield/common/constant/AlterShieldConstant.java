@@ -36,11 +36,11 @@ public class AlterShieldConstant {
      */
     public static final long    CONST_SEQ_MAX_VALUE      = 2821109907455L;
     /**
-     * 最大重试次数
+     * Maximum number of retries
      */
     public static volatile int  SCHEDULE_POINT_MAX_RETRY                  = 50;
     /**
-     * 首次重试间隔，in ms.调度器以秒为单位，这个数字低于1秒无意义
+     * First retry interval, in ms. Scheduler in seconds, this number is meaningless below 1 second
      */
     public static volatile long SCHEDULE_POINT_FIRST_RETRY_INTERVAL       = 1000;
     /**
@@ -48,65 +48,61 @@ public class AlterShieldConstant {
      */
     public static volatile int  SCHEDULE_POINT_MAX_RETRY_THRESHOLD        = 6;
     /**
-     * 采用固定间隔重试的初始重试时间间隔，im ms.
+     * Initial retry interval using fixed interval retries, im ms.
      */
     public static volatile long SCHEDULE_POINT_FIXED_RETRY_FIRST_INTERVAL = 5000;
     /**
-     * 采用固定间隔重试的最大重试时间间隔，im ms.
+     * Maximum retry interval using fixed interval retries, im ms.
      */
     public static volatile long SCHEDULE_POINT_FIXED_RETRY_MAX_INTERVAL   = 600000;
     /**
-     * 单次单UID捞数据大小
+     * Data size for single UID retrieval
      */
     public static volatile int SCHEDULE_POINT_SINGLE_UID_LOAD_SIZE = 100;
     /**
-     * 切换scheduler的暂停态
+     * Switch the scheduler's pause state
      */
     public static volatile boolean SWITCH_SCHEDULER_PAUSE = false;
-
     /**
-     * 工单详情页URL
+     * Change order details page URL
      */
     public static volatile String ALTER_SHIELD_ORDER_DETAIL_URL = "";
-
     /**
-     * 防御执行详情页URL
+     * Defense execution details page URL
      */
     public static volatile String ALTER_SHIELD_NODE_DETAIL_URL = "";
     /**
-     * kvRef字段是否采用变长模式(仅发布期间兼容用，永远保持true即可)
+     * Whether the kv Ref field adopts variable length mode (only compatible during release, just keep it true forever)
      */
     public static volatile boolean SWITCH_KV_REF_WRITE_VAR_LEN        = true;
     /**
      * The constant DAL_KV_VALUE_COLUMN_SIZE.
      */
     public static final int     DAL_KV_VALUE_COLUMN_SIZE = 200 * 1024;
-
     /**
-     * 每个参数允许的最大长度
+     * Maximum length allowed for each parameter
      */
     public static volatile int     LOG_PARAM_MAX_SIZE             = 4096;
     /**
-     * 日志脱敏组件总开关
+     * Log desensitization component master switch
      */
     public static volatile boolean SWITCH_ENABLE_LOG_DE_SENSITIVE = true;
     /**
-     * profiler的阀值
+     * profiler threshold
      */
     public static volatile long PROFILER_THRESHOLD = 5000;
-
     /**
-     * 配置中 refresh_by_ip_ 后缀的最大值
+     * Maximum value of refresh_by_ip_ suffix in configuration
      */
     public static volatile int REFRESH_BY_IP_MAX = 3;
     /**
-     * 客户端配置
+     * Client configuration
      */
-    public static volatile boolean OPSCLOUD_CLIENT_SWITCH_CHG_SRV_CHECK         = true;
+    public static volatile boolean ALTER_SHIELD_CLIENT_SWITCH_CHG_SRV_CHECK         = true;
     /**
-     * The constant OPSCLOUD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS.
+     * The constant ALTER_SHIELD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS.
      */
-    public static volatile String  OPSCLOUD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS = "";
+    public static volatile String  ALTER_SHIELD_CLIENT_SWITCH_OFF_CHANGE_SCENE_KEYS = "";
     /**
      * The constant META_CACHE_TIMEOUT_MILLI.
      */
@@ -120,41 +116,52 @@ public class AlterShieldConstant {
      */
     public static volatile boolean SWITCH_META_CACHE                            = true;
     /**
-     * 场景key的格式
+     * Change scene key format
      */
     public static final String CHANGE_KEY_PATTERN = "^[a-zA-Z][a-zA-Z0-9\\.\\_]*[a-zA-Z0-9]$";
     /**
-     * 风险防御校验详情连接
+     * Risk defense detection details link
      */
-    public static   volatile String OPSCLOUD_DEFENSE_CHECK_DETAIL_URL = "";
+    public static   volatile String ALTER_SHIELD_DEFENSE_CHECK_DETAIL_URL = "";
 
     /**
-     * 风险防御提交异步check的第一次schdpoint轮询时间
+     * Risk defense submits the first schdpoint polling time for asynchronous check
      */
     public static volatile   long   DEFENSE_SUBMIT_CHECK_INTERVAL     = 2;
 
     /**
-     * 同步纯管控获取校验数据超时时间(单位毫秒)
+     * Synchronous pure control timeout for obtaining detection data (unit: milliseconds)
      */
     public static volatile long SYNC_CHNG_CHECK_TIMEOUT = 3000;
     /**
-     * G1前置同步打标超时时间
+     * G1 pre-synchronous marking timeout time
      */
     public static volatile long G1_SYNC_DECISION_TAG_TIMEOUT_MS = 1000;
 
+    // -------------- Defender -----------------
+    /**
+     * Maximum blocking observation time of defense rules
+     */
+    public static volatile long DEFENDER_MAX_BLOCK_OBSERVE_SECOND = 600;
+
+    /**
+     * Synchronization defense verification timeout, unit: milliseconds
+     */
+    public static volatile long DEFENDER_SYNC_DETECT_TIMEOUT = 3000;
+
     // TODO 更换为开源的接入文档地址
     /**
-     * 接入文档地址
+     * Access document address
      */
-    public static volatile String OPSCLOUD_DOCUMENT_G0 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#pTAuq";
+    public static volatile String ALTER_SHIELD_DOCUMENT_G0 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#pTAuq";
     /**
-     * The constant OPSCLOUD_DOCUMENT_G1.
+     * The constant ALTER_SHIELD_DOCUMENT_G1.
      */
-    public static volatile String OPSCLOUD_DOCUMENT_G1 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#ziLU0";
+    public static volatile String ALTER_SHIELD_DOCUMENT_G1 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#ziLU0";
     /**
-     * The constant OPSCLOUD_DOCUMENT_G2.
+     * The constant ALTER_SHIELD_DOCUMENT_G2.
      */
-    public static volatile String OPSCLOUD_DOCUMENT_G2 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#Ebzy6";
+    public static volatile String ALTER_SHIELD_DOCUMENT_G2 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#Ebzy6";
 
 
 }

@@ -7,7 +7,6 @@ package com.alipay.altershield.defender.framework.exe.repository.impl;
 import com.alipay.altershield.defender.framework.exe.dal.dataobject.OpsCloudExeDefenderDetectDO;
 import com.alipay.altershield.defender.framework.exe.dal.dataobject.OpsCloudExeDefenderDetectParam;
 import com.alipay.altershield.defender.framework.exe.dal.mapper.OpsCloudExeDefenderDetectMapper;
-import com.alipay.altershield.defender.framework.exe.dal.mapper.OpsCloudManualExeDefenderDetectMapper;
 import com.alipay.altershield.defender.framework.exe.entity.convertor.ExeDefenderDetectConvertor;
 import com.alipay.altershield.defender.framework.exe.repository.ExeDefenderDetectRepository;
 import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
@@ -31,9 +30,6 @@ public class ExeDefenderDetectRepositoryImpl implements ExeDefenderDetectReposit
 
     @Autowired
     private OpsCloudExeDefenderDetectMapper opsCloudExeDefenderDetectMapper;
-
-    @Autowired
-    private OpsCloudManualExeDefenderDetectMapper opsCloudManualExeDefenderDetectMapper;
 
     @Autowired
     private ExeDefenderDetectConvertor exeDefenderDetectConvertor;

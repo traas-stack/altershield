@@ -27,7 +27,6 @@
  */
 package com.alipay.altershield.defender.framework.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alipay.altershield.common.constant.AlterShieldConstant;
 import com.alipay.altershield.common.id.enums.IdBizCodeEnum;
 import com.alipay.altershield.common.logger.Loggers;
@@ -40,8 +39,10 @@ import com.alipay.altershield.defender.framework.task.DefenderSyncDetectTask;
 import com.alipay.altershield.framework.common.util.JSONUtil;
 import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
 import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
 import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
 import com.alipay.altershield.shared.change.exe.service.ExeChangeNodeService;
+import com.alipay.altershield.shared.change.meta.model.enums.MetaChangeStepTypeEnum;
 import com.alipay.altershield.shared.defender.DefenderDetectService;
 import com.alipay.altershield.shared.defender.entity.ExeDefenderDetectEntity;
 import com.alipay.altershield.shared.defender.enums.DefenderPluginInvokeTypeEnum;
@@ -65,11 +66,9 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -79,16 +78,16 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * 发起变更风险防御校验的主流程服务
+ * The main process service that initiates change risk prevention detection
  *
- * @author haoxuan
- * @version DefenderDetectServiceImpl.java, v 0.1 2022年08月17日 4:02 下午 haoxuan
+ * @author yhaoxuan
+ * @version DefenderDetectServiceImpl.java, v 0.1 2022年08月17日 4:02 下午 yhaoxuan
  */
 @Service
 public class DefenderDetectServiceImpl extends AbstractDefenderService implements DefenderDetectService {
 
     @Autowired
-    private AlterShieldSchedulerEventPublisher schedulerEventPublisher;
+    private AlterShieldSchedulerEventPublisher alterShieldSchedulerEventPublisher;
 
     @Autowired
     private PluginMarket pluginMarket;
@@ -97,42 +96,23 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
     private ExeChangeNodeService changeNodeService;
 
     /**
-     * 变更防御主日志
+     * Change Defense Master Log
      */
     private static final Logger DEFENDER = Loggers.DEFENDER;
 
     /**
-     * 一级架构域key标识
-     */
-    private static final String MAIN_ARCH_DOMAIN = "mainDomains";
-
-    /**
-     * 二级架构域key标识
-     */
-    private static final String SUB_ARCH_DOMAIN = "subDomains";
-
-    /**
-     * 同步执行变更防御校验入口 - 仅提供G1代际的前置使用
-     * 注：同步防御中不执行实现异步防御SPI的防御规则，产品层已做拦截，此处做容错
+     * Synchronous execution of change defense detection entry - only available for pre-production in G1 generation
+     * Note: The defense rules for implementing asynchronous defense SPI are not executed in synchronous defense.
      *
-     * @param request 变更防御校验请求结构体
-     * @return 变更防御校验结果结构体
+     * @param request Change defense detection request structure
+     * @return Change defense detection result structure
      */
     @Override
     public AlterShieldResult<DefenderDetectResult> syncDetect(DefenderDetectRequest request) {
 
-        // 1.0 容错
+        // 1.0 fault tolerance
         if (request == null) {
             return AlterShieldResult.illegalArgument("request can`t be null");
-        }
-
-        // whiteList check
-        if (!whiteListCheck(request.getChangeSceneKey())) {
-            AlterShieldLoggerManager.log("info", DEFENDER, "白名单校验不通过", request.getChangeSceneKey());
-            DefenderDetectResult result = new DefenderDetectResult();
-            result.setDefensed(false);
-            result.setMsg("白名单校验不通过");
-            return AlterShieldResult.succeed("白名单校验不通过", result);
         }
 
         AlterShieldLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "syncDetect",
@@ -142,29 +122,29 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
         boolean checkPass = true;
 
         try {
-            // 2.0 获取最终要执行的防御规则列表
+            // 2.0 Get the final list of defense rules to be executed
             Set<MetaDefenderRuleEntity> matchedRules = matchDefenseRule(request);
 
             if (CollectionUtils.isEmpty(matchedRules)) {
-                // 规则列表为空
+                // Rule list is empty
                 AlterShieldLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "syncDetect",
-                        "防御规则匹配列表为空", request.getChangeOrderId(), request.getNodeId());
+                        "Defense rule matching list is empty", request.getChangeOrderId(), request.getNodeId());
                 return new AlterShieldResult<>(DefenderDetectResult.pass(detectGroupId));
             }
 
-            // 2.1 本方法只执行同步SPI接入的防御能力，所以要把异步的过滤掉
+            // 2.1 This method only implements the defense capability of synchronous SPI access, so asynchronous ones must be filtered out.
             matchedRules = matchedRules.stream()
                     .filter(r -> DefenderPluginInvokeTypeEnum.SYNC.getType().equals(r.getPluginInvokeType()))
                     .collect(Collectors.toSet());
 
             if (CollectionUtils.isEmpty(matchedRules)) {
-                // 规则列表为空
+                // Rule list is empty
                 AlterShieldLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "syncDetect",
-                        "防御规则过滤后列表为空", request.getChangeOrderId(), request.getNodeId());
+                        "The defense rules list is empty after filtering", request.getChangeOrderId(), request.getNodeId());
                 return new AlterShieldResult<>(DefenderDetectResult.pass(detectGroupId));
             }
 
-            // 3.0 调度防御规则执行，为每一个防御规则创建一个task
+            // 3.0 Schedule the execution of defense rules and create a task for each defense rule
             CountDownLatch countDownLatch = new CountDownLatch(matchedRules.size());
             List<FutureTask<DefenderDetectPluginResult>> tasks = new ArrayList<>(matchedRules.size());
             for (MetaDefenderRuleEntity rule : matchedRules) {
@@ -174,22 +154,22 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
                 tasks.add(futureTask);
             }
 
-            // 4.0 开始校验，更新node状态为校验中（前/后置）
+            // 4.0 Start detection and update the node status to detection (pre/post)
             ExeNodeEntity nodeEntity = changeNodeService.lockNodeById(request.getNodeId());
             changeNodeService.setNodeCheckStarted(nodeEntity, request.getDefenseStage(), detectGroupId);
 
-            // 5.0 判断校验结果
+            // 5.0 Determine the detection results
             long timeout = request.getTimeout() == null ? AlterShieldConstant.DEFENDER_SYNC_DETECT_TIMEOUT : request.getTimeout();
             boolean success = countDownLatch.await(timeout, TimeUnit.MILLISECONDS);
             if (!success) {
                 checkPass = true;
-                return new AlterShieldResult<>(DefenderDetectResult.timeout(detectGroupId, "防御执行超时，已大于" + timeout + "ms"));
+                return new AlterShieldResult<>(DefenderDetectResult.timeout(detectGroupId, "Defense execution timeout is greater than" + timeout + "ms"));
             }
 
-            // 5.1 获取校验结果
+            // 5.1 Get detection results
             for (FutureTask<DefenderDetectPluginResult> task : tasks) {
                 DefenderDetectPluginResult result = task.get();
-                // 5.1.1 出现一个阻断，则阻断
+                // 5.1.1 If a block occurs, then block
                 if (DefenderStatusEnum.FAIL.equals(result.getStatus())) {
                     checkPass = false;
                     DefenderDetectResult failResult = new DefenderDetectResult();
@@ -197,10 +177,10 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
                     failResult.setDefensed(true);
                     failResult.setStatus(DefenderStatusEnum.FAIL);
                     failResult.setDetectGroupId(detectGroupId);
-                    failResult.setMsg("存在防御规则校验不通过");
+                    failResult.setMsg("There is a defense rule that fails the detection");
                     return new AlterShieldResult<>(failResult);
                 } else if (DefenderStatusEnum.EXCEPTION.equals(result.getStatus())) {
-                    // 5.1.2 如果校验异常，需要看下规则的异常处理策略
+                    // 5.1.2 If the detection is abnormal, need to look at the rule's exception handling strategy.
                     MetaDefenderRuleEntity targetRule = matchedRules.stream()
                             .filter(r -> r.getId().equalsIgnoreCase(result.getRuleId()))
                             .findFirst().orElse(null);
@@ -211,7 +191,7 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
                         failResult.setDefensed(true);
                         failResult.setStatus(DefenderStatusEnum.FAIL);
                         failResult.setDetectGroupId(detectGroupId);
-                        failResult.setMsg("存在防御规则执行异常，且该规则异常处理策略为阻断变更");
+                        failResult.setMsg("There is a defense rule execution exception, and the rule exception handling strategy is to block changes");
                         return new AlterShieldResult<>(failResult);
                     }
                 }
@@ -219,10 +199,10 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
         } catch (Exception e) {
             AlterShieldLoggerManager.log("error", DEFENDER, "DefenderDetectServiceImpl", "syncDetect", "failed",
                     "do sync detect got an exception", request.getChangeOrderId(), request.getNodeId(), e);
-            DefenderDetectResult detectResult = DefenderDetectResult.exception(detectGroupId, "防御执行异常");
+            DefenderDetectResult detectResult = DefenderDetectResult.exception(detectGroupId, "Defense against execution exceptions");
             return new AlterShieldResult<>(detectResult);
         } finally {
-            // 6.0 开始校验，更新node状态为校验完成（前/后置）
+            // 6.0 Start detection and update the node status to detection completed (pre/post)
             ExeNodeEntity nodeEntity = changeNodeService.lockNodeById(request.getNodeId());
             changeNodeService.setNodeCheckFinish(nodeEntity, request.getDefenseStage(), checkPass);
         }
@@ -231,25 +211,16 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
     }
 
     /**
-     * 异步执行变更防御校验入口 - G1后置、G2、G3、G4代际使用
+     * Asynchronous execution change defense verification entry - G1 post, G2, G3, G4 use
      *
-     * @param request 变更防御校验请求结构体
-     * @return 变更防御校验结果结构体
+     * @param request Change defense detection request structure
+     * @return Change defense detection result structure
      */
     @Override
     public AlterShieldResult<DefenderDetectSubmitResult> asyncDetect(DefenderDetectRequest request) {
-        // 1.0 容错
+        // 1.0 fault tolerance
         if (request == null) {
             return AlterShieldResult.illegalArgument("request can`t be null");
-        }
-
-        // whiteList check
-        if (!whiteListCheck(request.getChangeSceneKey())) {
-            AlterShieldLoggerManager.log("info", DEFENDER, "白名单校验不通过", request.getChangeSceneKey());
-            DefenderDetectSubmitResult result = new DefenderDetectSubmitResult();
-            result.setDefensed(false);
-            result.setMsg("白名单校验不通过");
-            return AlterShieldResult.succeed("白名单校验不通过", result);
         }
 
         AlterShieldLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "asyncDetect",
@@ -259,41 +230,41 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
         result.setChangeOrderId(request.getChangeOrderId());
         result.setNodeId(request.getNodeId());
         result.setStage(request.getDefenseStage());
-        // 1.1 应急变更不做防御
+        // 1.1 Emergency changes do not perform defense detection
         if (request.isEmergency()) {
             result.setDefensed(false);
-            result.setMsg("应急变更不进行防御校验");
+            result.setMsg("Emergency changes do not perform defense detection");
             return new AlterShieldResult<>(result);
         }
 
         try {
-            // 2.0 获取最终要执行的防御规则列表
+            // 2.0 Get the final list of defense rules to be executed
             Set<MetaDefenderRuleEntity> matchedRules = matchDefenseRule(request);
             if (CollectionUtils.isEmpty(matchedRules)) {
                 result.setDefensed(false);
-                result.setMsg("本次未匹配到防御规则");
+                result.setMsg("No defense rules were matched");
                 return new AlterShieldResult<>(result);
             }
 
-            // 3.0 插入校验记录与调度事件
+            // 3.0 Inserting detection records and scheduling events
             List<ExeDefenderDetectEntity> toAddDetects = new ArrayList<>(matchedRules.size());
-            // 3.1 一批校验对应一个detectGroupId
+            // 3.1 A batch of detection corresponds to a detection group id
             String detectGroupId = idGenerator.generateIdByRelatedId(IdBizCodeEnum.OPSCLD_DEFENDER_DETECT_GROUP_ID, request.getNodeId());
             for (MetaDefenderRuleEntity rule : matchedRules) {
-                // 3.2 构建防御校验记录实体
+                // 3.2 Build defense detection record entity
                 ExeDefenderDetectEntity detect = createDetectEntity(request.getChangeOrderId(), request.getNodeId(),
                         detectGroupId, request.getDefenseStage(), rule);
                 toAddDetects.add(detect);
             }
 
-            // 3.3 开始校验，更新node状态为校验中（前/后置）
+            // 3.3 Start detection and update the node status to detecting (pre/post)
             ExeNodeEntity nodeEntity = changeNodeService.lockNodeById(request.getNodeId());
             changeNodeService.setNodeCheckStarted(nodeEntity, request.getDefenseStage(), detectGroupId);
 
             Boolean transactionRst = transactionTemplate.execute(new TransactionCallback<Boolean>() {
                 @Override
                 public Boolean doInTransaction(TransactionStatus status) {
-                    // 4.0 批量创建校验记录
+                    // 4.0 Create detection records in batches
                     boolean isSuccess = exeDefenderDetectRepository.batchInsert(toAddDetects);
                     if (!isSuccess) {
                         AlterShieldLoggerManager.log("error", DEFENDER, "DefenderDetectServiceImpl", "asyncDetect",
@@ -302,16 +273,16 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
                         status.setRollbackOnly();
                     }
 
-                    // 4.1 为每个校验记录创建一个防御执行事件，publish到事件中心进行调度
+                    // 4.1 Create a defense execution event for each detection record and publish it to the event center for scheduling
                     for (ExeDefenderDetectEntity detect : toAddDetects) {
                         DefenderDetectEvent detectEvent = createDetectEvent(request, detect);
-                        schedulerEventPublisher.publish(request.getChangeOrderId(), detectEvent);
+                        alterShieldSchedulerEventPublisher.publish(request.getChangeOrderId(), detectEvent);
                     }
 
-                    // 4.2 再创建一个防御状态轮询的事件，用于聚合整体防御校验结果
+                    // 4.2 Create another defense status polling event to aggregate the overall defense detection results.
                     DefenderCheckProcessEvent checkProcessEvent = createCheckProcessEvent(request.getChangeOrderId(), request.getNodeId(),
                             detectGroupId, request.getDefenseStage(), request.getChangeSceneKey(), request.getStepTypeEnum());
-                    schedulerEventPublisher.publish(request.getChangeOrderId(), checkProcessEvent);
+                    alterShieldSchedulerEventPublisher.publish(request.getChangeOrderId(), checkProcessEvent);
                     return true;
                 }
             });
@@ -328,7 +299,7 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
             } else {
                 AlterShieldLoggerManager.log("info", Loggers.DEFENDER, "DefenderDetectServiceImpl", "asyncDetect", "fail",
                         "submit detect task failed", request.getChangeOrderId(), request.getNodeId(), request.getDefenseStage());
-                return AlterShieldResult.systemError("提交校验任务失败");
+                return AlterShieldResult.systemError("Failed to submit detection task");
             }
 
         } catch (Exception e) {
@@ -339,21 +310,21 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
     }
 
     /**
-     * 匹配防御规则
+     * Match defense rules
      *
-     * @param request 变更防御校验请求结构体
-     * @return 匹配到的防御规则列表
+     * @param request Change defense detection request structure
+     * @return List of matched defense rules
      */
     private Set<MetaDefenderRuleEntity> matchDefenseRule(DefenderDetectRequest request) {
 
         Set<String> defenseRangeKeys = new HashSet<>();
         defenseRangeKeys.add(request.getChangeSceneKey());
-        // 1.0 加入changeTags
+        // 1.0 Add change Tags
         if (!CollectionUtils.isEmpty(request.getChangeTagIds())) {
             defenseRangeKeys.addAll(request.getChangeTagIds());
         }
 
-        // 2.0 获取防御规则列表
+        // 2.0 Get a list of defense rules
         AlterShieldLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
                 "get defenseRangeKeys", defenseRangeKeys.size(), JSONUtil.toJSONString(defenseRangeKeys, false), request.getDefenseStage());
         List<MetaDefenderRuleEntity> matchedRules = metaDefenderRuleRepository
@@ -369,59 +340,50 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
 
         if (request.getChangeExecuteInfo() == null
                 || request.getChangeExecuteInfo().isOrderPhase()) {
-            // 3.0 如果orderPhase为true，说明为工单级别的校验，过滤掉关联到批次维度的规则
+            // 3.0 If order phase is true, it means that the detection is at the change order level and rules associated with the batch dimension are filtered out.
             matchedRules = matchedRules.stream()
                     .filter(r -> !DefenseRangeTypeEnum.CHANGE_BATCH.equals(r.getDefenseRangeType()))
                     .collect(Collectors.toList());
         } else {
-            // 3.1 如果orderPhase为false，说明为批次级别的校验，过滤掉关联到工单维度的规则
+            // 3.1 If order phase is false, it means batch-level detection, and rules associated with the work order dimension are filtered out.
             matchedRules = matchedRules.stream()
                     .filter(r -> !DefenseRangeTypeEnum.CHANGE_SCENE.equals(r.getDefenseRangeType()))
                     .collect(Collectors.toList());
         }
 
-        // 4.0 执行每个防御规则的过滤条件
-        List<MetaDefenderRuleEntity> newMatchedRules = new ArrayList<>();
+        // 4.0 Execute filter conditions for each defense rule
+        List<MetaDefenderRuleEntity> matchResult = new ArrayList<>();
         for (MetaDefenderRuleEntity rule : matchedRules) {
-            // 4.1 过滤掉防御能力已关闭的防御规则，此处需要判断是否使用了新系统的插件还是代理到老系统的防御服务
-            if (!isEnabledRule(rule)) {
-                AlterShieldLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
-                        "filter disabled rule", request.getNodeId(), rule.getId(), rule.getName());
-                continue;
-            }
-
-            // 4.2 容错，如果changeFilter为空，默认匹配
+            // 4.1 Fault tolerance, if change Filter is empty, default matched
             if (rule.getChangeFilter() == null || rule.getChangeFilter().readObject() == null) {
                 AlterShieldLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
                         "the change filter is empty, default matched", request.getNodeId(), rule.getId(), rule.getName());
-                newMatchedRules.add(rule);
+                matchResult.add(rule);
                 continue;
             }
 
-            // 4.3 执行实际过滤条件的匹配
+            // 4.3 Perform matching of actual filter criteria
             ChangeFilter changeFilter = rule.getChangeFilter().readObject();
             boolean isMatch = changeFilter.isMatch(buildChangeFilterRequest(request));
 
             if (isMatch) {
-                // TODO 迭代器不能删数据
-//                matchedRules.remove(rule);
-                newMatchedRules.add(rule);
+                matchResult.add(rule);
             }
         }
 
         AlterShieldLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
-                "matched rule list size", newMatchedRules.size());
-        return new HashSet<>(newMatchedRules);
+                "matched rule list size", matchResult.size());
+        return new HashSet<>(matchResult);
     }
 
     /**
-     * 构建防御规则过滤请求结构体
+     * Construct a defense rule filtering request structure
      *
-     * @param req 变更防御校验请求结构体
-     * @return 构建结果
+     * @param req Change defense detection request structure
+     * @return Build results
      */
     private ChangeFilterRequest buildChangeFilterRequest(DefenderDetectRequest req) {
-        // req里面的嵌套类，都打了NotNull注解，所以不必判空
+        // The nested classes in req are all annotated with Not Null, so there is no need to judge null.
         ChangeFilterRequest request = new ChangeFilterRequest();
         request.setSceneCodes(Collections.singleton(IdUtil.getChangeScenarioEnum(req.getNodeId()).getCode()));
 
@@ -431,7 +393,7 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
             request.setChangeTile(req.getChangeBaseInfo().getChangeTitle());
             request.setChangeParam(req.getChangeBaseInfo().getChangeParamJSON());
 
-            // 变更内容信息
+            // Change content information
             ChangeContent changeContent = req.getChangeBaseInfo().getChangeContent();
             if (!Objects.isNull(changeContent) && !CollectionUtils.isEmpty(changeContent.getChangeContentInstance())) {
                 request.setChangeTargetTypes(Stream.of(changeContent.getChangeContentType()).collect(Collectors.toSet()));
@@ -440,7 +402,7 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
         }
 
 
-        // 分批信息组装
+        // Batch information assembly
         if (!Objects.isNull(req.getChangeExecuteInfo())) {
             request.setChangePhase(req.getChangeExecuteInfo().getChangePhase());
             request.setChangePhaseBatchNo(req.getChangeExecuteInfo().getBatchNo());
@@ -450,43 +412,24 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
             request.setTotalBatchNumInPhase(req.getChangeExecuteInfo().getTotalBatchInPhase());
         }
 
-        // 影响面信息
+        // Influence information
         if (!Objects.isNull(req.getChangeInfluenceInfo())) {
             request.setChangeApps(req.getChangeInfluenceInfo().getApps());
             request.setEnvs(req.getChangeInfluenceInfo().getEnvs());
             request.setIdcs(req.getChangeInfluenceInfo().getPhysicDeployCells());
-            request.setLogicalZones(req.getChangeInfluenceInfo().getLogicDeployCells());
+            request.setLogicalCells(req.getChangeInfluenceInfo().getLogicDeployCells());
             request.setHosts(req.getChangeInfluenceInfo().getHosts());
             request.setTenants(req.getChangeInfluenceInfo().getTenants());
-
-            // 其余影响面信息补充
-            Map<String, Object> extInfo = req.getChangeInfluenceInfo().getExtInfo();
-            if (!CollectionUtils.isEmpty(extInfo)) {
-                request.setOperatorDepId(String.valueOf(extInfo.get(ExtensionKey.DEP_ID.getKey())));
-                request.setBizGroupIds(new HashSet<>((Collection<String>) extInfo
-                        .getOrDefault(ExtensionKey.BIZ_GROUP_IDS.getKey(), Collections.emptySet())));
-                request.setGmCodes((new HashSet<>((Collection<String>) extInfo
-                        .getOrDefault(ExtensionKey.GM_CODES, Collections.emptyList()))));
-                request.setAffectedServices((new HashSet<>((Collection<String>) extInfo
-                        .getOrDefault(ExtensionKey.AFFECTED_SERVICES, Collections.emptyList()))));
-                request.setAppHaLevels(new HashSet<>((Collection<String>) extInfo
-                        .getOrDefault(ExtensionKey.HA_LEVEL, Collections.emptyList())));
-                if (extInfo.containsKey(ExtensionKey.ARCH_DOMAIN)) {
-                    JSONObject archObj = (JSONObject) extInfo.get(ExtensionKey.ARCH_DOMAIN);
-                    request.setMainArchDomainIds(new HashSet<>(archObj.getJSONArray(MAIN_ARCH_DOMAIN).toJavaList(String.class)));
-                    request.setSubArchDomainIds(new HashSet<>(archObj.getJSONArray(SUB_ARCH_DOMAIN).toJavaList(String.class)));
-                }
-            }
         }
         return request;
     }
 
     /**
-     * 创建变更防御校验事件实体
+     * Create a change defense detection event entity
      *
-     * @param request 防御校验请求结构体
-     * @param detect 校验记录实体
-     * @return 事件实体
+     * @param request Defense detection request structure
+     * @param detect Check record entity
+     * @return Event entity
      */
     private DefenderDetectEvent createDetectEvent(DefenderDetectRequest request, ExeDefenderDetectEntity detect) {
         DefenderDetectEvent event = new DefenderDetectEvent();
@@ -506,22 +449,17 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
         event.setChangeStartTime(request.getChangeExecuteInfo().getChangeStartTime());
         event.setChangeFinishTime(request.getChangeExecuteInfo().getChangeFinishTime());
         event.setOrderPhase(request.getChangeExecuteInfo().isOrderPhase());
-
-//        event.setChangeBaseInfo(request.getChangeBaseInfo());
-//        event.setChangeExecuteInfo(request.getChangeExecuteInfo());
-//        event.setChangeInfluenceInfo(request.getChangeInfluenceInfo());
-
         return event;
     }
 
     /**
-     * 创建变更防御结果检查事件实体
+     * Create a change prevention result check event entity
      *
-     * @param changeOrderId 变更工单id
-     * @param nodeId 变更节点id
-     * @param detectGroupId 校验分组id，对应一次前/后置
-     * @param stage 校验阶段 - 前/后置
-     * @return 事件实体
+     * @param changeOrderId Change order id
+     * @param nodeId Change node id
+     * @param detectGroupId Detection group id
+     * @param stage Pre or post
+     * @return Event entity
      */
     private DefenderCheckProcessEvent createCheckProcessEvent(String changeOrderId, String nodeId,
                                                               String detectGroupId, DefenseStageEnum stage,

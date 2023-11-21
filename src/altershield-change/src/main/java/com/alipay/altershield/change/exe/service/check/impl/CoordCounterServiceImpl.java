@@ -75,7 +75,7 @@ public class CoordCounterServiceImpl implements CoordCounterService {
      * @param traceId
      */
     @Override
-    public long (String traceId) {
+    public long addAndGetByTraceId (String traceId) {
         return transactionTemplate.execute(new TransactionCallback<Long>() {
             @Override
             public Long doInTransaction(TransactionStatus status) {

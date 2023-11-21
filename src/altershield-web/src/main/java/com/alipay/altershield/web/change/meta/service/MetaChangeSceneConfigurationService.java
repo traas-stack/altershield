@@ -94,7 +94,7 @@ public class MetaChangeSceneConfigurationService implements InitializingBean {
         metaChangeInterfaceVO.setCanConfig(metaChangeStepEntity != null);
         metaChangeInterfaceVO.setInterfaceType(METHOD_INVOKE_WAY_SYNC);
         metaChangeInterfaceVO.setChangeStepName("提交变更执行单");
-        metaChangeInterfaceVO.setParamDocumentUrl(AlterShieldConstant.OPSCLOUD_DOCUMENT_G1);
+        metaChangeInterfaceVO.setParamDocumentUrl(AlterShieldConstant.ALTER_SHIELD_DOCUMENT_G1);
         metaChangeInterfaceVO.setInterfaceInfo("OpsCloudSimpleChangeClient.submitChangeExecOrder(OpsCloudChangeExecOrderSubmitRequest)");
 
         aList.add(metaChangeInterfaceVO);
@@ -116,7 +116,7 @@ public class MetaChangeSceneConfigurationService implements InitializingBean {
         metaChangeInterfaceVO.setDisplayOnly(true);
         metaChangeInterfaceVO.setInterfaceType(METHOD_INVOKE_WAY_SYNC);
         metaChangeInterfaceVO.setChangeStepName("提交变更事件");
-        metaChangeInterfaceVO.setParamDocumentUrl(AlterShieldConstant.OPSCLOUD_DOCUMENT_G0);
+        metaChangeInterfaceVO.setParamDocumentUrl(AlterShieldConstant.ALTER_SHIELD_DOCUMENT_G0);
         metaChangeInterfaceVO.setInterfaceInfo("OpsCloudChangeNotifyClient.submitChangeEvent(OpsCloudChangeEventRequest)");
         aList.add(metaChangeInterfaceVO);
         return aList;
@@ -141,7 +141,7 @@ public class MetaChangeSceneConfigurationService implements InitializingBean {
         metaChangeInterfaceVO.setCanConfig(true);
         metaChangeInterfaceVO.setInterfaceType(METHOD_INVOKE_WAY_ASYNC);
         metaChangeInterfaceVO.setInterfaceInfo(interfaceInfo);
-        metaChangeInterfaceVO.setParamDocumentUrl(AlterShieldConstant.OPSCLOUD_DOCUMENT_G2);
+        metaChangeInterfaceVO.setParamDocumentUrl(AlterShieldConstant.ALTER_SHIELD_DOCUMENT_G2);
         g2InterfaceMap.put(typeName,metaChangeInterfaceVO);
     }
 

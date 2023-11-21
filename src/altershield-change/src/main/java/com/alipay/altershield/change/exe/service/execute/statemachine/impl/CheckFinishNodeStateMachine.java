@@ -101,7 +101,7 @@ public abstract class CheckFinishNodeStateMachine extends ExeNodeStateMachine {
         {
             ChangeCheckVerdict verdict = exeChangeNodeService.queryChangeVerdict(entity,defenseStageEnum, returnDetails, checkFinishSuccess());
             ChangeCheckProgressResult opsCloudChangeCheckProgressResult =  new ChangeCheckProgressResult(true, verdict,
-                    AlterShieldConstant.OPSCLOUD_DEFENSE_CHECK_DETAIL_URL + entity.getNodeExeId());
+                    AlterShieldConstant.ALTER_SHIELD_DEFENSE_CHECK_DETAIL_URL + entity.getNodeExeId());
 
             return new AlterShieldResult<>(opsCloudChangeCheckProgressResult);
         }
@@ -112,7 +112,7 @@ public abstract class CheckFinishNodeStateMachine extends ExeNodeStateMachine {
             verdict.setAllFinish(true);
             verdict.setMsg("check timeout or fail, paas all");
             return new AlterShieldResult<>(new ChangeCheckProgressResult(true, verdict,
-                    AlterShieldConstant.OPSCLOUD_DEFENSE_CHECK_DETAIL_URL + entity.getNodeExeId()));
+                    AlterShieldConstant.ALTER_SHIELD_DEFENSE_CHECK_DETAIL_URL + entity.getNodeExeId()));
         }
     }
 

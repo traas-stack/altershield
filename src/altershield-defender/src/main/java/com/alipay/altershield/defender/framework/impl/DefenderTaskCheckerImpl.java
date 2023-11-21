@@ -55,54 +55,48 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * 变更防御校验任务批次状态检查器
+ * Change Defense Detection Task Batch Status Checker
  *
- * @author haoxuan
- * @version DefenderTaskCheckerImpl.java, v 0.1 2022年08月29日 9:26 下午 haoxuan
+ * @author yhaoxuan
+ * @version DefenderTaskCheckerImpl.java, v 0.1 2022年08月29日 9:26 下午 yhaoxuan
  */
 @Component("defenderTaskCheckerImpl")
 public class DefenderTaskCheckerImpl extends AbstractDefenderService implements DefenderTaskChecker {
 
     @Autowired
-    private AlterShieldSchedulerEventPublisher opsCloudSchedulerEventPublisher;
+    private AlterShieldSchedulerEventPublisher alterShieldSchedulerEventPublisher;
 
     @Autowired
     private ExeChangeNodeService changeNodeService;
 
 
     /**
-     * 检查一次前/后置全部的校验任务的执行状态，并组合最终结果
+     * Check the execution status of all detection tasks pre/post once and combine the final results
      *
-     * @param changeOrderId 变更工单id
-     * @param nodeId 变更节点id
-     * @param detectGroupId 校验分组id
-     * @return 任务调度结果
+     * @param changeOrderId Change order id
+     * @param nodeId Change node id
+     * @param detectGroupId Detection group id
+     * @return Task result
      */
     @Override
     public DefenderTaskResult checkDetectProcess(String changeOrderId, String nodeId, String detectGroupId, DefenseStageEnum stage, String changeSceneKey, MetaChangeStepTypeEnum changeStepType) {
-        // 1、参数校验
+        // 1、Parameter verification
         if (StringUtils.isBlank(changeOrderId) || StringUtils.isBlank(detectGroupId)) {
             AlterShieldLoggerManager.log("error", Loggers.DEFENDER, "DefenderTaskCheckerImpl", "checkDetectProcess",
                     "change order id and detect group id can`t be empty", changeOrderId, detectGroupId);
-            return DefenderTaskResult.failWithNoRetry("入参非法");
+            return DefenderTaskResult.failWithNoRetry("Illegal arguments");
         }
 
-        // whiteList check
-        if (!whiteListCheck(changeSceneKey)) {
-            AlterShieldLoggerManager.log("info", Loggers.DEFENDER, "白名单校验不通过", changeSceneKey);
-            return DefenderTaskResult.failWithNoRetry("白名单校验不通过");
-        }
-
-        // 2、根据groupId取所有匹配到的防御规则
+        // 2、Get all matched defense rules based on group ID
         List<ExeDefenderDetectEntity> detectEntities = exeDefenderDetectRepository.selectByGroupId(detectGroupId);
         if (CollectionUtils.isEmpty(detectEntities)) {
             AlterShieldLoggerManager.log("error", Loggers.DEFENDER, "DefenderTaskCheckerImpl", "checkDetectProcess",
-                    "未查询到防御规则执行记录", changeOrderId, detectGroupId);
-            return DefenderTaskResult.failWithRetry("未查询到防御规则执行记录");
+                    "No defense rule execution record found", changeOrderId, detectGroupId);
+            return DefenderTaskResult.failWithRetry("No defense rule execution record found");
         }
         long detectCount = detectEntities.size();
 
-        // 3、过滤掉试运行规则（不过滤未开始的规则是防止在校验过程中关闭该规则）（存在问题：校验过程中改为试运行？采用更新的状态？）
+        // 3、Filter out trial run rules
         List<MetaDefenderRuleEntity> ruleEntities = metaDefenderRuleRepository.selectByRuleIds(detectEntities
                 .stream()
                 .map(ExeDefenderDetectEntity::getRuleId)
@@ -117,32 +111,32 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
                     return !Objects.isNull(rule) && !DefenderRuleStatusEnum.GRAY.equals(rule.getStatus());
                 }).collect(Collectors.toList());
 
-        // 4、判断是否有阻断状态且未忽略的规则，有则发布阻断
+        // 4、Determine whether there are rules in blocking status that have not been ignored, and if so, block them.
         List<ExeDefenderDetectEntity> blockRule = detectEntities.stream().filter(e -> e.isBlocked() && !e.isIgnored()).collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(blockRule)) {
-            // 发布校验失败事件
+            // Publish detection failure event
             publishFailEvent(changeOrderId, nodeId, detectGroupId, stage, changeSceneKey, changeStepType);
-            // 更新node状态为失败
+            // Update node status to failed
             updateNodeStatusFinishFail(nodeId, stage);
-            return DefenderTaskResult.succeed("任务执行完成");
+            return DefenderTaskResult.succeed("Task execution completed");
         }
 
-        // 5、判断是否存在INIT/EXE等状态，存在则RETRY（只要不阻断，并且存在有未执行完的规则就RETRY）
+        // 5、Determine whether there is INIT/EXE and other states, and if so, RETRY (as long as it is not blocked and there are unfinished rules, RETRY)
         long reTryCount = detectEntities.stream()
-                .filter(e -> DefenderStatusEnum.INIT.equals(e.getStatus()) || DefenderStatusEnum.EXE.equals(e.getStatus())).count();
+                .filter(e -> DefenderStatusEnum.INIT.equals(e.getStatus()) || DefenderStatusEnum.EXE.equals(e.getStatus()))
+                .count();
         if (reTryCount > 0) {
-            return DefenderTaskResult.failWithRetry("存在INIT/EXE状态的规则执行记录");
+            return DefenderTaskResult.failWithRetry("There is a rule execution record in INIT/EXE status");
         }
-        // --------------- 以上为非终态情况，处理未阻断或者重试，以下为所有规则均处于终态的校验逻辑 --------------------
 
-        // 6、全部通过/取消+通过=全量规则/取消+通过+异常处理策略为放行=全量规则，则发布成功
-        // 6.1 通过数
+        // 6、All passed/cancel + pass = full rule/cancel + pass + exception handling policy is release = full rule, then the release is successful
+        // 6.1 Number of passes
         long passCount = detectEntities.stream()
                 .filter(e -> DefenderStatusEnum.PASS.equals(e.getStatus())).count();
-        // 6.2 取消数
+        // 6.2 Number of cancellations
         long cancelCount = detectEntities.stream()
                 .filter(e -> DefenderStatusEnum.CANCEL.equals(e.getStatus())).count();
-        // 6.3 规则异常且异常处理策略为放行
+        // 6.3 The rule is abnormal and the exception handling strategy is release
         long exceptionReleaseCount = detectEntities.stream()
                 .filter(e -> {
                     DefenderStatusEnum defenderStatus = e.getStatus();
@@ -153,33 +147,33 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
                     return (DefenderStatusEnum.EXCEPTION.equals(defenderStatus) || DefenderStatusEnum.TIMEOUT.equals(defenderStatus))
                             && ExceptionStrategyEnum.RELEASE.equals(rule.getExceptionStrategy());
                 }).count();
-        // 6.4 执行判断
+        // 6.4 execution judgment
         if ((passCount == detectCount)
                 || (passCount + cancelCount == detectCount)
                 || (passCount + cancelCount + exceptionReleaseCount == detectCount)) {
-            // 发布校验通过事件
+            // Publish detection pass event
             publishPassEvent(changeOrderId, nodeId, detectGroupId, stage, changeSceneKey, changeStepType);
-            // 更新node状态为成功
+            // Update node status to successful
             updateNodeStatusFinishPass(nodeId, stage);
-            return DefenderTaskResult.succeed("任务执行完成");
+            return DefenderTaskResult.succeed("Task execution completed");
         }
 
-        // 7、过滤取消的规则
+        // 7、Filter canceled rules
         detectEntities = detectEntities.stream()
                 .filter(e -> !DefenderStatusEnum.CANCEL.equals(e.getStatus()))
                 .collect(Collectors.toList());
 
-        // 8、若存在阻断字段为 true且未忽略，则发布阻断
+        // 8、If the existing blocking field is true and is not ignored, the blocking is issued.
         blockRule = detectEntities.stream().filter(e -> e.isBlocked() && !e.isIgnored()).collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(blockRule)) {
-            // 发布校验失败事件
+            // Publish detection failure event
             publishFailEvent(changeOrderId, nodeId, detectGroupId, stage, changeSceneKey, changeStepType);
-            // 更新node状态为失败
+            // Update node status to failed
             updateNodeStatusFinishFail(nodeId, stage);
-            return DefenderTaskResult.succeed("任务执行完成");
+            return DefenderTaskResult.succeed("Task execution completed");
         }
 
-        // 9、若存在状态为异常/超时且未忽略且异常处理逻辑为阻断的规则，则发布阻断
+        // 9、If there is a rule whose status is exception/timeout and is not ignored and the exception handling logic is blocking, then block is issued.
         blockRule = detectEntities.stream().filter(e -> {
             DefenderStatusEnum status = e.getStatus();
             MetaDefenderRuleEntity rule = ruleMaps.get(e.getRuleId());
@@ -191,48 +185,48 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
         }).collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(blockRule)) {
             publishFailEvent(changeOrderId, nodeId, detectGroupId, stage, changeSceneKey, changeStepType);
-            // 更新node状态为失败
+            // Update node status to failed
             updateNodeStatusFinishFail(nodeId, stage);
-            return DefenderTaskResult.succeed("任务执行完成");
+            return DefenderTaskResult.succeed("Task execution completed");
         }
 
-        // 10、其余情况均判定为通过，需更新Node状态
+        // 10、The rest of the cases are judged as passed and the Node status needs to be updated.
         publishPassEvent(changeOrderId, nodeId, detectGroupId, stage, changeSceneKey, changeStepType);
-        // 更新node状态为成功
+        // Update node status to successful
         updateNodeStatusFinishPass(nodeId, stage);
 
-        return DefenderTaskResult.succeed("任务执行完成");
+        return DefenderTaskResult.succeed("Task execution completed");
     }
 
     /**
-     * 发布校验失败事件*
+     * Publish detection failure event*
      * @param changeOrderId orderId
      * @param nodeId nodeId
      * @param detectGroupId groupId
-     * @param stage 前后置
+     * @param stage pre or post
      */
     private void publishFailEvent(String changeOrderId, String nodeId, String detectGroupId, DefenseStageEnum stage, String changeSceneKey, MetaChangeStepTypeEnum changeStepType) {
         eventPublish(changeOrderId, nodeId, detectGroupId, stage, DefenderVerdictEnum.FAIL, changeSceneKey, changeStepType);
     }
 
     /**
-     * 发布校验成功事件*
+     * Publish detection success event
      * @param changeOrderId orderId
      * @param nodeId nodeId
      * @param detectGroupId groupId
-     * @param stage 前后置
+     * @param stage pre or post
      */
     private void publishPassEvent(String changeOrderId, String nodeId, String detectGroupId, DefenseStageEnum stage, String changeSceneKey, MetaChangeStepTypeEnum changeStepType) {
         eventPublish(changeOrderId, nodeId, detectGroupId, stage, DefenderVerdictEnum.PASS, changeSceneKey, changeStepType);
     }
 
     /**
-     * 事件发布*
+     * publish event
      * @param changeOrderId orderId
      * @param nodeId nodeId
      * @param detectGroupId groupId
-     * @param stage 前后轴
-     * @param verdict 校验结果
+     * @param stage pre or post
+     * @param verdict detection result
      */
     private void eventPublish(String changeOrderId, String nodeId, String detectGroupId, DefenseStageEnum stage,
                               DefenderVerdictEnum verdict, String changeSceneKey, MetaChangeStepTypeEnum changeStepType) {
@@ -240,13 +234,13 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
         DefenderDetectFinishEvent event = buildDefenseFinishEvent(changeOrderId, nodeId, detectGroupId,
                 stage, verdict,changeSceneKey, changeStepType);
 
-        opsCloudSchedulerEventPublisher.publish(changeOrderId, event);
+        alterShieldSchedulerEventPublisher.publish(changeOrderId, event);
     }
 
     /**
-     * 更新node状态结束 & 校验通过*
+     * Update node status completed & detection passed
      * @param nodeId nodeId
-     * @param stage 前后置
+     * @param stage pre or post
      */
     private void updateNodeStatusFinishPass(String nodeId, DefenseStageEnum stage) {
         ExeNodeEntity nodeEntity = changeNodeService.lockNodeById(nodeId);
@@ -254,9 +248,9 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
     }
 
     /**
-     * 更新node状态结束 & 校验不通过*
+     * End of updating node status & detection failed
      * @param nodeId nodeId
-     * @param stage 前后置
+     * @param stage pre or post
      */
     private void updateNodeStatusFinishFail(String nodeId, DefenseStageEnum stage) {
         ExeNodeEntity nodeEntity = changeNodeService.lockNodeById(nodeId);
@@ -264,10 +258,10 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
     }
 
     /**
-     * 更新node状态为失败*
+     * Update node status to failed
      * @param nodeId nodeId
-     * @param stage 前后置
-     * @param msg 失败信息
+     * @param stage pre or post
+     * @param msg failure message
      */
     private void updateNodeStatusFail(String nodeId, DefenseStageEnum stage, String msg) {
         ExeNodeEntity nodeEntity = changeNodeService.lockNodeById(nodeId);

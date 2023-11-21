@@ -4,52 +4,51 @@
  */
 package com.alipay.altershield.defender.framework.listener;
 
-import com.alipay.opscloud.api.defender.DefenderTaskChecker;
-import com.alipay.opscloud.api.defender.result.DefenderTaskResult;
-import com.alipay.opscloud.api.scheduler.enums.OpsCloudScheduleEventResultStatus;
-import com.alipay.opscloud.api.scheduler.event.defender.DefenderCheckProcessEvent;
-import com.alipay.opscloud.api.scheduler.event.listener.OpsCloudSchedulerEventContext;
-import com.alipay.opscloud.api.scheduler.event.listener.OpsCloudSchedulerEventListener;
-import com.alipay.opscloud.api.scheduler.event.result.OpsCloudSchedulerEventExecuteResult;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.tools.common.logger.Loggers;
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.shared.defender.DefenderTaskChecker;
+import com.alipay.altershield.shared.defender.result.DefenderTaskResult;
+import com.alipay.altershield.shared.schedule.enums.AlterShieldScheduleEventResultStatus;
+import com.alipay.altershield.shared.schedule.event.defender.DefenderCheckProcessEvent;
+import com.alipay.altershield.shared.schedule.event.listener.AlterShieldSchedulerEventContext;
+import com.alipay.altershield.shared.schedule.event.listener.AlterShieldSchedulerEventListener;
+import com.alipay.altershield.shared.schedule.event.result.AlterShieldSchedulerEventExecuteResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * 变更防御批次校验任务状态检查器
+ * Change Defense Batch Detection Task Status Checker
  *
- * @author haoxuan
- * @version DefenderCheckProcessEventListener.java, v 0.1 2022年08月30日 4:01 下午 haoxuan
+ * @author yhaoxuan
+ * @version DefenderCheckProcessEventListener.java, v 0.1 2022年08月30日 4:01 下午 yhaoxuan
  */
 @Component("defenderCheckProcessEventListener")
-public class DefenderCheckProcessEventListener implements OpsCloudSchedulerEventListener<DefenderCheckProcessEvent> {
+public class DefenderCheckProcessEventListener implements AlterShieldSchedulerEventListener<DefenderCheckProcessEvent> {
 
     @Autowired
     private DefenderTaskChecker defenderTaskChecker;
 
     /**
-     * 接收变更防御批次校验任务状态检查事件，汇总批次所有校验任务的状态
+     * Receive change defense batch detection task status check events and summarize the status of all detection tasks in the batch
      *
-     * @param context
-     * @param event
-     * @return
+     * @param context event context
+     * @param event event object
+     * @return event result
      */
     @Override
-    public OpsCloudSchedulerEventExecuteResult onEvent(OpsCloudSchedulerEventContext context, DefenderCheckProcessEvent event) {
-        OpsCloudLoggerManager.log("info", Loggers.DEFENDER,
-                String.format("[DefenderCheckProcessEventListener] 防御消费整合校验规则事件, OrderId=%s, NodeId=%s, stage=%s",
-                        event.getChangeOrderId(), event.getNodeId(), event.getStage().getStage()));
+    public AlterShieldSchedulerEventExecuteResult onEvent(AlterShieldSchedulerEventContext context, DefenderCheckProcessEvent event) {
+        AlterShieldLoggerManager.log("info", Loggers.DEFENDER, "DefenderCheckProcessEventListener", "onEvent",
+                event.getChangeOrderId(), event.getNodeId(), event.getStage().getStage());
 
-        OpsCloudSchedulerEventExecuteResult result = new OpsCloudSchedulerEventExecuteResult();
+        AlterShieldSchedulerEventExecuteResult result = new AlterShieldSchedulerEventExecuteResult();
 
         DefenderTaskResult executeRst = defenderTaskChecker.checkDetectProcess(event.getChangeOrderId(),
                 event.getNodeId(), event.getDetectGroupId(), event.getStage(), event.getChangeSceneKey(), event.getChangeStepType());
         result.setMsg(executeRst.getMsg());
         if (executeRst.isNeedRetry()) {
-            result.setStatus(OpsCloudScheduleEventResultStatus.RETRY);
+            result.setStatus(AlterShieldScheduleEventResultStatus.RETRY);
         } else {
-            result.setStatus(OpsCloudScheduleEventResultStatus.SUCCESS);
+            result.setStatus(AlterShieldScheduleEventResultStatus.SUCCESS);
         }
         return result;
     }
