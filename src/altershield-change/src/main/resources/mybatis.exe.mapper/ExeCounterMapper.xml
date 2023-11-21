@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alipay.altershield.change.exe.dal.mapper.ExeCounterMapper">
+    <resultMap id="BaseResultMap" type="com.alipay.altershield.change.exe.dal.dataobject.ExeCounterDO">
+
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+        <result column="count" jdbcType="BIGINT" property="count"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, uid, count, gmt_create, gmt_modified
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+        select
+        <include refid="Base_Column_List"/>
+        from opscloud_exe_counter
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="lockById" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+        select
+        <include refid="Base_Column_List"/>
+        from opscloud_exe_counter
+        where id = #{id,jdbcType=VARCHAR} FOR UPDATE
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+
+        delete from opscloud_exe_counter
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.alipay.altershield.change.exe.dal.dataobject.ExeCounterDO">
+        insert into opscloud_exe_counter (id,  count, gmt_create, gmt_modified)
+        values (#{id,jdbcType=VARCHAR}, #{count,jdbcType=BIGINT}, now(),now())
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.alipay.altershield.change.exe.dal.dataobject.ExeCounterDO">
+        update opscloud_exe_counter
+        set
+        count = #{count,jdbcType=BIGINT},
+        gmt_modified = now()
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

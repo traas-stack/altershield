@@ -49,7 +49,6 @@ import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
 import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
 import com.alipay.altershield.change.meta.service.request.*;
 import com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeSceneRequest;
-import com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeStepRequest;
 import com.alipay.altershield.framework.core.change.facade.result.AlterShieldPageResult;
 import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import com.alipay.altershield.framework.core.change.facade.result.CreateMetaChangeSceneResult;
@@ -226,15 +225,6 @@ public interface MetaChangeSceneService {
      * @return
      */
     AlterShieldResult<String> alterGeneration(AlterChangeSceneGenerationRequest request);
-
-    /**
-     * 获取所有的场景数据
-     *
-     * @return java.util.List<com.alipay.opscloud.change.meta.model.effective.MetaChangeSceneBatchEntity>
-     * @author gaofeng.pan
-     * @date 2022/10/24 19:01
-     **/
-    List<MetaChangeSceneBatchEntity> queryAllScene();
 
 
     /**

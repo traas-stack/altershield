@@ -34,6 +34,7 @@ import com.alipay.altershield.shared.change.exe.node.entity.*;
 import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
 import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
 import com.alipay.altershield.shared.schedule.event.change.ChangeNodeCheckStartEvent;
+import com.alipay.altershield.util.MiscUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -97,10 +98,10 @@ public class PreAopFinishExeNodeStateMachine extends CheckFinishNodeStateMachine
         //merge target
         boolean influenceEffectiveTarget = mergeEffectiveTargetLocations(exeNodeEntity, request);
         //merge 扩展信息
-        boolean influenceExtensionInfo = mergeExtentInfo(exeNodeEntity, request);
-        boolean influenceInfoChanged = influenceEffectiveTarget || influenceExtensionInfo;
+//        boolean influenceExtensionInfo = mergeExtentInfo(exeNodeEntity, request);
+//        boolean influenceInfoChanged = influenceEffectiveTarget || influenceExtensionInfo;
         exeChangeNodeRepository.update(exeNodeEntity);
-        publishChangeNodeCheckStartEvent(exeNodeEntity, DefenseStageEnum.POST, metaChangeSceneEntity, influenceInfoChanged);
+        publishChangeNodeCheckStartEvent(exeNodeEntity, DefenseStageEnum.POST, metaChangeSceneEntity, false);
     }
 
     private boolean mergeEffectiveTargetLocations(ExeNodeEntity exeNodeEntity, ChangeFinishNotifyRequest request) {
@@ -130,16 +131,16 @@ public class PreAopFinishExeNodeStateMachine extends CheckFinishNodeStateMachine
         return false;
     }
 
-    private boolean mergeExtentInfo(ExeNodeEntity exeNodeEntity, ChangeFinishNotifyRequest request) {
-
-        if (!CollectionUtils.isEmpty(request.getExtensionInfo())) {
-            Map<String, Object> extension =  MiscUtil.mergeExtension(exeNodeEntity.getSearchExtRef().readObject(), request.getExtensionInfo());
-            exeNodeEntity.getSearchExtRef().write(extension);
-            return true;
-        }
-        return false;
-
-    }
+//    private boolean mergeExtentInfo(ExeNodeEntity exeNodeEntity, ChangeFinishNotifyRequest request) {
+//
+//        if (!CollectionUtils.isEmpty(request.getExtensionInfo())) {
+//            Map<String, Object> extension =  MiscUtil.mergeExtension(exeNodeEntity.getSearchExtRef().readObject(), request.getExtensionInfo());
+//            exeNodeEntity.getSearchExtRef().write(extension);
+//            return true;
+//        }
+//        return false;
+//
+//    }
 
     /**
      * @param entity

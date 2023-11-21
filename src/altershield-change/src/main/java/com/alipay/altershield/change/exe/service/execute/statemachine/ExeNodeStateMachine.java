@@ -63,6 +63,7 @@ import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
 import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
 import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
 import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
+import com.alipay.altershield.shared.defender.ExeDefenderDetectService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -90,8 +91,8 @@ public abstract class ExeNodeStateMachine {
     protected ExeNodeStateEnum exeStateNode;
 
 
-//    @Autowired
-//    protected ExeDefenderDetectService exeDefenderDetectService;
+    @Autowired
+    protected ExeDefenderDetectService exeDefenderDetectService;
 
 
     /**

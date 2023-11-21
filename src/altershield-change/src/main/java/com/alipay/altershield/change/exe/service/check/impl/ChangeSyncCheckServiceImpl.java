@@ -30,13 +30,26 @@ import com.alipay.altershield.change.exe.repository.ExeChangeNodeRepository;
 import com.alipay.altershield.change.exe.service.check.ChangeSyncCheckService;
 import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
 import com.alipay.altershield.common.constant.AlterShieldConstant;
+import com.alipay.altershield.common.logger.Loggers;
 import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
 import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import com.alipay.altershield.framework.core.change.facade.result.ChangeCheckVerdict;
+import com.alipay.altershield.framework.core.change.model.AlterShieldChangeContent;
+import com.alipay.altershield.framework.core.change.model.enums.ChangePhaseLastBatchEnum;
 import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeBatchNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeChangeBatchEffectiveInfoEntity;
 import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
 import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
 import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
+import com.alipay.altershield.shared.change.meta.model.enums.MetaChangeStepTypeEnum;
+import com.alipay.altershield.shared.defender.DefenderDetectService;
+import com.alipay.altershield.shared.defender.ExeDefenderDetectService;
+import com.alipay.altershield.shared.defender.request.DefenderDetectRequest;
+import com.alipay.altershield.shared.defender.result.DefenderDetectResult;
+import com.alipay.altershield.spi.defender.model.request.ChangeBaseInfo;
+import com.alipay.altershield.spi.defender.model.request.ChangeContent;
+import com.alipay.altershield.spi.defender.model.request.ChangeExecuteInfo;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -158,11 +171,11 @@ public class ChangeSyncCheckServiceImpl implements ChangeSyncCheckService, Initi
         changeBaseInfo.setPlatform(changeOrder.getPlatform());
         changeBaseInfo.setChangeParamJSON(changeOrder.getParamRef().readObject());
         ChangeContent changeContent = new ChangeContent();
-        List<OpsCloudChangeContent> contents = changeOrder.getChangeContentRef().readObject();
+        List<AlterShieldChangeContent> contents = changeOrder.getChangeContentRef().readObject();
         if (!CollectionUtils.isEmpty(contents)) {
             // 这一步有点恶心，解析OpsCloudChangeContent的结构，默认使用第一个content的类型，因为一个工单只有一个content类型
             changeContent.setChangeContentType(contents.get(0).getContentType().getTypeName());
-            changeContent.setChangeContentInstance(contents.stream().map(OpsCloudChangeContent::getInstanceName)
+            changeContent.setChangeContentInstance(contents.stream().map(AlterShieldChangeContent::getInstanceName)
                     .collect(Collectors.toList()));
         }
         changeBaseInfo.setChangeContent(changeContent);
@@ -185,9 +198,9 @@ public class ChangeSyncCheckServiceImpl implements ChangeSyncCheckService, Initi
                 ExeChangeBatchEffectiveInfoEntity effectiveInfoEntity = batchNodeEntity.getChangeEffectiveInfoRef().readObject();
                 changeExecuteInfo.setBatchNo(effectiveInfoEntity.getBatchNo());
                 changeExecuteInfo.setLastBatch(
-                        OpsCloudChangePhaseLastBatchEnum.LAST.getTag().equals(effectiveInfoEntity.getIsLastBatchTag()));
+                        ChangePhaseLastBatchEnum.LAST.getTag().equals(effectiveInfoEntity.getIsLastBatchTag()));
                 changeExecuteInfo.setLastBatchInPhase(
-                        OpsCloudChangePhaseLastBatchEnum.LAST.getTag().equals(effectiveInfoEntity.getIsLastBatchInPhaseTag()));
+                        ChangePhaseLastBatchEnum.LAST.getTag().equals(effectiveInfoEntity.getIsLastBatchInPhaseTag()));
                 changeExecuteInfo.setTotalBatchNum(effectiveInfoEntity.getTotalBatchNum());
                 changeExecuteInfo.setTotalBatchInPhase(effectiveInfoEntity.getTotalBatchInEnvNum());
             }

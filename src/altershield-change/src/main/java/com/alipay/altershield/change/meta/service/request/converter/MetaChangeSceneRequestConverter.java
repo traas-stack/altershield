@@ -43,6 +43,8 @@
  */
 package com.alipay.altershield.change.meta.service.request.converter;
 
+import com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeStepRequest;
+import com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeProgressRequest;
 import com.alipay.altershield.change.meta.dal.dataobject.MetaChangeSceneQueryParam;
 import com.alipay.altershield.change.meta.model.MetaChangeDefenceConfigEntity;
 import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;

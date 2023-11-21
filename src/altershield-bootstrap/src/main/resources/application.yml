@@ -1,0 +1,33 @@
+log_level: INFO
+spring:
+  mvc:
+    dispatch-options-request: true
+  aop:
+    proxy-target-class: true
+  application:
+    name: altershield
+  ##默认是使用本地的
+  profiles:
+    active: local
+  #dataSource 数据源配置
+  datasource:
+    jdbc-url:
+    driver-class-name: com.mysql.jdbc.Driver
+    username:
+    hikari:
+      connection-timeout: 10000
+      validation-timeout: 3000
+      idle-timeout: 60000
+      login-timeout: 5
+      max-lifetime: 4000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      read-only: false
+    password:
+
+logging_path: ${user.home}/logs
+logging:
+  config : classpath:log4j2-spring.xml
+
+management.endpoint.health.show-details: always  #显示健康检查详细信息，默认为never，即不显示。
+

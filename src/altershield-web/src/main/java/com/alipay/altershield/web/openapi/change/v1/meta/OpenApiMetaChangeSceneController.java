@@ -27,18 +27,21 @@
 package com.alipay.altershield.web.openapi.change.v1.meta;
 
 import com.alipay.opscloud.change.meta.service.MetaChangeSceneService;
+import com.alipay.opscloud.change.meta.service.request.SyncMetaChangeSceneRequest;
 import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
+import com.alipay.opscloud.framework.core.meta.change.facade.request.CreateMetaChangeSceneRequest;
+import com.alipay.opscloud.framework.core.meta.change.facade.result.CreateMetaChangeSceneResult;
 import com.alipay.opscloud.framework.sdk.constant.OpsCloudApiConstant;
+import com.alipay.opscloud.tools.common.openapi.OpenApiRequestThreadLocal;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * The type Ops cloud open api meta change scene controller.
@@ -48,24 +51,40 @@ import javax.validation.constraints.NotNull;
  */
 @Controller
 @RequestMapping(OpsCloudApiConstant.metaPrefix)
-public class OpsCloudOpenApiMetaChangeKeyController {
+public class OpenApiMetaChangeSceneController {
 
     @Autowired
     private MetaChangeSceneService metaChangeSceneService;
 
-    @ApiOperation(value = "检查changeKey是否存在",notes = "存在返回true，不存在false")
+    /**
+     * Create base change scene ops cloud result.
+     *
+     * @param request the request
+     * @return the ops cloud result
+     */
     @ResponseBody
-    @RequestMapping(value = "/check_change_key", method = RequestMethod.GET)
-    public OpsCloudResult<Boolean> checkChangeKey(@NotNull @RequestParam @ApiParam("变更key") String changeKey)
-    {
-        return metaChangeSceneService.checkChangeKey(changeKey);
+    @RequestMapping(value = OpsCloudApiConstant.createChangeSceneAction, method = RequestMethod.POST)
+    public OpsCloudResult<CreateMetaChangeSceneResult> createBaseChangeScene(@Validated @RequestBody CreateMetaChangeSceneRequest request) {
+
+        String platform = OpenApiRequestThreadLocal.getPlatform();
+        if(!StringUtils.equals(platform, request.getPlatformName()))
+        {
+            return OpsCloudResult.notSupport("platform must equal to platform in request," + platform +"!=" + request.getPlatformName());
+        }
+        return metaChangeSceneService.createReleaseChangeScene(request);
     }
 
-    @ApiOperation(value = "检查changeKey是否存在",notes = "存在返回true，不存在false")
+
+    /**
+     * Create standard change scene 2 ops cloud result.
+     *
+     * @param request the request
+     * @return the ops cloud result
+     */
+    @ApiOperation(value = "创建标准变更场景第二步，G2,G3,G4场景使用")
     @ResponseBody
-    @RequestMapping(value = "/only_check_change_key", method = RequestMethod.GET)
-    public OpsCloudResult<Boolean> onlyCheckChangeKey(@NotNull @RequestParam @ApiParam("变更key") String changeKey)
-    {
-        return metaChangeSceneService.onlyCheckChangeKey(changeKey);
+    @RequestMapping(value = "/sync/serviceKeyConfig", method = RequestMethod.POST)
+    public OpsCloudResult<Boolean> syncServiceKeyConfig(@Validated @RequestBody SyncMetaChangeSceneRequest request) {
+        return metaChangeSceneService.syncServiceKey(request);
     }
 }

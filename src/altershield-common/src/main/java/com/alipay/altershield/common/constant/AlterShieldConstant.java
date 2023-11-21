@@ -141,4 +141,20 @@ public class AlterShieldConstant {
      * G1前置同步打标超时时间
      */
     public static volatile long G1_SYNC_DECISION_TAG_TIMEOUT_MS = 1000;
+
+    // TODO 更换为开源的接入文档地址
+    /**
+     * 接入文档地址
+     */
+    public static volatile String OPSCLOUD_DOCUMENT_G0 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#pTAuq";
+    /**
+     * The constant OPSCLOUD_DOCUMENT_G1.
+     */
+    public static volatile String OPSCLOUD_DOCUMENT_G1 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#ziLU0";
+    /**
+     * The constant OPSCLOUD_DOCUMENT_G2.
+     */
+    public static volatile String OPSCLOUD_DOCUMENT_G2 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#Ebzy6";
+
+
 }

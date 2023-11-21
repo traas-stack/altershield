@@ -43,14 +43,9 @@
  */
 package com.alipay.altershield.web.openapi.change.v1.exe;
 
-import com.alipay.opscloud.execution.request.DefenseCallbackRequest;
-import com.alipay.opscloud.execution.result.DefenseCallbackResult;
-import com.alipay.opscloud.execution.service.DefenseCallbackService;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.risk.facade.OpsCloudRiskDefenseCheckRuleFacade;
-import com.alipay.opscloud.framework.core.risk.facade.request.OpsCloudQueryCheckRulesRequest;
-import com.alipay.opscloud.framework.core.risk.facade.result.OpsCloudRiskCheckRuleResult;
-import com.alipay.opscloud.framework.sdk.constant.OpsCloudApiConstant;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.core.risk.facade.RiskDefenseCheckRuleFacade;
+import com.alipay.altershield.framework.sdk.constant.AlterShieldApiConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -64,11 +59,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @version : ExeChangeController.java, v 0.1 2022年04月11日 2:23 下午 yuanji Exp $
  */
 @Controller
-@RequestMapping(OpsCloudApiConstant.riskPrefix)
+@RequestMapping(AlterShieldApiConstant.riskPrefix)
 public class RiskChangeController {
 
     @Autowired(required = false)
-    private OpsCloudRiskDefenseCheckRuleFacade opsCloudRiskDefenseCheckRuleFacade;
+    private RiskDefenseCheckRuleFacade opsCloudRiskDefenseCheckRuleFacade;
 
     @Autowired
     private DefenseCallbackService defenseCallbackService;
@@ -79,8 +74,8 @@ public class RiskChangeController {
      * @param request
      */
     @ResponseBody
-    @RequestMapping(value = OpsCloudApiConstant.queryRiskDefenseCheckRuleAction, method = RequestMethod.POST)
-    public OpsCloudResult<OpsCloudRiskCheckRuleResult> retrieveChangeCheckResult(@Validated @RequestBody
+    @RequestMapping(value = AlterShieldApiConstant.queryRiskDefenseCheckRuleAction, method = RequestMethod.POST)
+    public AlterShieldResult<OpsCloudRiskCheckRuleResult> retrieveChangeCheckResult(@Validated @RequestBody
                                                                                              OpsCloudQueryCheckRulesRequest request) {
         return opsCloudRiskDefenseCheckRuleFacade.retrieveCheckRuleResult(request);
     }
@@ -91,13 +86,13 @@ public class RiskChangeController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = OpsCloudApiConstant.defenseCallbackAction, method = RequestMethod.POST)
-    public OpsCloudResult<DefenseCallbackResult> defenseCallback(@Validated @RequestBody DefenseCallbackRequest request) {
+    @RequestMapping(value = AlterShieldApiConstant.defenseCallbackAction, method = RequestMethod.POST)
+    public AlterShieldResult<DefenseCallbackResult> defenseCallback(@Validated @RequestBody DefenseCallbackRequest request) {
         try {
-            return new OpsCloudResult<>(defenseCallbackService.defenseCallback(request));
+            return new AlterShieldResult<>(defenseCallbackService.defenseCallback(request));
         } catch (Exception e) {
             // TODO log
-            return OpsCloudResult.systemError(e.getMessage());
+            return AlterShieldResult.systemError(e.getMessage());
         }
     }
 

@@ -59,6 +59,14 @@ public class ChangeFinishNotifyRequest extends ChangeCheckRequest {
     private String msg;
 
     /**
+     * [optional] 变更本身的执行结果 json string
+     * @Deprecated
+     * use {@link }
+     */
+    @JsonFormat
+    private String            serviceResult;
+
+    /**
      * @optional The execution results of the change itself. json string
      */
     @JsonFormat

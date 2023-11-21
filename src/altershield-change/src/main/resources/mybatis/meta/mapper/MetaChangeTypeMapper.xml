@@ -20,7 +20,7 @@
   <select id="selectByParam" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from opscloud_meta_change_type
+    from altershield_meta_change_type
     where category = #{category}
     and type LIKE CONCAT('%', #{type}, '%')
     limit #{size}
@@ -30,13 +30,13 @@
   <select id="selectByType" parameterType="map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from opscloud_meta_change_type
+    from altershield_meta_change_type
     where category = #{category} and type = #{type}
   </select>
 
   <insert id="insert" parameterType="com.alipay.altershield.change.meta.dal.dataobject.MetaChangeTypeDO">
 
-    insert into opscloud_meta_change_type
+    insert into altershield_meta_change_type
       (id, gmt_create, gmt_modified, type, name, type_desc, category)
     values (#{id,jdbcType=VARCHAR}, now(), now(), #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{typeDesc,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR})
   </insert>
@@ -44,7 +44,7 @@
 
 
   <delete id="deleteByType" parameterType="hashmap">
-    delete from opscloud_meta_change_type   where category = #{category} and type = #{type}
+    delete from altershield_meta_change_type   where category = #{category} and type = #{type}
   </delete>
 
 </mapper>

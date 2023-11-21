@@ -36,6 +36,10 @@
             <groupId>com.alipay</groupId>
             <artifactId>altershield-change</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>altershield-defender</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

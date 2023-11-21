@@ -44,13 +44,11 @@
 package com.alipay.altershield.change.exe.repository.converter;
 
 import com.alipay.altershield.change.exe.dal.dataobject.ExeNodeDO;
+import com.alipay.altershield.common.largefield.convertor.ConvertUtil;
+import com.alipay.altershield.shared.change.exe.node.entity.*;
 import com.alipay.altershield.shared.common.largefield.converter.AbstractEntityConverter;
 import com.alipay.altershield.framework.core.change.model.enums.ChangePhaseEnum;
 import com.alipay.altershield.framework.core.change.model.trace.OpsChngTrace;
-import com.alipay.altershield.shared.change.exe.node.entity.ExeActionNodeEntity;
-import com.alipay.altershield.shared.change.exe.node.entity.ExeBaseNodeEntity;
-import com.alipay.altershield.shared.change.exe.node.entity.ExeBatchNodeEntity;
-import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
 import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
 import com.alipay.altershield.shared.change.exe.node.ref.ExeChangeRefCodec;
 import com.alipay.altershield.shared.change.meta.model.enums.MetaChangeStepTypeEnum;

@@ -44,7 +44,7 @@
 package com.alipay.altershield.shared.change.exe.order.entity;
 
 import com.alipay.altershield.common.largefield.kv.KeyValueStorage;
-import com.alipay.altershield.framework.core.change.model.ChangeContent;
+import com.alipay.altershield.framework.core.change.model.AlterShieldChangeContent;
 import com.alipay.altershield.framework.core.change.model.ChangeParentOrderInfo;
 import com.alipay.altershield.framework.core.change.model.ChangeTarget;
 import com.alipay.altershield.framework.core.change.model.enums.ChangePhaseEnum;
@@ -111,7 +111,7 @@ public class ExeChangeOrderEntity extends ExeBaseChangeOrderEntity {
      *
      * @mbg.generated
      */
-    private String tldcTenantCode;
+    private String tenantCode;
 
     /**
      * Database Column Remarks: 来源云id
@@ -145,7 +145,7 @@ public class ExeChangeOrderEntity extends ExeBaseChangeOrderEntity {
     /**
      * 变更内容
      */
-    private KvRef<List<ChangeContent>> changeContentRef;
+    private KvRef<List<AlterShieldChangeContent>> changeContentRef;
 
     /**
      * 变更目标

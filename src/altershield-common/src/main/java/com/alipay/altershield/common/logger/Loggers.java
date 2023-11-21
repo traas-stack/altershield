@@ -80,4 +80,5 @@ public interface Loggers {
      * defender log
      */
     Logger DEFENDER = LoggerFactory.getLogger("ALTERSHIELD_DEFENDER");
+    Logger OUTTER_TASK = LoggerFactory.getLogger("ALTERSHIELD_OUTTER_TASK");
 }

@@ -43,10 +43,10 @@
  */
 package com.alipay.altershield.change.exe.service.check.impl;
 
-import com.alipay.opscloud.change.exe.dal.dataobject.ExeCounterDO;
-import com.alipay.opscloud.change.exe.dal.mapper.ExeCounterMapper;
-import com.alipay.opscloud.change.exe.service.check.CoordCounterService;
-import com.alipay.opscloud.tools.common.id.IdUtil;
+import com.alipay.altershield.change.exe.dal.dataobject.ExeCounterDO;
+import com.alipay.altershield.change.exe.dal.mapper.ExeCounterMapper;
+import com.alipay.altershield.change.exe.service.check.CoordCounterService;
+import com.alipay.altershield.common.util.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -69,13 +69,13 @@ public class CoordCounterServiceImpl implements CoordCounterService {
     @Resource
     private TransactionTemplate transactionTemplate;
     @Autowired
-    private ExeCounterMapper    exeCounterMapper;
+    private ExeCounterMapper exeCounterMapper;
 
     /**
      * @param traceId
      */
     @Override
-    public long addAndGetByTraceId(String traceId) {
+    public long (String traceId) {
         return transactionTemplate.execute(new TransactionCallback<Long>() {
             @Override
             public Long doInTransaction(TransactionStatus status) {

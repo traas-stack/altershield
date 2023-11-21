@@ -1,30 +1,48 @@
 /*
+ * MIT License
+ *
+ * Copyright (c) [2023]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/*
  * Ant Group
  * Copyright (c) 2004-2022 All Rights Reserved.
  */
 package com.alipay.altershield.defender.framework.exe.service.impl;
 
-import com.alipay.opscloud.api.defender.ExeDefenderDetectService;
-import com.alipay.opscloud.api.defender.entity.ExeDefenderDetectEntity;
-import com.alipay.opscloud.api.defender.request.DefenderDetectBatchFeedbackRequest;
-import com.alipay.opscloud.api.defender.result.DefenderDetectResult;
-import com.alipay.opscloud.api.migration.defender.OldDefenderRuleFeedbackService;
-import com.alipay.opscloud.defender.exe.repository.ExeDefenderDetectRepository;
-import com.alipay.opscloud.framework.common.util.exception.OpsCloudInternalErrorCode;
-import com.alipay.opscloud.framework.common.util.exception.OpsCloudInternalException;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.framework.core.change.facade.request.OpsCloudChangeSkipCheckRequest;
-import com.alipay.opscloud.framework.core.change.facade.result.OpsCloudChangeSkipCheckResult;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResultCodeEnum;
-import com.alipay.opscloud.framework.core.common.result.OpsCloudChangeCheckVerdict;
-import com.alipay.opscloud.framework.core.common.result.OpsCloudChangeCheckVerdictEnum;
-import com.alipay.opscloud.framework.core.risk.model.RiskDefenseRuleFeedbackVO;
-import com.alipay.opscloud.framework.core.risk.model.check.OpsCloudChangeCheckRule;
-import com.alipay.opscloud.framework.core.risk.model.check.OpsCloudChangeCheckStatusEnum;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
-import com.alipay.opscloud.spi.defender.model.enums.DefenderStatusEnum;
-import com.alipay.opscloud.tools.common.logger.Loggers;
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.defender.framework.exe.repository.ExeDefenderDetectRepository;
+import com.alipay.altershield.framework.common.util.exception.AlterShieldInternalErrorCode;
+import com.alipay.altershield.framework.common.util.exception.AlterShieldInternalException;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.change.facade.request.ChangeSkipCheckRequest;
+import com.alipay.altershield.framework.core.change.facade.result.*;
+import com.alipay.altershield.framework.core.risk.model.RiskDefenseRuleFeedbackVO;
+import com.alipay.altershield.framework.core.risk.model.check.ChangeCheckRule;
+import com.alipay.altershield.framework.core.risk.model.check.ChangeCheckStatusEnum;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.defender.ExeDefenderDetectService;
+import com.alipay.altershield.shared.defender.entity.ExeDefenderDetectEntity;
+import com.alipay.altershield.shared.defender.request.DefenderDetectBatchFeedbackRequest;
+import com.alipay.altershield.shared.defender.result.DefenderDetectResult;
+import com.alipay.altershield.spi.defender.model.enums.DefenderStatusEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +68,6 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
     @Autowired
     private ExeDefenderDetectRepository exeDefenderDetectRepository;
 
-    @Autowired
-    private OldDefenderRuleFeedbackService oldDefenderRuleFeedbackService;
 
     @Override
     public List<ExeDefenderDetectEntity> queryDetectInfoByOrderId(String orderId) {
@@ -74,7 +90,7 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
     }
 
     @Override
-    public List<OpsCloudChangeCheckRule> queryDetectStatusByNodeId(String nodeId, DefenseStageEnum stageEnum) {
+    public List<ChangeCheckRule> queryDetectStatusByNodeId(String nodeId, DefenseStageEnum stageEnum) {
         if (StringUtils.isBlank(nodeId) || Objects.isNull(stageEnum)) {
             // nodeId or stage is null
             return Collections.emptyList();
@@ -85,19 +101,19 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
 
 
     @Override
-    public OpsCloudResult<OpsCloudChangeSkipCheckResult> skipChangeCheck(OpsCloudChangeSkipCheckRequest request) {
+    public AlterShieldResult<ChangeSkipCheckResult> skipChangeCheck(ChangeSkipCheckRequest request) {
         if (Objects.isNull(request) ||
                 StringUtils.isBlank(request.getNodeId()) ||
                 Objects.isNull(request.getDefenseStage()) ||
                 CollectionUtils.isEmpty(request.getFeedbackVOList())) {
-            return OpsCloudResult.illegalArgument("request param exception");
+            return AlterShieldResult.illegalArgument("request param exception");
         }
 
         String nodeId = request.getNodeId();
         DefenseStageEnum defenseStage = request.getDefenseStage();
 
-        OpsCloudChangeSkipCheckResult skipCheckResult = new OpsCloudChangeSkipCheckResult();
-        OpsCloudResult<OpsCloudChangeSkipCheckResult> result = new OpsCloudResult<>();
+        ChangeSkipCheckResult skipCheckResult = new ChangeSkipCheckResult();
+        AlterShieldResult<ChangeSkipCheckResult> result = new AlterShieldResult<>();
 
         try {
             // 具体跳过的规则列表
@@ -108,7 +124,7 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
             List<ExeDefenderDetectEntity> exeDefenderDetectEntities = exeDefenderDetectRepository.selectDetectStatusByNodeId(nodeId, defenseStage);
             if (Objects.isNull(exeDefenderDetectEntities)) {
                 // 说明该node的前/后置阶段没有命中防御规则，所以根本就不存在跳过的情况
-                return OpsCloudResult.notSupport("未查询到防御规则校验实体");
+                return AlterShieldResult.notSupport("未查询到防御规则校验实体");
             }
 
             List<String> detectExeIds = exeDefenderDetectEntities.stream().
@@ -145,10 +161,10 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
                 return result;
             }
         } catch (Throwable t) {
-            OpsCloudLoggerManager.log("error", logger, "batchUpdate exception", t.getMessage());
+            AlterShieldLoggerManager.log("error", logger, "batchUpdate exception", t.getMessage());
             result.setMsg(t.getMessage());
             result.setSuccess(false);
-            result.setResultCode(OpsCloudResultCodeEnum.SYSTEM_ERROR.getCode());
+            result.setResultCode(AlterShieldResultCodeEnum.SYSTEM_ERROR.getCode());
             return result;
         }
 
@@ -158,12 +174,12 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
     }
 
     @Override
-    public OpsCloudChangeCheckVerdict convert2VerdictResult(OpsCloudResult<DefenderDetectResult> defenderDetectResult, boolean emergency) {
-        OpsCloudChangeCheckVerdict opsCloudChangeCheckVerdict = new OpsCloudChangeCheckVerdict();
+    public ChangeCheckVerdict convert2VerdictResult(AlterShieldResult<DefenderDetectResult> defenderDetectResult, boolean emergency) {
+        ChangeCheckVerdict opsCloudChangeCheckVerdict = new ChangeCheckVerdict();
 
         if (Objects.isNull(defenderDetectResult) || !defenderDetectResult.isSuccess() || Objects.isNull(defenderDetectResult.getDomain())) {
             // 防御结果为空 返回状态为 INCONC
-            opsCloudChangeCheckVerdict.setVerdict(OpsCloudChangeCheckVerdictEnum.INCONC.getVerdict());
+            opsCloudChangeCheckVerdict.setVerdict(ChangeCheckVerdictEnum.INCONC.getVerdict());
             opsCloudChangeCheckVerdict.setEmergency(emergency);
             return opsCloudChangeCheckVerdict;
         }
@@ -184,32 +200,14 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
         return opsCloudChangeCheckVerdict;
     }
 
-    /**
-     * 批量反馈
-     *
-     * @param request 批量反馈请求结构体
-     * @return 反馈是否成功
-     */
-    @Override
-    public Boolean batchFeedback(DefenderDetectBatchFeedbackRequest request) {
-        // TODO
-        // 目前仅支持对老变更核心表进行操作
-        if (Objects.isNull(request) || CollectionUtils.isEmpty(request.getDetectExeIds())) {
-            OpsCloudLoggerManager.log("error", logger, "param exception");
-            throw new OpsCloudInternalException(OpsCloudInternalErrorCode.FLOW_PARAM_ERROR, "参数错误");
-        }
-
-        return oldDefenderRuleFeedbackService.batchFeedback(request);
-    }
-
     // --------------------------- 内部方法 -----------------------------
 
-    private List<OpsCloudChangeCheckRule> convert2CheckRules(List<ExeDefenderDetectEntity> exeDefenderDetectEntityList) {
+    private List<ChangeCheckRule> convert2CheckRules(List<ExeDefenderDetectEntity> exeDefenderDetectEntityList) {
         if (CollectionUtils.isEmpty(exeDefenderDetectEntityList)) {
             return Collections.emptyList();
         }
 
-        List<OpsCloudChangeCheckRule> res = new ArrayList<>(exeDefenderDetectEntityList.size());
+        List<ChangeCheckRule> res = new ArrayList<>(exeDefenderDetectEntityList.size());
 
         for (ExeDefenderDetectEntity exeDefenderDetectEntity : exeDefenderDetectEntityList) {
             res.add(convert2CheckRule(exeDefenderDetectEntity));
@@ -218,8 +216,8 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
         return res;
     }
 
-    private OpsCloudChangeCheckRule convert2CheckRule(ExeDefenderDetectEntity exeDefenderDetectEntity) {
-        OpsCloudChangeCheckRule opsCloudChangeCheckRule = new OpsCloudChangeCheckRule();
+    private ChangeCheckRule convert2CheckRule(ExeDefenderDetectEntity exeDefenderDetectEntity) {
+        ChangeCheckRule opsCloudChangeCheckRule = new ChangeCheckRule();
         opsCloudChangeCheckRule.setRuleExeId(exeDefenderDetectEntity.getDetectExeId());
         if (!Objects.isNull(exeDefenderDetectEntity.getResultRef())) {
             opsCloudChangeCheckRule.setResultJsn(exeDefenderDetectEntity.getResultRef().readObject());
@@ -280,26 +278,26 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
         }
     }
 
-    private OpsCloudChangeCheckVerdictEnum convertVerdict(DefenderStatusEnum status) {
+    private ChangeCheckVerdictEnum convertVerdict(DefenderStatusEnum status) {
         if (Objects.isNull(status)) {
             // default
-            return OpsCloudChangeCheckVerdictEnum.INCONC;
+            return ChangeCheckVerdictEnum.INCONC;
         }
         switch (status) {
             case INIT:
             case EXE:
             case ASYNC_CHECK:
             case SUSPEND:
-                return OpsCloudChangeCheckVerdictEnum.NONE;
+                return ChangeCheckVerdictEnum.NONE;
             case PASS:
             case CANCEL:
-                return OpsCloudChangeCheckVerdictEnum.PASS;
+                return ChangeCheckVerdictEnum.PASS;
             case FAIL:
-                return OpsCloudChangeCheckVerdictEnum.FAIL;
+                return ChangeCheckVerdictEnum.FAIL;
             case TIMEOUT:
             case EXCEPTION:
             default:
-                return OpsCloudChangeCheckVerdictEnum.INCONC;
+                return ChangeCheckVerdictEnum.INCONC;
         }
     }
 
@@ -309,7 +307,7 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
      * @param status
      * @return
      */
-    private OpsCloudChangeCheckStatusEnum convertStatus(DefenderStatusEnum status) {
+    private ChangeCheckStatusEnum convertStatus(DefenderStatusEnum status) {
         if (Objects.isNull(status)) {
             return null;
         }
@@ -318,16 +316,16 @@ public class ExeDefenderDetectServiceImpl implements ExeDefenderDetectService {
             case EXE:
             case ASYNC_CHECK:
             case SUSPEND:
-                return OpsCloudChangeCheckStatusEnum.EXE;
+                return ChangeCheckStatusEnum.EXE;
             case PASS:
             case CANCEL:
             case FAIL:
-                return OpsCloudChangeCheckStatusEnum.SUCC;
+                return ChangeCheckStatusEnum.SUCCESS;
             case EXCEPTION:
-                return OpsCloudChangeCheckStatusEnum.FAIL;
+                return ChangeCheckStatusEnum.FAIL;
             case TIMEOUT:
             default:
-                return OpsCloudChangeCheckStatusEnum.TIMEOUT;
+                return ChangeCheckStatusEnum.TIMEOUT;
         }
     }
 }

@@ -48,6 +48,7 @@ import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
 import com.alipay.altershield.framework.core.change.facade.request.ChangeExecOrderStartNotifyRequest;
 import com.alipay.altershield.framework.core.change.facade.request.ChangeExecOrderSubmitAndStartRequest;
 import com.alipay.altershield.framework.core.change.facade.request.ChangeStartNotifyRequest;
+import com.alipay.altershield.framework.core.change.model.AlterShieldChangeContent;
 import com.alipay.altershield.framework.core.change.model.ChangeTarget;
 import com.alipay.altershield.framework.core.change.model.enums.ChangeScenarioEnum;
 import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
@@ -115,7 +116,7 @@ public class ChangeNodeCreateModel {
 
     private String paramJsn;
 
-    private ChangeTarget[] changeTargets;
+    private AlterShieldChangeContent[] changeContents;
 
     private Set<String> changeApps;
 
@@ -186,7 +187,7 @@ public class ChangeNodeCreateModel {
         this.startTime = buildStartTime(request.getStartTime());
         this.changeScenarioCode = changeScenarioCode;
         this.paramJsn = request.getChangeParamJson();
-        this.changeTargets = request.getChangeTargets();
+        this.changeContents = request.getChangeContents();
         this.changePhases = request.getChangePhases();
 
         if (Objects.isNull(request.getExtensionInfo())) {

@@ -1,26 +1,49 @@
 /*
+ * MIT License
+ *
+ * Copyright (c) [2023]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/*
  * Ant Group
  * Copyright (c) 2004-2022 All Rights Reserved.
  */
 package com.alipay.altershield.defender.framework.impl;
 
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.change.exe.service.ExeChangeNodeService;
-import com.alipay.opscloud.api.change.meta.model.enums.MetaChangeStepTypeEnum;
-import com.alipay.opscloud.api.defender.DefenderTaskChecker;
-import com.alipay.opscloud.api.defender.entity.ExeDefenderDetectEntity;
-import com.alipay.opscloud.api.defender.enums.DefenderRuleStatusEnum;
-import com.alipay.opscloud.api.defender.enums.DefenderVerdictEnum;
-import com.alipay.opscloud.api.defender.result.DefenderTaskResult;
-import com.alipay.opscloud.api.scheduler.event.defender.DefenderDetectFinishEvent;
-import com.alipay.opscloud.api.scheduler.event.publish.OpsCloudSchedulerEventPublisher;
-import com.alipay.opscloud.defender.AbstractDefenderService;
-import com.alipay.opscloud.defender.enums.ExceptionStrategyEnum;
-import com.alipay.opscloud.defender.meta.entity.MetaDefenderRuleEntity;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
-import com.alipay.opscloud.spi.defender.model.enums.DefenderStatusEnum;
-import com.alipay.opscloud.tools.common.logger.Loggers;
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.defender.framework.AbstractDefenderService;
+import com.alipay.altershield.defender.framework.enums.ExceptionStrategyEnum;
+import com.alipay.altershield.defender.framework.meta.entity.MetaDefenderRuleEntity;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.service.ExeChangeNodeService;
+import com.alipay.altershield.shared.change.meta.model.enums.MetaChangeStepTypeEnum;
+import com.alipay.altershield.shared.defender.DefenderTaskChecker;
+import com.alipay.altershield.shared.defender.entity.ExeDefenderDetectEntity;
+import com.alipay.altershield.shared.defender.enums.DefenderRuleStatusEnum;
+import com.alipay.altershield.shared.defender.enums.DefenderVerdictEnum;
+import com.alipay.altershield.shared.defender.result.DefenderTaskResult;
+import com.alipay.altershield.shared.schedule.event.defender.DefenderDetectFinishEvent;
+import com.alipay.altershield.shared.schedule.event.publish.AlterShieldSchedulerEventPublisher;
+import com.alipay.altershield.spi.defender.model.enums.DefenderStatusEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,7 +64,7 @@ import java.util.stream.Collectors;
 public class DefenderTaskCheckerImpl extends AbstractDefenderService implements DefenderTaskChecker {
 
     @Autowired
-    private OpsCloudSchedulerEventPublisher opsCloudSchedulerEventPublisher;
+    private AlterShieldSchedulerEventPublisher opsCloudSchedulerEventPublisher;
 
     @Autowired
     private ExeChangeNodeService changeNodeService;
@@ -59,21 +82,21 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
     public DefenderTaskResult checkDetectProcess(String changeOrderId, String nodeId, String detectGroupId, DefenseStageEnum stage, String changeSceneKey, MetaChangeStepTypeEnum changeStepType) {
         // 1、参数校验
         if (StringUtils.isBlank(changeOrderId) || StringUtils.isBlank(detectGroupId)) {
-            OpsCloudLoggerManager.log("error", Loggers.DEFENDER, "DefenderTaskCheckerImpl", "checkDetectProcess",
+            AlterShieldLoggerManager.log("error", Loggers.DEFENDER, "DefenderTaskCheckerImpl", "checkDetectProcess",
                     "change order id and detect group id can`t be empty", changeOrderId, detectGroupId);
             return DefenderTaskResult.failWithNoRetry("入参非法");
         }
 
         // whiteList check
         if (!whiteListCheck(changeSceneKey)) {
-            OpsCloudLoggerManager.log("info", Loggers.DEFENDER, "白名单校验不通过", changeSceneKey);
+            AlterShieldLoggerManager.log("info", Loggers.DEFENDER, "白名单校验不通过", changeSceneKey);
             return DefenderTaskResult.failWithNoRetry("白名单校验不通过");
         }
 
         // 2、根据groupId取所有匹配到的防御规则
         List<ExeDefenderDetectEntity> detectEntities = exeDefenderDetectRepository.selectByGroupId(detectGroupId);
         if (CollectionUtils.isEmpty(detectEntities)) {
-            OpsCloudLoggerManager.log("error", Loggers.DEFENDER, "DefenderTaskCheckerImpl", "checkDetectProcess",
+            AlterShieldLoggerManager.log("error", Loggers.DEFENDER, "DefenderTaskCheckerImpl", "checkDetectProcess",
                     "未查询到防御规则执行记录", changeOrderId, detectGroupId);
             return DefenderTaskResult.failWithRetry("未查询到防御规则执行记录");
         }

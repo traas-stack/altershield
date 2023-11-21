@@ -5,7 +5,7 @@
     <select id="getTokenByPlatform" parameterType="string" resultType="string">
         select
         token
-        from opscld_meta_platform
+        from altershield_meta_platform
         where platform_name = #{platform}
     </select>
 
@@ -13,11 +13,11 @@
     <select id="getAllPlatform" resultType="string">
         select
         platform_name
-        from opscld_meta_platform
+        from altershield_meta_platform
     </select>
 
     <insert id="insert" parameterType="com.alipay.altershield.change.meta.model.MetaChangePlatformEntity">
-        insert into opscld_meta_platform (`id`,`gmt_create`,`gmt_modified`,`platform_name`,`owner`,`description`,`token`,`scope`)
+        insert into altershield_meta_platform (`id`,`gmt_create`,`gmt_modified`,`platform_name`,`owner`,`description`,`token`,`scope`)
             value (
             #{id,jdbcType=VARCHAR},now(),now(),
             #{platformName,jdbcType=VARCHAR},

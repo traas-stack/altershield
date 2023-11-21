@@ -78,15 +78,15 @@ public class MetaChangeDefenceConfigEntity {
     private long postCheckTimeout = 1000;
 
 
-
     @Override
     public String toString() {
-        return "OpsCloudMetaChangeDefenceConfigEntity{" +
-                "enablePreCheck=" + enablePreCheck +
-                ", enablePostCheck=" + enablePostCheck +
-                ", preCheckTimeout=" + preCheckTimeout +
-                ", postCheckTimeout=" + postCheckTimeout +
-                '}';
+        final StringBuffer sb = new StringBuffer("MetaChangeDefenceConfigEntity{");
+        sb.append("enablePreCheck=").append(enablePreCheck);
+        sb.append(", enablePostCheck=").append(enablePostCheck);
+        sb.append(", preCheckTimeout=").append(preCheckTimeout);
+        sb.append(", postCheckTimeout=").append(postCheckTimeout);
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override

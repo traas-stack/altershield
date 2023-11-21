@@ -41,57 +41,44 @@
  *   4) distribute, lease, rent, sub-license, demise or transfer any rights in relation to this software, or authorize
  *    the reproduction of this software on other’s computers.
  */
-package com.alipay.altershield.framework.core.change.model;
+package com.alipay.altershield.web.change.converter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import com.alipay.altershield.change.meta.model.MetaChangeTypeEntity;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.web.change.meta.vo.MetaChangeTypeVO;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
+ * The interface Meta change type vo converter.
  *
  * @author yuanji
- * @version : ChangeContent.java, v 0.1 2022年01月27日 3:10 下午 yuanji Exp $
+ * @version : MetChangeTypeVOConverter.java, v 0.1 2022年03月21日 10:28 上午 yuanji Exp $
  */
-public class ChangeContent {
+@Mapper
+public interface MetaChangeTypeVOConverter {
 
     /**
-     * 变更内容类型
+     * The constant INSTANCE.
      */
-    @NotNull
-    private ChangeContentType contentType;
+    MetaChangeTypeVOConverter INSTANCE = Mappers.getMapper(MetaChangeTypeVOConverter.class);
+
     /**
-     * 变更内部实体名字
+     * Covert to vo result ops cloud result.
+     *
+     * @param result the result
+     * @return the ops cloud result
      */
-    @NotBlank
-    private String                    instanceName;
+    AlterShieldResult<List<MetaChangeTypeVO>> covertToVOResult(AlterShieldResult<List<MetaChangeTypeEntity>> result);
 
-    public ChangeContent() {
-    }
-
-    public ChangeContent(String contentTypeName, String instanceName) {
-        this.instanceName = instanceName;
-        this.contentType = new ChangeContentType(contentTypeName);
-    }
-
-    public ChangeContentType getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(ChangeContentType contentType) {
-        this.contentType = contentType;
-    }
-
-    public String getInstanceName() {
-        return instanceName;
-    }
-
-    public void setInstanceName(String instanceName) {
-        this.instanceName = instanceName;
-    }
-
-    @Override
-    public String toString() {
-        return "ChangeContentInstance{" + "opsCloudContentType=" + contentType + ", instanceName='"
-                + instanceName + '\'' + '}';
-    }
+    /**
+     * Covert to vo list.
+     *
+     * @param metaChangeSceneEntities the meta change scene entities
+     * @return the list
+     */
+    List<MetaChangeTypeVO> covertToVO(List<MetaChangeTypeEntity> metaChangeSceneEntities);
 
 }

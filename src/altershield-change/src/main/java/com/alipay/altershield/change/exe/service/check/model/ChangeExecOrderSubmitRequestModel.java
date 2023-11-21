@@ -24,6 +24,7 @@
 package com.alipay.altershield.change.exe.service.check.model;
 
 import com.alipay.altershield.framework.core.change.facade.request.ChangeExecOrderSubmitRequest;
+import com.alipay.altershield.framework.core.change.model.AlterShieldChangeContent;
 import com.alipay.altershield.framework.core.change.model.ChangeParentOrderInfo;
 import com.alipay.altershield.framework.core.change.model.ChangeTarget;
 import com.alipay.altershield.framework.core.change.model.enums.ChangePhaseEnum;
@@ -79,7 +80,7 @@ public class ChangeExecOrderSubmitRequestModel {
     /**
      * 变更内容实体信息
      */
-    private ChangeTarget[] changeTargets;
+    private AlterShieldChangeContent[] changeContents;
     /**
      * 变更内容参数。json格式
      */
@@ -139,7 +140,7 @@ public class ChangeExecOrderSubmitRequestModel {
         this.changeSceneKey = request.getChangeSceneKey();
         this.changeTitle = request.getChangeTitle();
         this.changeUrl = request.getChangeUrl();
-        this.changeTargets = request.getChangeTargets();
+        this.changeContents = request.getChangeContents();
         this.parentOrderInfo = request.getParentOrderInfo();
         this.trace = request.getTrace();
         this.platform = request.getPlatform();

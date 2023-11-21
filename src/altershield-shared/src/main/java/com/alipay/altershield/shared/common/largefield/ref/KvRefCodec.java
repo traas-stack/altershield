@@ -46,7 +46,7 @@ package com.alipay.altershield.shared.common.largefield.ref;
 import com.alibaba.fastjson.JSON;
 import com.alipay.altershield.framework.common.util.CommonUtil;
 import com.alipay.altershield.framework.common.util.JSONUtil;
-import com.alipay.altershield.framework.core.change.model.ChangeContent;
+import com.alipay.altershield.framework.core.change.model.AlterShieldChangeContent;
 import com.alipay.altershield.framework.core.change.model.ChangeParentOrderInfo;
 import com.alipay.altershield.framework.core.change.model.ChangeTarget;
 import com.alipay.altershield.framework.core.risk.config.RiskDefenseConfig;
@@ -194,15 +194,15 @@ public interface KvRefCodec<T> {
     /**
      * 变更对象类型
      **/
-    KvRefCodec<List<ChangeContent>> CHANGE_CONTENTS = new KvRefCodec<List<ChangeContent>>() {
+    KvRefCodec<List<AlterShieldChangeContent>> CHANGE_CONTENTS = new KvRefCodec<List<AlterShieldChangeContent>>() {
         @Override
-        public List<ChangeContent> decode(String value) {
+        public List<AlterShieldChangeContent> decode(String value) {
             return JSONUtil.parseJSONToObjList(value,
-                    ChangeContent.class);
+                    AlterShieldChangeContent.class);
         }
 
         @Override
-        public String encode(List<ChangeContent> obj) {
+        public String encode(List<AlterShieldChangeContent> obj) {
             return JSONUtil.toJSONString(obj, false);
         }
     };

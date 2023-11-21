@@ -47,6 +47,9 @@ import com.alipay.altershield.change.exe.dal.dataobject.ExeNodeDO;
 import com.alipay.altershield.change.exe.dal.mapper.ExeNodeMapper;
 import com.alipay.altershield.change.exe.repository.ExeChangeNodeRepository;
 import com.alipay.altershield.change.exe.repository.converter.ExeNodeEntityConverter;
+import com.alipay.altershield.common.logger.intercept.AlterShieldLogAnnotation;
+import com.alipay.altershield.common.logger.intercept.DetailLogTypeEnum;
+import com.alipay.altershield.common.logger.intercept.DigestLogTypeEnum;
 import com.alipay.altershield.common.util.IdUtil;
 import com.alipay.altershield.framework.common.util.CommonUtil;
 import com.alipay.altershield.shared.change.exe.node.entity.*;
@@ -145,7 +148,7 @@ public class ExeChangeNodeRepositoryImpl implements ExeChangeNodeRepository {
 
 
     @Override
-    @OpsCloudLogAnnotation(serviceDesc = "getLatestNodeEntity", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
+    @AlterShieldLogAnnotation(serviceDesc = "getLatestNodeEntity", digestLogType = DigestLogTypeEnum.SERVICE_OPERATE_DIGEST,
             detailLogType = DetailLogTypeEnum.SERVICE_INFO, keyArg = 0, keyProps = "orderId")
     public ExeNodeEntity getLatestNodeEntity(String orderId, MetaChangeStepTypeEnum changeStepType) {
         List<ExeNodeEntity> exeNodeEntities = getNodeEntityByOrderIdList(orderId, changeStepType, 1);

@@ -43,6 +43,7 @@
  */
 package com.alipay.altershield.common.logger.intercept;
 
+import com.alibaba.common.lang.diagnostic.Profiler;
 import com.alipay.altershield.common.logger.Loggers;
 import com.alipay.altershield.common.intercept.DefaultSensitiveContentHandler;
 import com.alipay.altershield.common.intercept.SensitiveContentHandler;
@@ -53,6 +54,10 @@ import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerMana
 import com.alipay.altershield.framework.common.validate.JsonFormat;
 import com.alipay.altershield.framework.core.change.model.trace.OpsChngTrace;
 import org.apache.commons.lang3.StringUtils;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AdvisedSupport;

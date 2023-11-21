@@ -272,7 +272,7 @@ public class ExeNodeDO {
      *
      * @mbg.generated
      */
-    private String tldcTenantCode;
+    private String tenantCode;
 
     /**
      * Database Column Remarks:
@@ -299,7 +299,7 @@ public class ExeNodeDO {
      *
      * @mbg.generated
      */
-    private String fromTldcTenantCode;
+    private String fromTenantCode;
 
     /**
      * Database Column Remarks:
@@ -825,18 +825,18 @@ public class ExeNodeDO {
      * @return the value of opscloud_exe_node.tldc_tenant_code
      * @mbg.generated
      */
-    public String getTldcTenantCode() {
-        return tldcTenantCode;
+    public String getTenantCode() {
+        return tenantCode;
     }
 
     /**
      * Sets tldc tenant code.
      *
-     * @param tldcTenantCode the value for opscloud_exe_node.tldc_tenant_code
+     * @param tenantCode the value for opscloud_exe_node.tldc_tenant_code
      * @mbg.generated
      */
-    public void setTldcTenantCode(String tldcTenantCode) {
-        this.tldcTenantCode = tldcTenantCode;
+    public void setTenantCode(String tenantCode) {
+        this.tenantCode = tenantCode;
     }
 
     /**
@@ -885,18 +885,18 @@ public class ExeNodeDO {
      * @return the value of opscloud_exe_node.from_tldc_tenant_code
      * @mbg.generated
      */
-    public String getFromTldcTenantCode() {
-        return fromTldcTenantCode;
+    public String getFromTenantCode() {
+        return fromTenantCode;
     }
 
     /**
      * Sets from tldc tenant code.
      *
-     * @param fromTldcTenantCode the value for opscloud_exe_node.from_tldc_tenant_code
+     * @param fromTenantCode the value for opscloud_exe_node.from_tldc_tenant_code
      * @mbg.generated
      */
-    public void setFromTldcTenantCode(String fromTldcTenantCode) {
-        this.fromTldcTenantCode = fromTldcTenantCode;
+    public void setFromTenantCode(String fromTenantCode) {
+        this.fromTenantCode = fromTenantCode;
     }
 
     /**
@@ -1010,10 +1010,10 @@ public class ExeNodeDO {
         sb.append(", finishTime=").append(finishTime);
         sb.append(", emergencyFlag=").append(emergencyFlag);
         sb.append(", contextRef=").append(contextRef);
-        sb.append(", tldcTenantCode=").append(tldcTenantCode);
+        sb.append(", tldcTenantCode=").append(tenantCode);
         sb.append(", fromCloudId=").append(fromCloudId);
         sb.append(", referId=").append(referId);
-        sb.append(", fromTldcTenantCode=").append(fromTldcTenantCode);
+        sb.append(", fromTldcTenantCode=").append(fromTenantCode);
         sb.append(", changeContentRef=").append(changeContentRef);
         sb.append(", changeTargetRef=").append(changeTargetRef);
         sb.append(", changeEffectiveInfoRef=").append(changeEffectiveInfoRef);

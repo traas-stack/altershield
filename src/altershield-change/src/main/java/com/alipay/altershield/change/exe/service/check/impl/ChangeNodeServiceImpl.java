@@ -43,6 +43,36 @@
  */
 package com.alipay.altershield.change.exe.service.check.impl;
 
+import com.alipay.altershield.change.exe.repository.ExeChangeNodeRepository;
+import com.alipay.altershield.change.exe.repository.ExeChangeOrderRepository;
+import com.alipay.altershield.change.exe.service.check.ChangeNodeService;
+import com.alipay.altershield.change.exe.service.check.CoordCounterService;
+import com.alipay.altershield.change.exe.service.check.model.ChangeNodeCreateModel;
+import com.alipay.altershield.change.exe.service.convert.ChangeStartNotifyRequestConvert;
+import com.alipay.altershield.change.exe.service.execute.statemachine.ExeNodeStateMachine;
+import com.alipay.altershield.change.exe.service.execute.statemachine.ExeNodeStateMachineManager;
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.common.service.AlterShieldGroupService;
+import com.alipay.altershield.common.util.TraceUtil;
+import com.alipay.altershield.framework.common.util.JSONUtil;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.change.facade.result.ChangeCheckVerdict;
+import com.alipay.altershield.framework.core.change.facade.result.ChangeCheckVerdictEnum;
+import com.alipay.altershield.framework.core.change.model.enums.ChangePhaseEnum;
+import com.alipay.altershield.framework.core.change.model.trace.OpsChngTrace;
+import com.alipay.altershield.framework.core.risk.model.check.ChangeCheckRule;
+import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeBaseNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeCheckInfo;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.enums.ExeNodeStateEnum;
+import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
+import com.alipay.altershield.shared.change.exe.order.enums.ExeOrderStatusEnum;
+import com.alipay.altershield.shared.change.exe.service.ExeChangeNodeService;
+import com.alipay.altershield.shared.change.meta.model.enums.MetaChangeStepTypeEnum;
+import com.alipay.altershield.shared.defender.ExeDefenderDetectService;
+import com.alipay.altershield.shared.schedule.event.change.ChangeNodeCreatedEvent;
+import com.alipay.altershield.shared.schedule.event.publish.AlterShieldSchedulerEventPublisher;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,15 +97,15 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
     private ExeChangeNodeRepository exeChangeNodeRepository;
 
     @Autowired
-    private OpsCloudChangeStartNotifyRequestConvert opsCloudChangeStartNotifyRequestConvert;
+    private ChangeStartNotifyRequestConvert opsCloudChangeStartNotifyRequestConvert;
     @Autowired
-    private CoordCounterService                     coordCounterService;
+    private CoordCounterService coordCounterService;
 
     @Autowired
-    private OpsCloudGroupService opsCloudGroupService;
+    private AlterShieldGroupService alterShieldGroupService;
 
     @Autowired
-    private OpsCloudSchedulerEventPublisher opsCloudSchedulerEventPublisher;
+    private AlterShieldSchedulerEventPublisher alterShieldSchedulerEventPublisher;
 
     @Autowired
     private ExeNodeStateMachineManager exeNodeStateMachineManager;
@@ -93,16 +123,16 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
      * @return the exe node entity
      */
     @Override
-    public ExeNodeEntity createExeNodeEntity(OpsCloudChangeNodeCreateModel model) {
+    public ExeNodeEntity createExeNodeEntity(ChangeNodeCreateModel model) {
 
         ExeNodeEntity exeNodeEntity = createNode(model);
-        OpsCloudLoggerManager.log("info", logger, "create exe node entity", JSONUtil.toJSONString(exeNodeEntity, false));
+        AlterShieldLoggerManager.log("info", logger, "create exe node entity", JSONUtil.toJSONString(exeNodeEntity, false));
         sendEvent(exeNodeEntity, model);
-        OpsCloudLoggerManager.log("info", logger, "create exe node entity success", model.getNodeExeId());
+        AlterShieldLoggerManager.log("info", logger, "create exe node entity success", model.getNodeExeId());
         return exeNodeEntity;
     }
 
-    private ExeNodeEntity createNode(OpsCloudChangeNodeCreateModel model)
+    private ExeNodeEntity createNode(ChangeNodeCreateModel model)
     {
         OpsChngTrace myTrace = genOpsChngTrace(model.getRequest().getTrace());
         model.setTrace(myTrace);
@@ -112,7 +142,7 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
         return exeNodeEntity;
     }
 
-    private void updateOrderStatus(ExeNodeEntity entity, OpsCloudChangeNodeCreateModel model)
+    private void updateOrderStatus(ExeNodeEntity entity, ChangeNodeCreateModel model)
     {
         if(StringUtils.isNotBlank(entity.getOrderId()))
         {
@@ -138,16 +168,16 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
         }
     }
 
-    private void sendEvent(ExeNodeEntity exeNodeEntity, OpsCloudChangeNodeCreateModel opsCloudChangeNodeCreateModel)
+    private void sendEvent(ExeNodeEntity exeNodeEntity, ChangeNodeCreateModel opsCloudChangeNodeCreateModel)
     {
-        OpsCloudChangeNodeCreatedEvent event = new OpsCloudChangeNodeCreatedEvent();
+        ChangeNodeCreatedEvent event = new ChangeNodeCreatedEvent();
         event.setExeNodeId(exeNodeEntity.getNodeExeId());
         event.setChangeKey(exeNodeEntity.getChangeKey());
         event.setEmergency(exeNodeEntity.isEmergency());
         event.setChangeKey(exeNodeEntity.getChangeKey());
         event.setChangeStepType(exeNodeEntity.getChangeStepType());
         event.setGeneration(opsCloudChangeNodeCreateModel.getGeneration());
-        opsCloudSchedulerEventPublisher.publish(exeNodeEntity.getNodeExeId(),event);
+        alterShieldSchedulerEventPublisher.publish(exeNodeEntity.getNodeExeId(),event);
     }
 
     /**
@@ -168,9 +198,9 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
         return TraceUtil.genTraceNodeByService(parentTrace, targetSer);
     }
 
-    private ExeNodeEntity convertToEntity(OpsCloudChangeNodeCreateModel model) {
+    private ExeNodeEntity convertToEntity(ChangeNodeCreateModel model) {
         //自动生成trace
-        model.setDispatchGroup(opsCloudGroupService.getGroup());
+        model.setDispatchGroup(alterShieldGroupService.getGroup());
         model.setStatus(ExeNodeStateEnum.PRE_AOP_SUBMIT);
         ExeNodeEntity exeNodeEntity = opsCloudChangeStartNotifyRequestConvert.createExeNodeEntity(model.getChangeStepType());
         opsCloudChangeStartNotifyRequestConvert.convert(model, exeNodeEntity);
@@ -181,14 +211,14 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
         Set<String> changePhases = model.getChangePhases();
         if (!CollectionUtils.isEmpty(changePhases)) {
             for (String phase : changePhases) {
-                OpsCloudChangePhaseEnum phaseEnum = OpsCloudChangePhaseEnum.getByPhase(phase);
+                ChangePhaseEnum phaseEnum = ChangePhaseEnum.getByPhase(phase);
                 if (!Objects.isNull(phaseEnum)) {
                     exeNodeEntity.setChangePhase(phaseEnum);
                 }
             }
         }
-        if (model.getChangeTargets() != null && model.getChangeTargets().length > 0) {
-            exeNodeEntity.getChangeTargetRef().write(new ArrayList<>(Arrays.asList(model.getChangeTargets())));
+        if (model.getChangeContents() != null && model.getChangeContents().length > 0) {
+            exeNodeEntity.getChangeContentRef().write(new ArrayList<>(Arrays.asList(model.getChangeContents())));
         }
 
         return exeNodeEntity;
@@ -251,7 +281,7 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
      */
     @Override
     public void setNodeCheckFinish(ExeNodeEntity exeNodeEntity, DefenseStageEnum defenseStageEnum, Boolean checkPaas) {
-        OpsCloudLoggerUtil.log("info", Loggers.EXE_STATE_MACHINE, "ChangeNodeServiceImpl$setNodeCheckFinish", exeNodeEntity.getNodeExeId(),
+        AlterShieldLoggerManager.log("info", Loggers.EXE_STATE_MACHINE, "ChangeNodeServiceImpl$setNodeCheckFinish", exeNodeEntity.getNodeExeId(),
                 exeNodeEntity, defenseStageEnum, checkPaas);
         ExeNodeStateMachine exeNodeStateMachine =  exeNodeStateMachineManager.getExeNodeStateMachine(exeNodeEntity.getStatus());
         exeNodeStateMachine.setNodeDefenseFinish(exeNodeEntity, defenseStageEnum, checkPaas);
@@ -310,10 +340,10 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
      * @return the ops cloud change check verdict
      */
     @Override
-    public OpsCloudChangeCheckVerdict queryChangeVerdict(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum,
-                                                         boolean returnDetails, boolean changeSuccess) {
-        OpsCloudChangeCheckVerdict verdict = new OpsCloudChangeCheckVerdict();
-        verdict.setVerdict(OpsCloudChangeCheckVerdictEnum.PASS.getVerdict());
+    public ChangeCheckVerdict queryChangeVerdict(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum,
+                                                 boolean returnDetails, boolean changeSuccess) {
+        ChangeCheckVerdict verdict = new ChangeCheckVerdict();
+        verdict.setVerdict(ChangeCheckVerdictEnum.PASS.getVerdict());
         verdict.setAllFinish(true);
         if (changeSuccess) {
             final ExeNodeCheckInfo idInfo = entity.getExeNodeCheckInfo();
@@ -322,9 +352,9 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
             boolean isPass = isPre ? Boolean.TRUE.equals(idInfo.getPreCheckPass()) : Boolean.TRUE.equals(idInfo.getPostCheckPass());
             verdict.setAllFinish(true);
             verdict.setVerdict(
-                    isPass ? OpsCloudChangeCheckVerdictEnum.PASS.getVerdict() : OpsCloudChangeCheckVerdictEnum.FAIL.getVerdict());
+                    isPass ? ChangeCheckVerdictEnum.PASS.getVerdict() : ChangeCheckVerdictEnum.FAIL.getVerdict());
             if (returnDetails) {
-                List<OpsCloudChangeCheckRule> ruleList = exeDefenderDetectService.queryDetectStatusByNodeId(entity.getNodeExeId(),
+                List<ChangeCheckRule> ruleList = exeDefenderDetectService.queryDetectStatusByNodeId(entity.getNodeExeId(),
                         defenseStageEnum);
                 verdict.setRules(ruleList);
             }

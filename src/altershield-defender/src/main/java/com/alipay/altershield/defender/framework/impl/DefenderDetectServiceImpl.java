@@ -1,42 +1,62 @@
 /*
+ * MIT License
+ *
+ * Copyright (c) [2023]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/*
  * Ant Group
  * Copyright (c) 2004-2022 All Rights Reserved.
  */
 package com.alipay.altershield.defender.framework.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alipay.opscloud.api.change.exe.node.entity.ExeNodeEntity;
-import com.alipay.opscloud.api.change.exe.service.ExeChangeNodeService;
-import com.alipay.opscloud.api.change.meta.model.enums.MetaChangeStepTypeEnum;
-import com.alipay.opscloud.api.defender.DefenderDetectService;
-import com.alipay.opscloud.api.defender.entity.ExeDefenderDetectEntity;
-import com.alipay.opscloud.api.defender.enums.DefenderPluginInvokeTypeEnum;
-import com.alipay.opscloud.api.defender.model.ChangeFilter;
-import com.alipay.opscloud.api.defender.request.ChangeFilterRequest;
-import com.alipay.opscloud.api.defender.request.DefenderDetectRequest;
-import com.alipay.opscloud.api.defender.result.DefenderDetectResult;
-import com.alipay.opscloud.api.defender.result.DefenderDetectSubmitResult;
-import com.alipay.opscloud.api.pluginmarket.PluginMarket;
-import com.alipay.opscloud.api.scheduler.event.defender.DefenderCheckProcessEvent;
-import com.alipay.opscloud.api.scheduler.event.defender.DefenderDetectEvent;
-import com.alipay.opscloud.api.scheduler.event.publish.OpsCloudSchedulerEventPublisher;
-import com.alipay.opscloud.defender.AbstractDefenderService;
-import com.alipay.opscloud.defender.enums.DefenseRangeTypeEnum;
-import com.alipay.opscloud.defender.enums.ExceptionStrategyEnum;
-import com.alipay.opscloud.defender.meta.entity.MetaDefenderRuleEntity;
-import com.alipay.opscloud.defender.task.DefenderSyncDetectTask;
-import com.alipay.opscloud.framework.common.util.JSONUtil;
-import com.alipay.opscloud.framework.common.util.logger.OpsCloudLoggerManager;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.risk.model.enums.DefenseStageEnum;
-import com.alipay.opscloud.spi.defender.model.enums.DefenderStatusEnum;
-import com.alipay.opscloud.spi.defender.model.request.ChangeContent;
-import com.alipay.opscloud.spi.defender.model.result.DefenderDetectPluginResult;
-import com.alipay.opscloud.spi.influence.model.enums.ExtensionKey;
-import com.alipay.opscloud.tools.common.constant.OpsCloudConstant;
-import com.alipay.opscloud.tools.common.id.IdBizCodeEnum;
-import com.alipay.opscloud.tools.common.id.IdUtil;
-import com.alipay.opscloud.tools.common.logger.Loggers;
+import com.alipay.altershield.common.constant.AlterShieldConstant;
+import com.alipay.altershield.common.id.enums.IdBizCodeEnum;
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.common.util.IdUtil;
+import com.alipay.altershield.defender.framework.AbstractDefenderService;
+import com.alipay.altershield.defender.framework.enums.DefenseRangeTypeEnum;
+import com.alipay.altershield.defender.framework.enums.ExceptionStrategyEnum;
+import com.alipay.altershield.defender.framework.meta.entity.MetaDefenderRuleEntity;
+import com.alipay.altershield.defender.framework.task.DefenderSyncDetectTask;
+import com.alipay.altershield.framework.common.util.JSONUtil;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
+import com.alipay.altershield.shared.change.exe.service.ExeChangeNodeService;
+import com.alipay.altershield.shared.defender.DefenderDetectService;
+import com.alipay.altershield.shared.defender.entity.ExeDefenderDetectEntity;
+import com.alipay.altershield.shared.defender.enums.DefenderPluginInvokeTypeEnum;
+import com.alipay.altershield.shared.defender.model.ChangeFilter;
+import com.alipay.altershield.shared.defender.request.ChangeFilterRequest;
+import com.alipay.altershield.shared.defender.request.DefenderDetectRequest;
+import com.alipay.altershield.shared.defender.result.DefenderDetectResult;
+import com.alipay.altershield.shared.defender.result.DefenderDetectSubmitResult;
+import com.alipay.altershield.shared.pluginmarket.PluginMarket;
+import com.alipay.altershield.shared.schedule.event.defender.DefenderCheckProcessEvent;
+import com.alipay.altershield.shared.schedule.event.defender.DefenderDetectEvent;
+import com.alipay.altershield.shared.schedule.event.publish.AlterShieldSchedulerEventPublisher;
+import com.alipay.altershield.spi.defender.model.enums.DefenderStatusEnum;
+import com.alipay.altershield.spi.defender.model.request.ChangeContent;
+import com.alipay.altershield.spi.defender.model.result.DefenderDetectPluginResult;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,7 +88,7 @@ import java.util.stream.Stream;
 public class DefenderDetectServiceImpl extends AbstractDefenderService implements DefenderDetectService {
 
     @Autowired
-    private OpsCloudSchedulerEventPublisher schedulerEventPublisher;
+    private AlterShieldSchedulerEventPublisher schedulerEventPublisher;
 
     @Autowired
     private PluginMarket pluginMarket;
@@ -99,23 +119,23 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
      * @return 变更防御校验结果结构体
      */
     @Override
-    public OpsCloudResult<DefenderDetectResult> syncDetect(DefenderDetectRequest request) {
+    public AlterShieldResult<DefenderDetectResult> syncDetect(DefenderDetectRequest request) {
 
         // 1.0 容错
         if (request == null) {
-            return OpsCloudResult.illegalArgument("request can`t be null");
+            return AlterShieldResult.illegalArgument("request can`t be null");
         }
 
         // whiteList check
         if (!whiteListCheck(request.getChangeSceneKey())) {
-            OpsCloudLoggerManager.log("info", DEFENDER, "白名单校验不通过", request.getChangeSceneKey());
+            AlterShieldLoggerManager.log("info", DEFENDER, "白名单校验不通过", request.getChangeSceneKey());
             DefenderDetectResult result = new DefenderDetectResult();
             result.setDefensed(false);
             result.setMsg("白名单校验不通过");
-            return OpsCloudResult.succeed("白名单校验不通过", result);
+            return AlterShieldResult.succeed("白名单校验不通过", result);
         }
 
-        OpsCloudLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "syncDetect",
+        AlterShieldLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "syncDetect",
                 "starting sync detect", request.getChangeOrderId(), request.getNodeId());
 
         String detectGroupId = idGenerator.generateIdByRelatedId(IdBizCodeEnum.OPSCLD_DEFENDER_DETECT_GROUP_ID, request.getNodeId());
@@ -127,9 +147,9 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
 
             if (CollectionUtils.isEmpty(matchedRules)) {
                 // 规则列表为空
-                OpsCloudLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "syncDetect",
+                AlterShieldLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "syncDetect",
                         "防御规则匹配列表为空", request.getChangeOrderId(), request.getNodeId());
-                return new OpsCloudResult<>(DefenderDetectResult.pass(detectGroupId));
+                return new AlterShieldResult<>(DefenderDetectResult.pass(detectGroupId));
             }
 
             // 2.1 本方法只执行同步SPI接入的防御能力，所以要把异步的过滤掉
@@ -139,9 +159,9 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
 
             if (CollectionUtils.isEmpty(matchedRules)) {
                 // 规则列表为空
-                OpsCloudLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "syncDetect",
+                AlterShieldLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "syncDetect",
                         "防御规则过滤后列表为空", request.getChangeOrderId(), request.getNodeId());
-                return new OpsCloudResult<>(DefenderDetectResult.pass(detectGroupId));
+                return new AlterShieldResult<>(DefenderDetectResult.pass(detectGroupId));
             }
 
             // 3.0 调度防御规则执行，为每一个防御规则创建一个task
@@ -159,11 +179,11 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
             changeNodeService.setNodeCheckStarted(nodeEntity, request.getDefenseStage(), detectGroupId);
 
             // 5.0 判断校验结果
-            long timeout = request.getTimeout() == null ? OpsCloudConstant.DEFENDER_SYNC_DETECT_TIMEOUT : request.getTimeout();
+            long timeout = request.getTimeout() == null ? AlterShieldConstant.DEFENDER_SYNC_DETECT_TIMEOUT : request.getTimeout();
             boolean success = countDownLatch.await(timeout, TimeUnit.MILLISECONDS);
             if (!success) {
                 checkPass = true;
-                return new OpsCloudResult<>(DefenderDetectResult.timeout(detectGroupId, "防御执行超时，已大于" + timeout + "ms"));
+                return new AlterShieldResult<>(DefenderDetectResult.timeout(detectGroupId, "防御执行超时，已大于" + timeout + "ms"));
             }
 
             // 5.1 获取校验结果
@@ -178,7 +198,7 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
                     failResult.setStatus(DefenderStatusEnum.FAIL);
                     failResult.setDetectGroupId(detectGroupId);
                     failResult.setMsg("存在防御规则校验不通过");
-                    return new OpsCloudResult<>(failResult);
+                    return new AlterShieldResult<>(failResult);
                 } else if (DefenderStatusEnum.EXCEPTION.equals(result.getStatus())) {
                     // 5.1.2 如果校验异常，需要看下规则的异常处理策略
                     MetaDefenderRuleEntity targetRule = matchedRules.stream()
@@ -192,22 +212,22 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
                         failResult.setStatus(DefenderStatusEnum.FAIL);
                         failResult.setDetectGroupId(detectGroupId);
                         failResult.setMsg("存在防御规则执行异常，且该规则异常处理策略为阻断变更");
-                        return new OpsCloudResult<>(failResult);
+                        return new AlterShieldResult<>(failResult);
                     }
                 }
             }
         } catch (Exception e) {
-            OpsCloudLoggerManager.log("error", DEFENDER, "DefenderDetectServiceImpl", "syncDetect", "failed",
+            AlterShieldLoggerManager.log("error", DEFENDER, "DefenderDetectServiceImpl", "syncDetect", "failed",
                     "do sync detect got an exception", request.getChangeOrderId(), request.getNodeId(), e);
             DefenderDetectResult detectResult = DefenderDetectResult.exception(detectGroupId, "防御执行异常");
-            return new OpsCloudResult<>(detectResult);
+            return new AlterShieldResult<>(detectResult);
         } finally {
             // 6.0 开始校验，更新node状态为校验完成（前/后置）
             ExeNodeEntity nodeEntity = changeNodeService.lockNodeById(request.getNodeId());
             changeNodeService.setNodeCheckFinish(nodeEntity, request.getDefenseStage(), checkPass);
         }
 
-        return new OpsCloudResult<>(DefenderDetectResult.pass(detectGroupId));
+        return new AlterShieldResult<>(DefenderDetectResult.pass(detectGroupId));
     }
 
     /**
@@ -217,22 +237,22 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
      * @return 变更防御校验结果结构体
      */
     @Override
-    public OpsCloudResult<DefenderDetectSubmitResult> asyncDetect(DefenderDetectRequest request) {
+    public AlterShieldResult<DefenderDetectSubmitResult> asyncDetect(DefenderDetectRequest request) {
         // 1.0 容错
         if (request == null) {
-            return OpsCloudResult.illegalArgument("request can`t be null");
+            return AlterShieldResult.illegalArgument("request can`t be null");
         }
 
         // whiteList check
         if (!whiteListCheck(request.getChangeSceneKey())) {
-            OpsCloudLoggerManager.log("info", DEFENDER, "白名单校验不通过", request.getChangeSceneKey());
+            AlterShieldLoggerManager.log("info", DEFENDER, "白名单校验不通过", request.getChangeSceneKey());
             DefenderDetectSubmitResult result = new DefenderDetectSubmitResult();
             result.setDefensed(false);
             result.setMsg("白名单校验不通过");
-            return OpsCloudResult.succeed("白名单校验不通过", result);
+            return AlterShieldResult.succeed("白名单校验不通过", result);
         }
 
-        OpsCloudLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "asyncDetect",
+        AlterShieldLoggerManager.log("info", DEFENDER, "DefenderDetectServiceImpl", "asyncDetect",
                 "starting async detect", request.getChangeOrderId(), request.getNodeId(), request.getDefenseStage());
 
         DefenderDetectSubmitResult result = new DefenderDetectSubmitResult();
@@ -243,7 +263,7 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
         if (request.isEmergency()) {
             result.setDefensed(false);
             result.setMsg("应急变更不进行防御校验");
-            return new OpsCloudResult<>(result);
+            return new AlterShieldResult<>(result);
         }
 
         try {
@@ -252,7 +272,7 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
             if (CollectionUtils.isEmpty(matchedRules)) {
                 result.setDefensed(false);
                 result.setMsg("本次未匹配到防御规则");
-                return new OpsCloudResult<>(result);
+                return new AlterShieldResult<>(result);
             }
 
             // 3.0 插入校验记录与调度事件
@@ -276,7 +296,7 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
                     // 4.0 批量创建校验记录
                     boolean isSuccess = exeDefenderDetectRepository.batchInsert(toAddDetects);
                     if (!isSuccess) {
-                        OpsCloudLoggerManager.log("error", DEFENDER, "DefenderDetectServiceImpl", "asyncDetect",
+                        AlterShieldLoggerManager.log("error", DEFENDER, "DefenderDetectServiceImpl", "asyncDetect",
                                 "create detect records failed", request.getChangeOrderId(), request.getNodeId(), request.getDefenseStage(),
                                 detectGroupId);
                         status.setRollbackOnly();
@@ -302,19 +322,19 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
                 result.setDetectGroupId(detectGroupId);
                 result.setStage(request.getDefenseStage());
 
-                OpsCloudLoggerManager.log("info", Loggers.DEFENDER, "DefenderDetectServiceImpl", "asyncDetect", "success",
+                AlterShieldLoggerManager.log("info", Loggers.DEFENDER, "DefenderDetectServiceImpl", "asyncDetect", "success",
                         "submit detect task succeed", request.getChangeOrderId(), request.getNodeId(), request.getDefenseStage());
-                return new OpsCloudResult<>(result);
+                return new AlterShieldResult<>(result);
             } else {
-                OpsCloudLoggerManager.log("info", Loggers.DEFENDER, "DefenderDetectServiceImpl", "asyncDetect", "fail",
+                AlterShieldLoggerManager.log("info", Loggers.DEFENDER, "DefenderDetectServiceImpl", "asyncDetect", "fail",
                         "submit detect task failed", request.getChangeOrderId(), request.getNodeId(), request.getDefenseStage());
-                return OpsCloudResult.systemError("提交校验任务失败");
+                return AlterShieldResult.systemError("提交校验任务失败");
             }
 
         } catch (Exception e) {
-            OpsCloudLoggerManager.log("error", DEFENDER, e, "DefenderDetectServiceImpl", "asyncDetect", "fail",
+            AlterShieldLoggerManager.log("error", DEFENDER, e, "DefenderDetectServiceImpl", "asyncDetect", "fail",
                     "do async detect got an exception", request.getChangeOrderId(), request.getNodeId(), e);
-            return OpsCloudResult.systemError("unknown exception");
+            return AlterShieldResult.systemError("unknown exception");
         }
     }
 
@@ -334,17 +354,17 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
         }
 
         // 2.0 获取防御规则列表
-        OpsCloudLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
+        AlterShieldLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
                 "get defenseRangeKeys", defenseRangeKeys.size(), JSONUtil.toJSONString(defenseRangeKeys, false), request.getDefenseStage());
         List<MetaDefenderRuleEntity> matchedRules = metaDefenderRuleRepository
                 .selectByRangeKeysAndStage(defenseRangeKeys, request.getDefenseStage());
         if (CollectionUtils.isEmpty(matchedRules)){
-            OpsCloudLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
+            AlterShieldLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
                     "get defense rule list size", matchedRules.size());
             return Collections.emptySet();
         }
 
-        OpsCloudLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
+        AlterShieldLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
                 "get defense rule list size", matchedRules.size(), JSONUtil.toJSONString(matchedRules.stream().map(MetaDefenderRuleEntity::getName).collect(Collectors.toList())));
 
         if (request.getChangeExecuteInfo() == null
@@ -365,14 +385,14 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
         for (MetaDefenderRuleEntity rule : matchedRules) {
             // 4.1 过滤掉防御能力已关闭的防御规则，此处需要判断是否使用了新系统的插件还是代理到老系统的防御服务
             if (!isEnabledRule(rule)) {
-                OpsCloudLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
+                AlterShieldLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
                         "filter disabled rule", request.getNodeId(), rule.getId(), rule.getName());
                 continue;
             }
 
             // 4.2 容错，如果changeFilter为空，默认匹配
             if (rule.getChangeFilter() == null || rule.getChangeFilter().readObject() == null) {
-                OpsCloudLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
+                AlterShieldLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
                         "the change filter is empty, default matched", request.getNodeId(), rule.getId(), rule.getName());
                 newMatchedRules.add(rule);
                 continue;
@@ -389,7 +409,7 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
             }
         }
 
-        OpsCloudLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
+        AlterShieldLoggerManager.log("info", DEFENDER, request.getNodeId(), "DefenderDetectServiceImpl", "matchDefenseRule",
                 "matched rule list size", newMatchedRules.size());
         return new HashSet<>(newMatchedRules);
     }

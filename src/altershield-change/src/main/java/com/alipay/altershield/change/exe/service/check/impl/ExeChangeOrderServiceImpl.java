@@ -105,7 +105,7 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
     public ExeChangeOrderEntity createExeChangeOrder(
             MetaChangeSceneEntity metaChangeSceneEntity, ChangeExecOrderSubmitRequestModel request) {
         ExeChangeOrderEntity entity = convertToOrder(cloudId, request);
-        entity.setTldcTenantCode(metaChangeSceneEntity.getTenantCode());
+        entity.setTenantCode(metaChangeSceneEntity.getTenantCode());
         exeChangeOrderRepository.insert(entity);
         publishChangeExecOrderCreateEvent(metaChangeSceneEntity, entity);
         return entity;
@@ -167,7 +167,7 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
         entity.setOrderId(orderId);
         entity.setFromCloudId(fromCloudId);
         entity.setDispatchGroup(opsCloudGroupService.getGroup());
-        entity.setTldcTenantCode(request.getTldcTenantCode());
+        entity.setTenantCode(request.getTenantCode());
         return entity;
     }
 

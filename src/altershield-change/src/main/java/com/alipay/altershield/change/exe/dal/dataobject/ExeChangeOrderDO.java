@@ -221,7 +221,7 @@ public class ExeChangeOrderDO {
      *
      * @mbg.generated
      */
-    private String tldcTenantCode;
+    private String tenantCode;
 
     /**
      * Database Column Remarks:
@@ -248,7 +248,7 @@ public class ExeChangeOrderDO {
      *
      * @mbg.generated
      */
-    private String fromTldTenantCode;
+    private String fromTenantCode;
 
     /**
      * Database Column Remarks:
@@ -683,18 +683,18 @@ public class ExeChangeOrderDO {
      * @return the value of opscloud_exe_change_order.tldc_tenant_code
      * @mbg.generated
      */
-    public String getTldcTenantCode() {
-        return tldcTenantCode;
+    public String getTenantCode() {
+        return tenantCode;
     }
 
     /**
      * Sets tldc tenant code.
      *
-     * @param tldcTenantCode the value for opscloud_exe_change_order.tldc_tenant_code
+     * @param tenantCode the value for opscloud_exe_change_order.tldc_tenant_code
      * @mbg.generated
      */
-    public void setTldcTenantCode(String tldcTenantCode) {
-        this.tldcTenantCode = tldcTenantCode;
+    public void setTldcTenantCode(String tenantCode) {
+        this.tenantCode = tenantCode;
     }
 
     /**
@@ -743,18 +743,18 @@ public class ExeChangeOrderDO {
      * @return the value of opscloud_exe_change_order.from_tld_tenant_code
      * @mbg.generated
      */
-    public String getFromTldTenantCode() {
-        return fromTldTenantCode;
+    public String getFromTenantCode() {
+        return fromTenantCode;
     }
 
     /**
      * Sets from tld tenant code.
      *
-     * @param fromTldTenantCode the value for opscloud_exe_change_order.from_tld_tenant_code
+     * @param fromTenantCode the value for opscloud_exe_change_order.from_tld_tenant_code
      * @mbg.generated
      */
-    public void setFromTldTenantCode(String fromTldTenantCode) {
-        this.fromTldTenantCode = fromTldTenantCode;
+    public void setFromTenantCode(String fromTenantCode) {
+        this.fromTenantCode = fromTenantCode;
     }
 
     /**
@@ -984,10 +984,10 @@ public class ExeChangeOrderDO {
         sb.append(", executor=").append(executor);
         sb.append(", changePhase=").append(changePhases);
         sb.append(", msg=").append(msg);
-        sb.append(", tldcTenantCode=").append(tldcTenantCode);
+        sb.append(", tenantCode=").append(tenantCode);
         sb.append(", fromCloudId=").append(fromCloudId);
         sb.append(", referId=").append(referId);
-        sb.append(", fromTldTenantCode=").append(fromTldTenantCode);
+        sb.append(", fromTldTenantCode=").append(fromTenantCode);
         sb.append(", changeAppsRef=").append(changeAppsRef);
         sb.append(", planStartTime=").append(planStartTime);
         sb.append(", startTime=").append(startTime);

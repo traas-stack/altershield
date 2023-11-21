@@ -43,12 +43,12 @@
  */
 package com.alipay.altershield.change.exe.service.check.impl;
 
-import com.alipay.opscloud.api.change.meta.model.enums.MetaChangeStepTypeEnum;
-import com.alipay.opscloud.change.exe.service.check.ChangeTraceService;
-import com.alipay.opscloud.common.id.IdGenerator;
-import com.alipay.opscloud.framework.core.change.model.enums.OpsCloudChangeScenarioEnum;
-import com.alipay.opscloud.framework.core.change.model.trace.OpsChngTrace;
-import com.alipay.opscloud.tools.common.id.IdBizCodeEnum;
+import com.alipay.altershield.change.exe.service.check.ChangeTraceService;
+import com.alipay.altershield.common.id.IdGenerator;
+import com.alipay.altershield.common.id.enums.IdBizCodeEnum;
+import com.alipay.altershield.framework.core.change.model.enums.ChangeScenarioEnum;
+import com.alipay.altershield.framework.core.change.model.trace.OpsChngTrace;
+import com.alipay.altershield.shared.change.meta.model.enums.MetaChangeStepTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -66,7 +66,7 @@ public class ChangeTraceServiceImpl implements ChangeTraceService {
     private IdGenerator idGenerator;
 
     @Override
-    public OpsChngTrace generateTrace(OpsCloudChangeScenarioEnum changeScenarioEnum, String bizExecOrderId) {
+    public OpsChngTrace generateTrace(ChangeScenarioEnum changeScenarioEnum, String bizExecOrderId) {
         Assert.notNull(changeScenarioEnum, "changeScenario is null");
         Assert.notNull(bizExecOrderId, "bizExecOrderId is null");
         return _generateTrace(changeScenarioEnum, bizExecOrderId);
@@ -78,7 +78,7 @@ public class ChangeTraceServiceImpl implements ChangeTraceService {
     }
 
 
-    private OpsChngTrace _generateTrace(OpsCloudChangeScenarioEnum changeScenarioEnum,  String bizExecOrderId) {
+    private OpsChngTrace _generateTrace(ChangeScenarioEnum changeScenarioEnum,  String bizExecOrderId) {
 
         final String uid = generateUid(bizExecOrderId);
         String traceId = idGenerator.generateIdByUid(IdBizCodeEnum.OPSCLD_TRACE, uid, changeScenarioEnum);
