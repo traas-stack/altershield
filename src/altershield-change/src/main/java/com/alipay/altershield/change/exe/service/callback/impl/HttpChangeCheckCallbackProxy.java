@@ -43,7 +43,7 @@ public class HttpChangeCheckCallbackProxy implements ChangeCheckCallbackProxy {
     @Autowired
     private HttpAlterShieldClient httpAlterShieldClient;
 
-    private static Logger logger = Loggers.OUTTER_TASK;
+    private static Logger logger = Loggers.OUTER_TASK;
 
     @Override
     public ChangeCheckCallbackResult doCallback(ChangeCheckCallbackProxyModel model) {

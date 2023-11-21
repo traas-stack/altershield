@@ -60,7 +60,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AlterShieldGroupServiceImpl implements AlterShieldGroupService, InitializingBean {
 
-    @Value("${opscloud.framework.server.common.group.value:#{null}}")
+    @Value("${altershield.framework.server.common.group.value:#{null}}")
     private              String group = null;
     /**
      * 启动参数中的信息

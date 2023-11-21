@@ -53,7 +53,7 @@ public class SchedulerEventRepositoryImpl implements SchedulerEventRepository {
     @Autowired
     private IdGenerator idGenerator;
 
-    @Value("${opscloud.framework.server.scheduler.testUid:#{null}}")
+    @Value("${altershield.framework.server.scheduler.testUid:#{null}}")
     private String testUid;
 
     private static final ExeSchedulerEventEntityConverter converter = ExeSchedulerEventEntityConverter.INSTANCE;

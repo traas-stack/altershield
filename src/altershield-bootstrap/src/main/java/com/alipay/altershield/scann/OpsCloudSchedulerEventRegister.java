@@ -26,8 +26,8 @@
  */
 package com.alipay.altershield.scann;
 
-import com.alipay.opscloud.api.scheduler.event.OpsCloudSchedulerEvent;
-import com.alipay.opscloud.scheduler.event.OpsCloudSchedulerEventHolder;
+import com.alipay.altershield.shared.schedule.event.AlterShieldSchedulerEvent;
+import com.alipay.altershiled.schedule.event.AlterShieldSchedulerEventHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
@@ -85,7 +85,7 @@ public class OpsCloudSchedulerEventRegister implements ImportBeanDefinitionRegis
         // Named annotations are not scanned
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(registry, false, environment, resourceLoader);
         // Add our custom annotation scan
-        scanner.addIncludeFilter(new AnnotationTypeFilter(com.alipay.opscloud.api.scheduler.event.annotations.SchedulerEvent.class));
+        scanner.addIncludeFilter(new AnnotationTypeFilter(com.alipay.altershield.shared.schedule.event.annotations.SchedulerEvent.class));
         // Scan package
         for (String needScanPackage : packages) {
             Set<BeanDefinition> candidateComponents = scanner.findCandidateComponents(needScanPackage);
@@ -120,14 +120,14 @@ public class OpsCloudSchedulerEventRegister implements ImportBeanDefinitionRegis
                 AnnotatedBeanDefinition annotatedBeanDefinition = (AnnotatedBeanDefinition) candidateComponent;
                 AnnotationMetadata annotationMetadata = annotatedBeanDefinition.getMetadata();
                 Map<String, Object> customImportAnnotationAttributesMap = annotationMetadata.getAnnotationAttributes(
-                        com.alipay.opscloud.api.scheduler.event.annotations.SchedulerEvent.class.getName());
+                        com.alipay.altershield.shared.schedule.event.annotations.SchedulerEvent.class.getName());
                 AnnotationAttributes customImportAnnotationAttributes = Optional.ofNullable(
                         AnnotationAttributes.fromMap(customImportAnnotationAttributesMap)).orElseGet(AnnotationAttributes::new);
                 String beanName = customImportAnnotationAttributes.getString("value");
                 String className = annotationMetadata.getClassName();
-                Class<? extends OpsCloudSchedulerEvent> clazz = (Class<? extends OpsCloudSchedulerEvent>) Class.forName(className);
+                Class<? extends AlterShieldSchedulerEvent> clazz = (Class<? extends AlterShieldSchedulerEvent>) Class.forName(className);
                 logger.info("register schedulerEvent: {}, type={}", beanName,className);
-                OpsCloudSchedulerEventHolder.addEventType(beanName, clazz);
+                AlterShieldSchedulerEventHolder.addEventType(beanName, clazz);
             }
         }
     }

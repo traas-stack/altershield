@@ -58,8 +58,6 @@ public enum DetailLogTypeEnum {
     /** 外部调用详情日志 */
     SERVICE_INFO("外部调用详情日志", Loggers.SERVICE_INFO),
 
-    CALLBACK_INFO("老变更核心回调日志", Loggers.CALL_BACK),
-
 
     ///** dal详情日志 */
     //DAL_INFO("dal详情日志", Loggers.DAL_INFO),

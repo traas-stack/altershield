@@ -26,13 +26,13 @@
  */
 package com.alipay.altershield.web.openapi.change.v1.meta;
 
-import com.alipay.opscloud.change.meta.service.MetaChangeSceneService;
-import com.alipay.opscloud.change.meta.service.request.SyncMetaChangeSceneRequest;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.core.meta.change.facade.request.CreateMetaChangeSceneRequest;
-import com.alipay.opscloud.framework.core.meta.change.facade.result.CreateMetaChangeSceneResult;
-import com.alipay.opscloud.framework.sdk.constant.OpsCloudApiConstant;
-import com.alipay.opscloud.tools.common.openapi.OpenApiRequestThreadLocal;
+import com.alipay.altershield.change.meta.service.MetaChangeSceneService;
+import com.alipay.altershield.change.meta.service.request.SyncMetaChangeSceneRequest;
+import com.alipay.altershield.common.openapi.OpenApiRequestThreadLocal;
+import com.alipay.altershield.framework.core.change.facade.request.CreateMetaChangeSceneRequest;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.core.change.facade.result.CreateMetaChangeSceneResult;
+import com.alipay.altershield.framework.sdk.constant.AlterShieldApiConstant;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @version : MetaChangeSceneController.java, v 0.1 2022年06月09日 10:44 yuanji Exp $
  */
 @Controller
-@RequestMapping(OpsCloudApiConstant.metaPrefix)
+@RequestMapping(AlterShieldApiConstant.metaPrefix)
 public class OpenApiMetaChangeSceneController {
 
     @Autowired
@@ -63,13 +63,13 @@ public class OpenApiMetaChangeSceneController {
      * @return the ops cloud result
      */
     @ResponseBody
-    @RequestMapping(value = OpsCloudApiConstant.createChangeSceneAction, method = RequestMethod.POST)
-    public OpsCloudResult<CreateMetaChangeSceneResult> createBaseChangeScene(@Validated @RequestBody CreateMetaChangeSceneRequest request) {
+    @RequestMapping(value = AlterShieldApiConstant.createChangeSceneAction, method = RequestMethod.POST)
+    public AlterShieldResult<CreateMetaChangeSceneResult> createBaseChangeScene(@Validated @RequestBody CreateMetaChangeSceneRequest request) {
 
         String platform = OpenApiRequestThreadLocal.getPlatform();
         if(!StringUtils.equals(platform, request.getPlatformName()))
         {
-            return OpsCloudResult.notSupport("platform must equal to platform in request," + platform +"!=" + request.getPlatformName());
+            return AlterShieldResult.notSupport("platform must equal to platform in request," + platform +"!=" + request.getPlatformName());
         }
         return metaChangeSceneService.createReleaseChangeScene(request);
     }
@@ -84,7 +84,7 @@ public class OpenApiMetaChangeSceneController {
     @ApiOperation(value = "创建标准变更场景第二步，G2,G3,G4场景使用")
     @ResponseBody
     @RequestMapping(value = "/sync/serviceKeyConfig", method = RequestMethod.POST)
-    public OpsCloudResult<Boolean> syncServiceKeyConfig(@Validated @RequestBody SyncMetaChangeSceneRequest request) {
+    public AlterShieldResult<Boolean> syncServiceKeyConfig(@Validated @RequestBody SyncMetaChangeSceneRequest request) {
         return metaChangeSceneService.syncServiceKey(request);
     }
 }

@@ -56,7 +56,7 @@ public class ConfigController {
 
     @ResponseBody
     @RequestMapping(value = "/queryConfigByPage", method = RequestMethod.POST)
-    public AlterShieldResult<List<QueryConfigResult>> queryConfigByPage(@NotNull @RequestBody QueryConfigRequest request) {
+    public AlterShieldResult queryConfigByPage(@NotNull @RequestBody QueryConfigRequest request) {
         try {
             return configService.queryConfigList(request);
         } catch (Exception e) {

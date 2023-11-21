@@ -108,7 +108,7 @@ public class CheckCallbackServiceImpl implements CheckCallbackService, Initializ
     private ExeChangeNodeService exeChangeNodeService;
 
 
-    private static Logger logger = Loggers.OUTTER_TASK;
+    private static Logger logger = Loggers.OUTER_TASK;
 
 
     /**

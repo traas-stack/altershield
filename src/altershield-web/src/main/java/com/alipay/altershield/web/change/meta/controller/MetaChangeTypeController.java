@@ -43,13 +43,14 @@
  */
 package com.alipay.altershield.web.change.meta.controller;
 
-import com.alipay.opscloud.change.meta.model.MetaChangeTypeEntity;
-import com.alipay.opscloud.change.meta.service.MetaChangeTypeService;
-import com.alipay.opscloud.change.meta.service.request.CreateMetaChangeTypeRequest;
-import com.alipay.opscloud.change.meta.service.request.QueryChangeTypeRequest;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.web.change.converter.MetaChangeTypeVOConverter;
-import com.alipay.opscloud.web.change.meta.vo.MetaChangeTypeVO;
+
+import com.alipay.altershield.change.meta.model.MetaChangeTypeEntity;
+import com.alipay.altershield.change.meta.service.MetaChangeTypeService;
+import com.alipay.altershield.change.meta.service.request.CreateMetaChangeTypeRequest;
+import com.alipay.altershield.change.meta.service.request.QueryChangeTypeRequest;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.web.change.converter.MetaChangeTypeVOConverter;
+import com.alipay.altershield.web.change.meta.vo.MetaChangeTypeVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,8 +76,8 @@ public class MetaChangeTypeController {
     @ApiOperation(value = "获取变更type")
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     @ResponseBody
-    public  OpsCloudResult<List<MetaChangeTypeVO>> query(@Valid @RequestBody QueryChangeTypeRequest request) {
-        OpsCloudResult<List<MetaChangeTypeEntity>> rs = metaChangeTypeService.queryChangeType(request);
+    public AlterShieldResult<List<MetaChangeTypeVO>> query(@Valid @RequestBody QueryChangeTypeRequest request) {
+        AlterShieldResult<List<MetaChangeTypeEntity>> rs = metaChangeTypeService.queryChangeType(request);
 
         return MetaChangeTypeVOConverter.INSTANCE.covertToVOResult(rs);
     }
@@ -84,14 +85,14 @@ public class MetaChangeTypeController {
     @ApiOperation(value = "创建变更类型")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public  OpsCloudResult<String> insert(@Valid @RequestBody CreateMetaChangeTypeRequest request) {
+    public  AlterShieldResult<String> insert(@Valid @RequestBody CreateMetaChangeTypeRequest request) {
 
         return metaChangeTypeService.insert(request);
     }
 
     @ApiOperation("查询全量变更类型列表")
     @RequestMapping(value = "/queryAll", method = RequestMethod.GET)
-    public OpsCloudResult<List<String>> queryAllChangeType() {
-        return new OpsCloudResult<>();
+    public AlterShieldResult<List<String>> queryAllChangeType() {
+        return new AlterShieldResult<>();
     }
 }

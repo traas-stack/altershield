@@ -43,6 +43,8 @@
  */
 package com.alipay.altershield.web.common.servlet;
 
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
 import org.slf4j.Logger;
 
 import javax.servlet.ReadListener;
@@ -74,7 +76,7 @@ public class ContentCachingRequestWrapper extends HttpServletRequestWrapper {
                 sb.append(line);
             }
         } catch (IOException e) {
-            OpsCloudLoggerManager.log("error", logger, e, "http request wrap fail");
+            AlterShieldLoggerManager.log("error", logger, e, "http request wrap fail");
         }
         body = sb.toString().getBytes(StandardCharsets.UTF_8);
     }

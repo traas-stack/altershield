@@ -10,6 +10,7 @@
     <artifactId>altershield-bootstrap</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -38,6 +39,10 @@
         <dependency>
             <groupId>com.alipay</groupId>
             <artifactId>altershield-shared</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>altershield-schedule</artifactId>
         </dependency>
     </dependencies>
 </project>

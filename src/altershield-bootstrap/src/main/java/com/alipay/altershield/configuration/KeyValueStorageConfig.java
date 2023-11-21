@@ -25,9 +25,9 @@ package com.alipay.altershield.configuration;
 
 import com.alipay.altershield.common.id.IdGenerator;
 import com.alipay.altershield.common.largefield.kv.KeyValueDAO;
+import com.alipay.altershield.common.largefield.kv.KeyValueStorage;
 import com.alipay.altershield.common.largefield.kv.KeyValueStorageImpl;
 import com.alipay.altershield.common.logger.Loggers;
-import com.alipay.altershield.shared.common.largefield.kv.KeyValueStorage;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

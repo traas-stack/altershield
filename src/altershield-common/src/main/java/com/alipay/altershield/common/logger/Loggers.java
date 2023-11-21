@@ -28,57 +28,87 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author xiangyue
- * @version : Loggers.java, v 0.1 2023-05-29 15:41 xiangyue Exp $$
+ * @version : Loggers.java, v 0.1 2023_05_29 15:41 xiangyue Exp $$
  */
 public interface Loggers {
 
     /**
      * default
      */
-    Logger DEFAULT = LoggerFactory.getLogger("ALTERSHIELD-FRAMEWORK");
+    Logger DEFAULT = LoggerFactory.getLogger("ALTER_SHIELD_FRAMEWORK");
 
     /**
      * local scheduler
      */
-    Logger LOCAL_SCHEDULE = LoggerFactory.getLogger("ALTERSHIELD-LOCAL-SCHEDULE");
+    Logger LOCAL_SCHEDULE = LoggerFactory.getLogger("ALTER_SHIELD_LOCAL_SCHEDULE");
 
     /**
      * event schedule point
      */
-    Logger SCHEDULE_POINT = LoggerFactory.getLogger("ALTERSHIELD-SCHEDULE-POINT");
+    Logger SCHEDULE_POINT = LoggerFactory.getLogger("ALTER_SHIELD_SCHEDULE_POINT");
 
     /**
      * digest log of schedule point
      */
-    Logger SCHEDULE_POINT_DIGEST = LoggerFactory.getLogger("ALTERSHIELD-SCHEDULE-POINT-DIGEST");
+    Logger SCHEDULE_POINT_DIGEST = LoggerFactory.getLogger("ALTER_SHIELD_SCHEDULE_POINT_DIGEST");
 
     /**
      * DAL log
      */
-    Logger DAL = LoggerFactory.getLogger("ALTERSHIELD-DAL");
+    Logger DAL = LoggerFactory.getLogger("ALTER_SHIELD_DAL");
 
     /**
      * DAO log
      */
-    Logger DAO_DIGEST = LoggerFactory.getLogger("ALTERSHIELD_DAO_DIGEST");
+    Logger DAO_DIGEST = LoggerFactory.getLogger("ALTER_SHIELD_DAO_DIGEST");
+
     /**
      * FACADE execution log
      */
-    Logger FACADE_EXE = LoggerFactory.getLogger("ALTERSHIELD_FACADE_EXE");
-    Logger SERVICE_INFO = LoggerFactory.getLogger("ALTERSHIELD_SERVICE_INFO");
-    Logger CALL_BACK = LoggerFactory.getLogger("ALTERSHIELD_CALL_BACK");
-    Logger SERVICE_OPERATE_DIGEST = LoggerFactory.getLogger("ALTERSHIELD_SERVICE_OPERATE_DIGEST");
-    Logger SERVICE_QUERY_DIGEST = LoggerFactory.getLogger("ALTERSHIELD_SERVICE_QUERY_DIGEST");
+    Logger FACADE_EXE = LoggerFactory.getLogger("ALTER_SHIELD_FACADE_EXE");
 
-    Logger SERVICE_PROFILER  = LoggerFactory.getLogger("ALTERSHIELD-SERVICE-PROFILER");
-    Logger BIZ_SERVICE = LoggerFactory.getLogger("ALTERSHIELD_BIZ_SERVICE");
-    Logger META_CACHE            = LoggerFactory.getLogger("ALTERSHIELD_META_CACHE");
-    Logger META_CHANGE            = LoggerFactory.getLogger("ALTERSHIELD_META_CHANGE");
-    Logger EXE_STATE_MACHINE            = LoggerFactory.getLogger("ALTERSHIELD_EXE_STATE_MACHINE");
+    /**
+     * 外部服务日志
+     */
+    Logger SERVICE_INFO = LoggerFactory.getLogger("ALTER_SHIELD_SERVICE_INFO");
 
+    /**
+     * 外部操作类调用日志
+     */
+    Logger SERVICE_OPERATE_DIGEST = LoggerFactory.getLogger("ALTER_SHIELD_SERVICE_OPERATE_DIGEST");
+
+    /**
+     * 外部查询类调用日志
+     */
+    Logger SERVICE_QUERY_DIGEST = LoggerFactory.getLogger("ALTER_SHIELD_SERVICE_QUERY_DIGEST");
+
+    /**
+     * 方法性能监测日志
+     */
+    Logger SERVICE_PROFILER  = LoggerFactory.getLogger("ALTER_SHIELD_SERVICE_PROFILER");
+
+    /**
+     * 业务服务方法
+     */
+    Logger BIZ_SERVICE = LoggerFactory.getLogger("ALTER_SHIELD_BIZ_SERVICE");
+    /**
+     * CACHE缓存
+     */
+    Logger META_CACHE            = LoggerFactory.getLogger("ALTER_SHIELD_META_CACHE");
+    /**
+     * 变更模块
+     */
+    Logger META_CHANGE            = LoggerFactory.getLogger("ALTER_SHIELD_META_CHANGE");
+    /**
+     * 状态机
+     */
+    Logger EXE_STATE_MACHINE            = LoggerFactory.getLogger("ALTER_SHIELD_EXE_STATE_MACHINE");
     /**
      * defender log
      */
-    Logger DEFENDER = LoggerFactory.getLogger("ALTERSHIELD_DEFENDER");
-    Logger OUTTER_TASK = LoggerFactory.getLogger("ALTERSHIELD_OUTTER_TASK");
+    Logger DEFENDER = LoggerFactory.getLogger("ALTER_SHIELD_DEFENDER");
+    /**
+     * 外部任务调用
+     */
+    Logger OUTER_TASK = LoggerFactory.getLogger("ALTER_SHIELD_OUTER_TASK");
 }

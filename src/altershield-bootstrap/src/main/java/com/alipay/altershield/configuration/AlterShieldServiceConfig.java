@@ -26,6 +26,10 @@
  */
 package com.alipay.altershield.configuration;
 
+import com.alipay.altershield.change.exe.service.check.ExeChangeAsyncCheckService;
+import com.alipay.altershield.change.exe.service.check.ExeChangeSyncCheckService;
+import com.alipay.altershield.change.exe.service.check.impl.ExeChangeAsyncCheckServiceImpl;
+import com.alipay.altershield.change.exe.service.check.impl.ExeChangeSyncCheckServiceImpl;
 import com.alipay.altershield.common.logger.Loggers;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
@@ -50,8 +54,7 @@ public class AlterShieldServiceConfig {
      */
     //构建新变更核心同步接口
     @Bean()
-    public ExeChangeSyncCheckService createExeChangeSyncCheckService()
-    {
+    public ExeChangeSyncCheckService createExeChangeSyncCheckService() {
         logger.info("starting create opscloud ExeChangeSyncCheckService");
 
         ExeChangeSyncCheckServiceImpl exeChangeSyncCheckService = new ExeChangeSyncCheckServiceImpl();
@@ -67,17 +70,14 @@ public class AlterShieldServiceConfig {
      */
     //构建新变更接口
     @Bean()
-    public ExeChangeAsyncCheckService createExeChangeAsyncCheckService()
-    {
+    public ExeChangeAsyncCheckService createExeChangeAsyncCheckService() {
         logger.info("starting create opscloud ExeChangeAsyncCheckService");
         ExeChangeAsyncCheckServiceImpl exeChangeAsyncCheckService = new ExeChangeAsyncCheckServiceImpl();
         logger.info("starting create opscloud ExeChangeAsyncCheckService");
 
         return exeChangeAsyncCheckService;
     }
-
-
-
-
-
 }
+
+
+

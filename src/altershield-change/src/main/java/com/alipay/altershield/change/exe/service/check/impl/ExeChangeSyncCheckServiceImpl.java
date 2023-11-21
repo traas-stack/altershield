@@ -80,7 +80,7 @@ public class ExeChangeSyncCheckServiceImpl implements ExeChangeSyncCheckService 
     @Autowired
     private IdGenerator idGenerator;
 
-    @Value("${opscloud.framework.server.common.cloudId}")
+    @Value("${altershield.framework.server.common.cloudId}")
     private String cloudId;
 
     @Autowired

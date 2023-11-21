@@ -26,11 +26,11 @@
  */
 package com.alipay.altershield.configuration;
 
-import com.alipay.opscloud.change.exe.service.check.OpscloudExeChangeAsyncCheckService;
-import com.alipay.opscloud.change.exe.service.check.OpscloudExeChangeSyncCheckService;
-import com.alipay.opscloud.change.exe.service.check.impl.OpscloudExeChangeAsyncCheckServiceImpl;
-import com.alipay.opscloud.change.exe.service.check.impl.OpscloudExeChangeSyncCheckServiceImpl;
-import com.alipay.opscloud.tools.common.logger.Loggers;
+import com.alipay.altershield.change.exe.service.check.ExeChangeAsyncCheckService;
+import com.alipay.altershield.change.exe.service.check.ExeChangeSyncCheckService;
+import com.alipay.altershield.change.exe.service.check.impl.ExeChangeAsyncCheckServiceImpl;
+import com.alipay.altershield.change.exe.service.check.impl.ExeChangeSyncCheckServiceImpl;
+import com.alipay.altershield.common.logger.Loggers;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,11 +52,11 @@ public class AlterShieldExeServiceConfig {
      */
     //构建新变更核心同步接口
     @Bean()
-    public OpscloudExeChangeSyncCheckService createOpsCloudExeChangeSyncCheckService()
+    public ExeChangeSyncCheckService createOpsCloudExeChangeSyncCheckService()
     {
         logger.info("starting create opscloud OpscloudExeChangeSyncCheckService");
 
-        OpscloudExeChangeSyncCheckServiceImpl exeChangeSyncCheckService = new OpscloudExeChangeSyncCheckServiceImpl();
+        ExeChangeSyncCheckServiceImpl exeChangeSyncCheckService = new ExeChangeSyncCheckServiceImpl();
         logger.info("starting create opscloud OpscloudExeChangeSyncCheckService");
 
         return exeChangeSyncCheckService;
@@ -69,10 +69,10 @@ public class AlterShieldExeServiceConfig {
      */
     //构建新变更接口
     @Bean()
-    public OpscloudExeChangeAsyncCheckService createOpsCloudExeChangeAsyncCheckService()
+    public ExeChangeAsyncCheckService createOpsCloudExeChangeAsyncCheckService()
     {
         logger.info("starting create opscloud OpscloudExeChangeAsyncCheckService");
-        OpscloudExeChangeAsyncCheckServiceImpl exeChangeAsyncCheckService = new OpscloudExeChangeAsyncCheckServiceImpl();
+        ExeChangeAsyncCheckServiceImpl exeChangeAsyncCheckService = new ExeChangeAsyncCheckServiceImpl();
         logger.info("starting create opscloud OpscloudExeChangeAsyncCheckService");
 
         return exeChangeAsyncCheckService;

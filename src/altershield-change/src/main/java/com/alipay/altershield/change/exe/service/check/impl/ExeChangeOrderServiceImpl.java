@@ -90,7 +90,7 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
     @Autowired
     private AlterShieldGroupService opsCloudGroupService;
 
-    @Value("${opscloud.framework.server.common.cloudId}")
+    @Value("${altershield.framework.server.common.cloudId}")
     private String cloudId;
 
     /**

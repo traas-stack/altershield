@@ -26,9 +26,9 @@
  */
 package com.alipay.altershield.web.openapi.change.v1.meta;
 
-import com.alipay.opscloud.change.meta.service.MetaChangeSceneService;
-import com.alipay.opscloud.framework.core.common.facade.result.OpsCloudResult;
-import com.alipay.opscloud.framework.sdk.constant.OpsCloudApiConstant;
+import com.alipay.altershield.change.meta.service.MetaChangeSceneService;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
+import com.alipay.altershield.framework.sdk.constant.AlterShieldApiConstant;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ import javax.validation.constraints.NotNull;
  * @version : MetaChangeSceneController.java, v 0.1 2022年06月09日 10:44 yuanji Exp $
  */
 @Controller
-@RequestMapping(OpsCloudApiConstant.metaPrefix)
+@RequestMapping(AlterShieldApiConstant.metaPrefix)
 public class OpenApiMetaChangeKeyController {
 
     @Autowired
@@ -56,7 +56,7 @@ public class OpenApiMetaChangeKeyController {
     @ApiOperation(value = "检查changeKey是否存在",notes = "存在返回true，不存在false")
     @ResponseBody
     @RequestMapping(value = "/check_change_key", method = RequestMethod.GET)
-    public OpsCloudResult<Boolean> checkChangeKey(@NotNull @RequestParam @ApiParam("变更key") String changeKey)
+    public AlterShieldResult<Boolean> checkChangeKey(@NotNull @RequestParam @ApiParam("变更key") String changeKey)
     {
         return metaChangeSceneService.checkChangeKey(changeKey);
     }
@@ -64,7 +64,7 @@ public class OpenApiMetaChangeKeyController {
     @ApiOperation(value = "检查changeKey是否存在",notes = "存在返回true，不存在false")
     @ResponseBody
     @RequestMapping(value = "/only_check_change_key", method = RequestMethod.GET)
-    public OpsCloudResult<Boolean> onlyCheckChangeKey(@NotNull @RequestParam @ApiParam("变更key") String changeKey)
+    public AlterShieldResult<Boolean> onlyCheckChangeKey(@NotNull @RequestParam @ApiParam("变更key") String changeKey)
     {
         return metaChangeSceneService.onlyCheckChangeKey(changeKey);
     }

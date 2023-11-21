@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Properties>
-        <Property name="app_name">opscloud</Property>
+        <Property name="app_name">altershield</Property>
         <Property name="log_level">${ctx:log_level}</Property>
         <Property name="log_root">${ctx:logging_path}</Property>
     </Properties>
     <Appenders>
-        <Console name="STDOUT-APPENDER" target="SYSTEM_OUT">
+        <Console name="STDOUT_APPENDER" target="SYSTEM_OUT">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n%throwable" charset="UTF-8" />
         </Console>
-        <Console name="STDERR-APPENDER" target="SYSTEM_ERR">
+        <Console name="STDERR_APPENDER" target="SYSTEM_ERR">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n%throwable" charset="UTF-8" />
         </Console>
-        <RollingFile name="SOFA-DEFAULT-APPENDER"
-            fileName="${log_root}/${app_name}/sofa-default.log"
-            filePattern="${log_root}/${app_name}/sofa-default.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-        <RollingFile name="ERROR-APPENDER" fileName="${log_root}/${app_name}/common-error.log"
+        <RollingFile name="ERROR_APPENDER" fileName="${log_root}/${app_name}/common-error.log"
             filePattern="${log_root}/${app_name}/common-error.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n%throwable"
                 charset="UTF-8" />
@@ -27,1020 +20,203 @@
             <DefaultRolloverStrategy />
             <ThresholdFilter level="ERROR" />
         </RollingFile>
-        <RollingFile name="APP-DEFAULT-APPENDER" fileName="${log_root}/${app_name}/opscloud-default.log"
-            filePattern="${log_root}/${app_name}/opscloud-default.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-DAO-DIGEST-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-dao-digest.log"
-            filePattern="${log_root}/${app_name}/opscloud-dao-digest.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SERVICE-OPERATE-DIGEST-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-service-operate-digest.log"
-                     filePattern="${log_root}/${app_name}/opscloud-service-operate-digest.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SERVICE-DELEGATE-DIGEST-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-service-delegate-digest.log"
-                     filePattern="${log_root}/${app_name}/opscloud-service-delegate-digest.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SERVICE-QUERY-DIGEST-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-service-query-digest.log"
-                     filePattern="${log_root}/${app_name}/opscloud-service-query-digest.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SERVICE-INFO-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-service-info.log"
-                     filePattern="${log_root}/${app_name}/opscloud-service-info.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-DAL-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-dal.log"
-            filePattern="${log_root}/${app_name}/opscloud-dal.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-        <RollingFile name="OPSCLOUD-FRAMEWORK-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-framework.log"
-            filePattern="${log_root}/${app_name}/opscloud-framework.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SCHEDULER-SPLIT-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-scheduler-split.log"
-            filePattern="${log_root}/${app_name}/opscloud-scheduler-split.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-        <RollingFile name="OPSCLOUD-LOCAL-SCHEDULE-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-local-schedule.log"
-            filePattern="${log_root}/${app_name}/opscloud-local-schedule.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-        <RollingFile name="OPSCLOUD-EXE-DECIDER-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-exe-decider.log"
-                     filePattern="${log_root}/${app_name}/opscloud-exe-decider.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-        <RollingFile name="OPSCLOUD-SCHEDULER-EXECUTOR-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-scheduler-executor.log"
-            filePattern="${log_root}/${app_name}/opscloud-scheduler-executor.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-EXE-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-exe.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-exe.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-EXE-YUNYOU-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-exe-yunyou.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-exe-yunyou.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-EXE-CF-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-exe-cf.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-exe-cf.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-EXE-CLOUDOPS-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-exe-cloudops.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-exe-cloudops.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-EXE-STARAGENT-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-exe-staragent.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-exe-staragent.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-EXE-ASIOPS-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-exe-asiops.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-exe-asiops.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-EXE-ADAPTOR-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-exe-adaptor.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-exe-adaptor.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-EXE-HTTP-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-exe-http.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-exe-http.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-ASYNC-CHECK-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-async-check.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-async-check.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-MAN-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-manual.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-manual.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FACADE-MSG-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-facade-msg.log"
-            filePattern="${log_root}/${app_name}/opscloud-facade-msg.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-BIZ-THREADPOOL-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-biz-threadpool.log"
-            filePattern="${log_root}/${app_name}/opscloud-biz-threadpool.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-        <RollingFile name="OPSCLOUD-SCHEDULE-POINT-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-schedule-point.log"
-            filePattern="${log_root}/${app_name}/opscloud-schedule-point.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-        <RollingFile name="OPSCLOUD-SCHEDULE-POINT-DIGEST-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-schedule-point-digest.log"
-            filePattern="${log_root}/${app_name}/opscloud-schedule-point-digest.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-        <RollingFile name="OPSCLOUD-EXE-STATE-MACHINE-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-exe-state-machine.log"
-            filePattern="${log_root}/${app_name}/opscloud-exe-state-machine.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-        <RollingFile name="OPSCLOUD-EXE-NODE-TIER-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-exe-node-tier.log"
-            filePattern="${log_root}/${app_name}/opscloud-exe-node-tier.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SRV-DISPATCH-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-srv-dispatch.log"
-            filePattern="${log_root}/${app_name}/opscloud-srv-dispatch.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-EXE-EVENT-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-exe-event.log"
-            filePattern="${log_root}/${app_name}/opscloud-exe-event.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-DEFENSE-CHECKROUTE-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-defense-checkroute.log"
-            filePattern="${log_root}/${app_name}/opscloud-defense-checkroute.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SRV-INVOKER-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-srv-invoker.log"
-            filePattern="${log_root}/${app_name}/opscloud-srv-invoker.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-OUTTER-TASK-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-outter-task.log"
-            filePattern="${log_root}/${app_name}/opscloud-outter-task.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
 
-        <RollingFile name="OPSCLOUD-ANTX-API-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-antx-api.log"
-            filePattern="${log_root}/${app_name}/opscloud-antx-api.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-
-        <RollingFile name="OPSCLOUD-PLUGIN-ITEM-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-plugin-item.log"
-            filePattern="${log_root}/${app_name}/opscloud-plugin-item.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-PLUGIN-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-plugin.log"
-            filePattern="${log_root}/${app_name}/opscloud-plugin.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-PLUGIN-DIGEST-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-plugin-digest.log"
-                     filePattern="${log_root}/${app_name}/opscloud-plugin-digest.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OUT-PLUGIN-INFLUENCE-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-out-plugin-influence.log"
-                     filePattern="${log_root}/${app_name}/opscloud-out-plugin-influence.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-META-CACHE-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-meta-cache.log"
-            filePattern="${log_root}/${app_name}/opscloud-meta-cache.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-INTEGRATION-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-integration.log"
-            filePattern="${log_root}/${app_name}/opscloud-integration.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-INTEGRATION-DIGEST-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-integration-digest.log"
-            filePattern="${log_root}/${app_name}/opscloud-integration-digest.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FILE-SYS-APPENDER"
-            fileName="${log_root}/${app_name}/opscloud-file-sys.log"
-            filePattern="${log_root}/${app_name}/opscloud-file-sys.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-INVOKE-PERMISSION-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-invoke-permission.log"
-                     filePattern="${log_root}/${app_name}/opscloud-invoke-permission.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-RPC-ITEM-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-rpc-item.log"
-                     filePattern="${log_root}/${app_name}/opscloud-rpc-item.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-RISK-SERVICE-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-risk-service.log"
-                     filePattern="${log_root}/${app_name}/opscloud-risk-service.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-ANTEMC-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-antemc.log"
-                     filePattern="${log_root}/${app_name}/opscloud-antemc.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-RISK-MATCH-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-risk-match-info.log"
-                     filePattern="${log_root}/${app_name}/opscloud-risk-match-info.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-CHANGE-MODEL-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-change-model-info.log"
-                     filePattern="${log_root}/${app_name}/opscloud-change-model-info.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-INJECT-RECEIPT-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-inject-receipt.log"
-                     filePattern="${log_root}/${app_name}/opscloud-inject-receipt.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="APP-DEFAULT_APPENDER" fileName="${log_root}/${app_name}/altershield-default.log"
+            filePattern="${log_root}/${app_name}/altershield-default.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-FAULT-INJECT-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-fault-inject.log"
-                     filePattern="${log_root}/${app_name}/opscloud-fault-inject.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-CHANGE-RISK-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-change-risk.log"
-                     filePattern="${log_root}/${app_name}/opscloud-change-risk.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-BIZ-SERVICE-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-biz-service.log"
-                     filePattern="${log_root}/${app_name}/opscloud-biz-service.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-
-        <RollingFile name="OPSCLOUD-CHANGE-SCENE-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-change-scene.log"
-                     filePattern="${log_root}/${app_name}/opscloud-change-scene.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-CHANGE-METRIC-PORTRAIT-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-change-metric-portrait.log"
-                     filePattern="${log_root}/${app_name}/opscloud-change-metric-portrait.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-CALLBACK-INFO-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-callback-info.log"
-                     filePattern="${log_root}/${app_name}/opscloud-callback-info.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SERVICE-PROFILER-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-service-profiler.log"
-                     filePattern="${log_root}/${app_name}/opscloud-service-profiler.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-
-
-        <RollingFile name="OPSCLOUD-PLAN-INTERNAL-SYSTEM-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-plan-internal-system.log"
-                     filePattern="${log_root}/${app_name}/opscloud-plan-internal-system.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-PLAN-BUSINESS-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-plan-business.log"
-                     filePattern="${log_root}/${app_name}/opscloud-plan-business.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-DECISION-INTERNAL-SYSTEM-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-decision-internal-system.log"
-                     filePattern="${log_root}/${app_name}/opscloud-decision-internal-system.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
-
-        <RollingFile name="OPSCLOUD-DECISION-BUSINESS-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-decision-business.log"
-                     filePattern="${log_root}/${app_name}/opscloud-decision-business.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_FRAMEWORK_APPENDER" fileName="${log_root}/${app_name}/altershield-framework.log"
+                     filePattern="${log_root}/${app_name}/altershield-framework.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-DEFENDER-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-defender.log"
-                     filePattern="${log_root}/${app_name}/opscloud-defender.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_LOCAL_SCHEDULE_APPENDER" fileName="${log_root}/${app_name}/altershield-local-schedule.log"
+                     filePattern="${log_root}/${app_name}/altershield-local-schedule.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-CLOUD-DEFENDER-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-cloud-defender.log"
-                     filePattern="${log_root}/${app_name}/opscloud-clou-defender.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_SCHEDULE_POINT_APPENDER" fileName="${log_root}/${app_name}/altershield-schedule-point.log"
+                     filePattern="${log_root}/${app_name}/altershield-schedule-point.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-DEFENDER-MANAGE-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-defender-manage.log"
-                     filePattern="${log_root}/${app_name}/opscloud-defender-manage.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_SCHEDULE_POINT_DIGEST_APPENDER" fileName="${log_root}/${app_name}/altershield-schedule-point-digest.log"
+                     filePattern="${log_root}/${app_name}/altershield-schedule-point-digest.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-PLUGIN-MARKET-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-plugin-market.log"
-                     filePattern="${log_root}/${app_name}/opscloud-plugin-market.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_DAL_APPENDER" fileName="${log_root}/${app_name}/altershield-dal.log"
+                     filePattern="${log_root}/${app_name}/altershield-dal.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-CHANGE-SEARCH-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-change-search.log"
-                     filePattern="${log_root}/${app_name}/opscloud-change-search.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_DAO_DIGEST_APPENDER" fileName="${log_root}/${app_name}/altershield-dao-digest.log"
+                     filePattern="${log_root}/${app_name}/altershield-dao-digest.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-CHANGE-BIZ-SEARCH-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-change-biz-search.log"
-                     filePattern="${log_root}/${app_name}/opscloud-change-biz-search.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_FACADE_EXE_APPENDER" fileName="${log_root}/${app_name}/altershield-facade-exe.log"
+                     filePattern="${log_root}/${app_name}/altershield-facade-exe.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SUBSCRIPTION-SERVICE-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-subscription-service.log"
-                     filePattern="${log_root}/${app_name}/opscloud-subscription-service.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8"/>
-            <TimeBasedTriggeringPolicy/>
-            <DefaultRolloverStrategy/>
-        </RollingFile>
-        <RollingFile name="OPSCLOUD-CHANGE-TAG-SERVICE-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-change-tag-service.log"
-                     filePattern="${log_root}/${app_name}/opscloud-change-tag-service.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_SERVICE_INFO_APPENDER" fileName="${log_root}/${app_name}/altershield-service-info.log"
+                     filePattern="${log_root}/${app_name}/altershield-service-info.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-DECISION_INTERNAL_SYSTEM_APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-decision-internal-system.log"
-                     filePattern="${log_root}/${app_name}/opscloud-decision-internal-system.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_SERVICE_OPERATE_DIGEST_APPENDER" fileName="${log_root}/${app_name}/altershield-operate-digest.log"
+                     filePattern="${log_root}/${app_name}/altershield-operate-digest.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SUBSCRIPTION-MESSAGE_APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-subscription-message.log"
-                     filePattern="${log_root}/${app_name}/opscloud-subscription-message.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_SERVICE_QUERY_DIGEST_APPENDER" fileName="${log_root}/${app_name}/altershield-service-query-digest.log"
+                     filePattern="${log_root}/${app_name}/altershield-service-query-digest.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-MESSAGE_APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-message.log"
-                     filePattern="${log_root}/${app_name}/opscloud-message.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_SERVICE_PROFILER_APPENDER" fileName="${log_root}/${app_name}/altershield-service-profiler.log"
+                     filePattern="${log_root}/${app_name}/altershield-service-profiler.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-SUBSCRIPTION-DATA_APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-subscription-data.log"
-                     filePattern="${log_root}/${app_name}/opscloud-subscription-data.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_BIZ_SERVICE_APPENDER" fileName="${log_root}/${app_name}/altershield-biz-service.log"
+                     filePattern="${log_root}/${app_name}/altershield-biz-service.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-INFLUENCE-ANALYST-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-influence-analyst.log"
-                     filePattern="${log_root}/${app_name}/opscloud-influence-analyst.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_META_CACHE_APPENDER" fileName="${log_root}/${app_name}/altershield-meta-cache.log"
+                     filePattern="${log_root}/${app_name}/altershield-meta-cache.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="INFLUENCE_PLUGIN_RES_RECORD-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-influence-plugin-res.log"
-                     filePattern="${log_root}/${app_name}/opscloud-influence-plugin-res.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_META_CHANGE_APPENDER" fileName="${log_root}/${app_name}/altershield-meta-change.log"
+                     filePattern="${log_root}/${app_name}/altershield-meta-change.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="INFORMATION_EXTENSION-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-information-extension.log"
-                     filePattern="${log_root}/${app_name}/opscloud-information-extension.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_EXE_STATE_MACHINE_APPENDER" fileName="${log_root}/${app_name}/altershield-exe-state-machine.log"
+                     filePattern="${log_root}/${app_name}/altershield-exe-state-machine.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-PLAN-DW-STATISTIC-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-plan-dw-statistic.log"
-                     filePattern="${log_root}/${app_name}/opscloud-plan-dw-statistic.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_DEFENDER_APPENDER" fileName="${log_root}/${app_name}/altershield-defender.log"
+                     filePattern="${log_root}/${app_name}/altershield-defender.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
-
-        <RollingFile name="OPSCLOUD-INTEGRATOR-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-integrator.log"
-                     filePattern="${log_root}/${app_name}/opscloud-integrator.log.%d{yyyy-MM-dd}" append="true">
+        <RollingFile name="ALTER_SHIELD_OUTER_TASK_APPENDER" fileName="${log_root}/${app_name}/altershield-outer-task.log"
+                     filePattern="${log_root}/${app_name}/altershield-outer-task.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
 
-        <RollingFile name="OPSCLOUD-PLAN-RISK-ANALYSE-APPENDER"
-                     fileName="${log_root}/${app_name}/opscloud-plan-risk-analyse.log"
-                     filePattern="${log_root}/${app_name}/opscloud-integrator.log.%d{yyyy-MM-dd}" append="true">
-            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
-            <TimeBasedTriggeringPolicy />
-            <DefaultRolloverStrategy />
-        </RollingFile>
     </Appenders>
 
     <Loggers>
         <AsyncLogger name="STDOUT" additivity="false" level="${log_level}">
-            <AppenderRef ref="STDOUT-APPENDER" />
+            <AppenderRef ref="STDOUT_APPENDER" />
         </AsyncLogger>
         <AsyncLogger name="STDERR" additivity="false" level="ERROR">
-            <AppenderRef ref="STDERR-APPENDER" />
+            <AppenderRef ref="STDERR_APPENDER" />
         </AsyncLogger>
-        <AsyncLogger name="com.alipay.sofa" additivity="false" level="${log_level}">
-            <AppenderRef ref="SOFA-DEFAULT-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="com.alipay.altershield" additivity="false" level="${log_level}">
+            <AppenderRef ref="APP-DEFAULT_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-        <AsyncLogger name="com.alipay.opscloud" additivity="false" level="${log_level}">
-            <AppenderRef ref="APP-DEFAULT-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <!-- loggers -->
+        <AsyncLogger name="ALTER_SHIELD_FRAMEWORK" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_FRAMEWORK_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-
-        <AsyncLogger name="OPSCLOUD-DAO-DIGEST" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-DAO-DIGEST-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-SERVICE-OPERATE-DIGEST" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SERVICE-OPERATE-DIGEST-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-SERVICE-DELEGATE-DIGEST" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SERVICE-DELEGATE-DIGEST-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-SERVICE-QUERY-DIGEST" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SERVICE-QUERY-DIGEST-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-DAL" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-DAL-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-FRAMEWORK" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FRAMEWORK-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-SCHEDULER-SPLIT" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SCHEDULER-SPLIT-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-LOCAL-SCHEDULE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-LOCAL-SCHEDULE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-SCHEDULER-EXECUTOR" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SCHEDULER-EXECUTOR-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-EXE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-EXE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-EXE-YUNYOU" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-EXE-YUNYOU-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-EXE-CF" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-EXE-CF-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-EXE-CLOUDOPS" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-EXE-CLOUDOPS-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-EXE-STARAGENT" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-EXE-STARAGENT-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-EXE-ASIOPS" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-EXE-ASIOPS-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-EXE-ADAPTOR" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-EXE-ADAPTOR-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-EXE-HTTP" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-EXE-HTTP-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-ASYNC-CHECK" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-ASYNC-CHECK-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-MAN" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-MAN-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FACADE-MSG" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FACADE-MSG-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-BIZ-THREADPOOL" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-BIZ-THREADPOOL-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-SCHEDULE-POINT" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SCHEDULE-POINT-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-SCHEDULE-POINT-DIGEST" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SCHEDULE-POINT-DIGEST-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-EXE-STATE-MACHINE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-EXE-STATE-MACHINE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-EXE-NODE-TIER" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-EXE-NODE-TIER-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-EXE-DECIDER" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-EXE-DECIDER-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-        <AsyncLogger name="OPSCLOUD-CALLBACK-INFO" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-CALLBACK-INFO-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-
-
-
-        <AsyncLogger name="OPSCLOUD-SRV-DISPATCH" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SRV-DISPATCH-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-EXE-EVENT" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-EXE-EVENT-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-DEFENSE-CHECKROUTE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-DEFENSE-CHECKROUTE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-SRV-INVOKER" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SRV-INVOKER-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-OUTTER-TASK" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-OUTTER-TASK-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-ANTX-API" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-ANTX-API-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-PLUGIN-ITEM" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-PLUGIN-ITEM-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-PLUGIN" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-PLUGIN-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-PLUGIN-DIGEST" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-PLUGIN-DIGEST-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OUT-PLUGIN-INFLUENCE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OUT-PLUGIN-INFLUENCE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-META-CACHE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-META-CACHE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-INTEGRATION" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-INTEGRATION-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-INTEGRATION-DIGEST" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-INTEGRATION-DIGEST-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FILE-SYS" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FILE-SYS-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-INVOKE-PERMISSION" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-INVOKE-PERMISSION-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-RPC-ITEM" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-RPC-ITEM-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-RISK-SERVICE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-RISK-SERVICE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-ANTEMC" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-ANTEMC-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-RISK-MATCH" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-RISK-MATCH-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-CHANGE-MODEL" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-CHANGE-MODEL-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-INJECT-RECEIPT" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-INJECT-RECEIPT-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-FAULT-INJECT" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-FAULT-INJECT-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-CHANGE-RISK" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-CHANGE-RISK-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-BIZ-SERVICE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-BIZ-SERVICE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-CHANGE-SCENE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-CHANGE-SCENE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-CHANGE-METRIC-PORTRAIT" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-CHANGE-METRIC-PORTRAIT-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-
-        <AsyncLogger name="OPSCLOUD-SERVICE-INFO" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SERVICE-INFO-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-PLAN-INTERNAL-SYSTEM" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-PLAN-INTERNAL-SYSTEM-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-PLAN-BUSINESS" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-PLAN-BUSINESS-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-DEFENDER" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-DEFENDER-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-CLOUD-DEFENDER" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-CLOUD-DEFENDER-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-DEFENDER-MANAGE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-DEFENDER-MANAGE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-PLUGIN-MARKET" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-PLUGIN-MARKET-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-SERVICE-PROFILER" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SERVICE-PROFILER-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_LOCAL_SCHEDULE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_LOCAL_SCHEDULE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-DECISION-INTERNAL-SYSTEM" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-DECISION-INTERNAL-SYSTEM-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_SCHEDULE_POINT" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SCHEDULE_POINT_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-DECISION-BUSINESS" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-DECISION-BUSINESS-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_SCHEDULE_POINT_DIGEST" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SCHEDULE_POINT_DIGEST_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-CHANGE-SEARCH" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-CHANGE-SEARCH-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_DAL" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_DAL_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-CHANGE-BIZ-SEARCH" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-CHANGE-BIZ-SEARCH-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_DAO_DIGEST" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_DAO_DIGEST_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-SUBSCRIPTION-SERVICE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SUBSCRIPTION-SERVICE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_FACADE_EXE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_FACADE_EXE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-CHANGE-TAG-SERVICE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-CHANGE-TAG-SERVICE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_SERVICE_INFO" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SERVICE_INFO_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-DECISION_INTERNAL_SYSTEM" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-DECISION_INTERNAL_SYSTEM_APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_SERVICE_OPERATE_DIGEST" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SERVICE_OPERATE_DIGEST_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-SUBSCRIPTION-MESSAGE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SUBSCRIPTION-MESSAGE_APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_SERVICE_QUERY_DIGEST" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SERVICE_QUERY_DIGEST_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-MESSAGE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-MESSAGE_APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_SERVICE_PROFILER" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SERVICE_PROFILER_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-SUBSCRIPTION-DATA" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-SUBSCRIPTION-DATA_APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_BIZ_SERVICE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_BIZ_SERVICE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-INFLUENCE-ANALYST" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-INFLUENCE-ANALYST-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_META_CACHE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_META_CACHE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="INFLUENCE_PLUGIN_RES_RECORD" additivity="false" level="${log_level}">
-            <AppenderRef ref="INFLUENCE_PLUGIN_RES_RECORD-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_META_CHANGE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_META_CHANGE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="INFORMATION_EXTENSION" additivity="false" level="${log_level}">
-            <AppenderRef ref="INFORMATION_EXTENSION-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_EXE_STATE_MACHINE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_EXE_STATE_MACHINE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-PLAN-DW-STATISTIC" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-PLAN-DW-STATISTIC-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_DEFENDER" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_DEFENDER_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
-        <AsyncLogger name="OPSCLOUD-INTEGRATOR" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-INTEGRATOR-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+        <AsyncLogger name="ALTER_SHIELD_OUTER_TASK" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_OUTER_TASK_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
 
-        <AsyncLogger name="OPSCLOUD-PLAN-RISK-ANALYSE" additivity="false" level="${log_level}">
-            <AppenderRef ref="OPSCLOUD-PLAN-RISK-ANALYSE-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
-        </AsyncLogger>
 
         <AsyncRoot level="${log_level}">
-            <AppenderRef ref="APP-DEFAULT-APPENDER" />
-            <AppenderRef ref="ERROR-APPENDER" />
+            <AppenderRef ref="APP-DEFAULT_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
         </AsyncRoot>
 
     </Loggers>

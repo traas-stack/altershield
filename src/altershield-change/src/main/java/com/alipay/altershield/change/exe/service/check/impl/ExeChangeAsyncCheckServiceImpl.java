@@ -70,7 +70,7 @@ public class ExeChangeAsyncCheckServiceImpl implements ExeChangeAsyncCheckServic
     @Autowired
     private MetaChangeSceneRepository metaChangeSceneRepository;
 
-    @Value("${opscloud.framework.server.common.cloudId}")
+    @Value("${altershield.framework.server.common.cloudId}")
     private String cloudId;
 
     @Autowired

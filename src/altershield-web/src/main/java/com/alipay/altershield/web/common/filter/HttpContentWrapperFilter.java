@@ -43,6 +43,9 @@
  */
 package com.alipay.altershield.web.common.filter;
 
+import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.framework.common.httpclient.HttpAlterShieldClient;
+import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
 import com.alipay.altershield.web.common.servlet.ContentCachingRequestWrapper;
 import com.alipay.altershield.web.common.servlet.ContentCachingResponseWrapper;
 import org.slf4j.Logger;
@@ -70,11 +73,11 @@ public class HttpContentWrapperFilter implements Filter {
         try (ServletOutputStream outputStream = servletResponse.getOutputStream()) {
             //String requestParamJson = new String(requestWrapper.getBody());
             filterChain.doFilter(requestWrapper, responseWrapper);
-            String respDataJson = new String(responseWrapper.toByteArray(), HttpOpsCloudClient.charSet);
-            outputStream.write(respDataJson.getBytes(HttpOpsCloudClient.charSet));
+            String respDataJson = new String(responseWrapper.toByteArray(), HttpAlterShieldClient.CHAR_SET);
+            outputStream.write(respDataJson.getBytes(HttpAlterShieldClient.CHAR_SET));
             outputStream.flush();
         } catch (Exception e) {
-            OpsCloudLoggerManager.log("error", logger, e, "http content wrap fail");
+            AlterShieldLoggerManager.log("error", logger, e, "http content wrap fail");
         }
     }
 }

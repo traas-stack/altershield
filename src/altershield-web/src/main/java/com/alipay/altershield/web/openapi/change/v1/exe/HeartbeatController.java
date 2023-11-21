@@ -43,6 +43,8 @@
  */
 package com.alipay.altershield.web.openapi.change.v1.exe;
 
+import com.alipay.altershield.framework.core.change.facade.HeartbeatCheck;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,7 +74,7 @@ public class HeartbeatController {
      */
     @ResponseBody
     @RequestMapping(value = "/config", method = RequestMethod.GET)
-    public OpsCloudResult<Map<String, String>> doCheck(@RequestParam(required = false) String platform) {
+    public AlterShieldResult<Map<String, String>> doCheck(@RequestParam(required = false) String platform) {
         if (StringUtils.isBlank(platform)) {
             return heartbeatCheck.doCheck();
         } else {

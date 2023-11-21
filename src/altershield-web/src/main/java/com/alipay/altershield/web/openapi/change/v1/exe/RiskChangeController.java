@@ -45,6 +45,8 @@ package com.alipay.altershield.web.openapi.change.v1.exe;
 
 import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import com.alipay.altershield.framework.core.risk.facade.RiskDefenseCheckRuleFacade;
+import com.alipay.altershield.framework.core.risk.facade.request.QueryCheckRulesRequest;
+import com.alipay.altershield.framework.core.risk.facade.result.RiskCheckRuleResult;
 import com.alipay.altershield.framework.sdk.constant.AlterShieldApiConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,9 +67,6 @@ public class RiskChangeController {
     @Autowired(required = false)
     private RiskDefenseCheckRuleFacade opsCloudRiskDefenseCheckRuleFacade;
 
-    @Autowired
-    private DefenseCallbackService defenseCallbackService;
-
     /**
      * 获取变更检查结果
      *
@@ -75,25 +74,8 @@ public class RiskChangeController {
      */
     @ResponseBody
     @RequestMapping(value = AlterShieldApiConstant.queryRiskDefenseCheckRuleAction, method = RequestMethod.POST)
-    public AlterShieldResult<OpsCloudRiskCheckRuleResult> retrieveChangeCheckResult(@Validated @RequestBody
-                                                                                             OpsCloudQueryCheckRulesRequest request) {
+    public AlterShieldResult<RiskCheckRuleResult> retrieveChangeCheckResult(@Validated @RequestBody
+                                                                            QueryCheckRulesRequest request) {
         return opsCloudRiskDefenseCheckRuleFacade.retrieveCheckRuleResult(request);
     }
-
-    /**
-     * 防御校验回调
-     * @param request
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = AlterShieldApiConstant.defenseCallbackAction, method = RequestMethod.POST)
-    public AlterShieldResult<DefenseCallbackResult> defenseCallback(@Validated @RequestBody DefenseCallbackRequest request) {
-        try {
-            return new AlterShieldResult<>(defenseCallbackService.defenseCallback(request));
-        } catch (Exception e) {
-            // TODO log
-            return AlterShieldResult.systemError(e.getMessage());
-        }
-    }
-
 }

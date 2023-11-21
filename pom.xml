@@ -3,6 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <properties>
+        <spring.boot.version>2.5.6</spring.boot.version>
         <altershield.framework.sdk.version>0.0.1</altershield.framework.sdk.version>
         <altershield.framework.spi.version>0.0.1</altershield.framework.spi.version>
         <java.version>8</java.version>
@@ -68,7 +69,13 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>2.5.6</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+                <version>${spring.boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -83,6 +90,11 @@
             <dependency>
                 <groupId>com.alipay</groupId>
                 <artifactId>altershield-change</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alipay</groupId>
+                <artifactId>altershield-schedule</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
