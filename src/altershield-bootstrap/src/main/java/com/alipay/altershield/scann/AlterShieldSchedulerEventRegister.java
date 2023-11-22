@@ -27,7 +27,7 @@
 package com.alipay.altershield.scann;
 
 import com.alipay.altershield.shared.schedule.event.AlterShieldSchedulerEvent;
-import com.alipay.altershiled.schedule.event.AlterShieldSchedulerEventHolder;
+import com.alipay.altershield.schedule.event.AlterShieldSchedulerEventHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
