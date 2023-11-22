@@ -1,11 +1,34 @@
 /*
+ * MIT License
+ *
+ * Copyright (c) [2023]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/*
  * Ant Group
  * Copyright (c) 2004-2022 All Rights Reserved.
  */
 package com.alipay.altershield.defender.framework.exe.entity.convertor;
 
 import com.alipay.altershield.common.util.IdUtil;
-import com.alipay.altershield.defender.framework.exe.dal.dataobject.OpsCloudExeDefenderDetectDO;
+import com.alipay.altershield.defender.framework.exe.dal.dataobject.ExeDefenderDetectDO;
 import com.alipay.altershield.defender.framework.model.AbstractDefenderEntityConvertor;
 import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
 import com.alipay.altershield.framework.core.risk.model.enums.FeedbackStatusEnum;
@@ -34,7 +57,7 @@ public class ExeDefenderDetectConvertor extends AbstractDefenderEntityConvertor 
      * @param modelDO Data object
      * @return Entity object
      */
-    public ExeDefenderDetectEntity convert2Model(OpsCloudExeDefenderDetectDO modelDO) {
+    public ExeDefenderDetectEntity convert2Model(ExeDefenderDetectDO modelDO) {
         if (modelDO == null) {
             return null;
         }
@@ -83,12 +106,12 @@ public class ExeDefenderDetectConvertor extends AbstractDefenderEntityConvertor 
      * @param model Entity object
      * @return Data object
      */
-    public OpsCloudExeDefenderDetectDO convert2DO(ExeDefenderDetectEntity model) {
+    public ExeDefenderDetectDO convert2DO(ExeDefenderDetectEntity model) {
         if (model == null) {
             return null;
         }
 
-        OpsCloudExeDefenderDetectDO doModel = new OpsCloudExeDefenderDetectDO();
+        ExeDefenderDetectDO doModel = new ExeDefenderDetectDO();
         doModel.setDetectExeId(model.getDetectExeId());
         doModel.setGmtCreate(model.getGmtCreate());
         doModel.setGmtModified(model.getGmtModified());
@@ -133,14 +156,14 @@ public class ExeDefenderDetectConvertor extends AbstractDefenderEntityConvertor 
      * @param modelDOList Data object list
      * @return Entity object list
      */
-    public List<ExeDefenderDetectEntity> convert2ModelList(List<OpsCloudExeDefenderDetectDO> modelDOList) {
+    public List<ExeDefenderDetectEntity> convert2ModelList(List<ExeDefenderDetectDO> modelDOList) {
         if (modelDOList == null) {
             return Collections.emptyList();
         }
 
         List<ExeDefenderDetectEntity> modelList = new ArrayList<>();
 
-        for (OpsCloudExeDefenderDetectDO doModel : modelDOList) {
+        for (ExeDefenderDetectDO doModel : modelDOList) {
             modelList.add(convert2Model(doModel));
         }
 
@@ -154,12 +177,12 @@ public class ExeDefenderDetectConvertor extends AbstractDefenderEntityConvertor 
      * @param modelList Data object list
      * @return Entity object list
      */
-    public List<OpsCloudExeDefenderDetectDO> convert2DOList(List<ExeDefenderDetectEntity> modelList) {
+    public List<ExeDefenderDetectDO> convert2DOList(List<ExeDefenderDetectEntity> modelList) {
         if (modelList == null) {
             return Collections.emptyList();
         }
 
-        List<OpsCloudExeDefenderDetectDO> DOList = new ArrayList<>();
+        List<ExeDefenderDetectDO> DOList = new ArrayList<>();
 
         for (ExeDefenderDetectEntity model : modelList) {
             DOList.add(convert2DO(model));
