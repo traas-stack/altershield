@@ -79,10 +79,6 @@ import java.util.List;
         "com.alipay.altershield.common.ability.mapper",
         "com.alipay.altershield.change.meta.dal.mapper",
         "com.alipay.altershield.defender.meta.dal.mapper",
-        "com.alipay.altershield.common.ability.dal.mapper",
-        "com.alipay.altershield.change.search.dal.mapper",
-        "com.alipay.altershield.smart.meta.dal.mapper",
-        "com.alipay.altershield.smart.exe.dal.mapper"
 },
         sqlSessionFactoryRef = "confSqlSessionFactory")
 public class AlterShieldDataSourceConfig {

@@ -54,6 +54,5 @@
             <groupId>com.alipay</groupId>
             <artifactId>altershield-framework-sdk</artifactId>
         </dependency>
-
     </dependencies>
 </project>

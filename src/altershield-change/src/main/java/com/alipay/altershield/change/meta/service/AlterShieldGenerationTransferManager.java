@@ -24,28 +24,27 @@
 /**
  * Alipay.com Inc. Copyright (c) 2004-2022 All Rights Reserved.
  */
-package com.alipay.altershield.scann;
+package com.alipay.altershield.change.meta.service;
 
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.*;
+import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
 
 /**
- * The interface Ops cloud scheduler event scan.
  *
  * @author yuanji
- * @version : SchdulerPointEventScan.java, v 0.1 2022年08月15日 19:25 yuanji Exp $
+ * @version : OpsCloudGenerationTransferManager.java, v 0.1 2022年10月11日 11:22 yuanji Exp $
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Target(ElementType.TYPE)
-@Import({OpsCloudSchedulerEventRegister.class})
-public @interface OpsCloudSchedulerEventScan {
+public interface AlterShieldGenerationTransferManager {
 
     /**
-     * Base packages string [ ].
-     *
-     * @return the string [ ]
+     * 根据代G获取代G转换器
+     * @param generation
+     * @return
      */
-    String[] basePackages() default {};
+    AlterShieldGenerationTransfer getOpsCloudGenerationTransfer(MetaChangeSceneGenerationEnum generation);
+
+    /**
+     * 注册代G转换器
+     * @param alterShieldGenerationTransfer
+     */
+    void register(AlterShieldGenerationTransfer alterShieldGenerationTransfer);
 }

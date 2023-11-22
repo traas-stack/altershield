@@ -20,6 +20,10 @@
         </dependency>
         <dependency>
             <groupId>com.alipay</groupId>
+            <artifactId>altershield-schedule</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay</groupId>
             <artifactId>altershield-shared</artifactId>
         </dependency>
         <dependency>

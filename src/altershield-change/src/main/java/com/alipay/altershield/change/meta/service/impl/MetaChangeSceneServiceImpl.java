@@ -57,8 +57,8 @@ import com.alipay.altershield.change.meta.model.enums.MetaChangeGrayModeTypeEnum
 import com.alipay.altershield.change.meta.model.enums.MetaChangeSceneStatus;
 import com.alipay.altershield.change.meta.repository.MetaChangeSceneRepository;
 import com.alipay.altershield.change.meta.service.MetaChangeSceneService;
-import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransfer;
-import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransferManager;
+import com.alipay.altershield.change.meta.service.AlterShieldGenerationTransfer;
+import com.alipay.altershield.change.meta.service.AlterShieldGenerationTransferManager;
 import com.alipay.altershield.change.meta.service.request.*;
 import com.alipay.altershield.change.meta.service.request.converter.MetaChangeSceneRequestConverter;
 import com.alipay.altershield.change.meta.service.request.converter.MetaChangeStepRequestConverter;
@@ -112,10 +112,10 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
     private IdGenerator idGenerator;
 
     @Autowired
-    private AlterShieldSchedulerEventPublisher opsCloudSchedulerEventPublisher;
+    private AlterShieldSchedulerEventPublisher alterShieldSchedulerEventPublisher;
 
     @Autowired
-    private OpsCloudGenerationTransferManager opsCloudGenerationTransferManager;
+    private AlterShieldGenerationTransferManager alterShieldGenerationTransferManager;
 
     private Function<String, String> createStepIdFunction;
 
@@ -572,7 +572,7 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
             event.setChangeSceneKey(metaChangeSceneEntity.getChangeSceneKey());
             event.setPlatform(metaChangeSceneEntity.getPlatformName());
             event.setId(metaChangeSceneEntity.getId());
-            opsCloudSchedulerEventPublisher.publish(metaChangeSceneEntity.getId(), event);
+            alterShieldSchedulerEventPublisher.publish(metaChangeSceneEntity.getId(), event);
         }
     }
 
@@ -647,21 +647,21 @@ public class MetaChangeSceneServiceImpl implements MetaChangeSceneService, MetaC
         if (metaChangeSceneEntity.getStatus() != MetaChangeSceneStatus.RELEASE) {
             return AlterShieldResult.illegalArgument("变更场景还未发布，不支持代G调整");
         }
-        OpsCloudGenerationTransfer opsCloudGenerationTransfer = opsCloudGenerationTransferManager.getOpsCloudGenerationTransfer(metaChangeSceneEntity.getGeneration());
-        if (opsCloudGenerationTransfer == null) {
+        AlterShieldGenerationTransfer alterShieldGenerationTransfer = alterShieldGenerationTransferManager.getOpsCloudGenerationTransfer(metaChangeSceneEntity.getGeneration());
+        if (alterShieldGenerationTransfer == null) {
             return AlterShieldResult.illegalArgument("不支持" + metaChangeSceneEntity.getGeneration() + "调整到：" + metaChangeSceneGenerationEnum.name());
         }
 
         switch (metaChangeSceneGenerationEnum) {
             case G0:
-                return opsCloudGenerationTransfer.toG0(metaChangeSceneEntity);
+                return alterShieldGenerationTransfer.toG0(metaChangeSceneEntity);
             case G1:
-                return opsCloudGenerationTransfer.toG1(metaChangeSceneEntity,
+                return alterShieldGenerationTransfer.toG1(metaChangeSceneEntity,
                         metaChangeSceneEntity1 -> buildG1OrderStep(metaChangeSceneEntity1, createStepIdFunction));
             case G2:
-                return opsCloudGenerationTransfer.toG2(metaChangeSceneEntity);
+                return alterShieldGenerationTransfer.toG2(metaChangeSceneEntity);
             case G3:
-                return opsCloudGenerationTransfer.toG3(metaChangeSceneEntity);
+                return alterShieldGenerationTransfer.toG3(metaChangeSceneEntity);
         }
         return AlterShieldResult.illegalArgument("不支持" + metaChangeSceneEntity.getGeneration() + "调整到：" + metaChangeSceneGenerationEnum.name());
     }

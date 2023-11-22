@@ -7,6 +7,8 @@
         <altershield.framework.sdk.version>0.0.1</altershield.framework.sdk.version>
         <altershield.framework.spi.version>0.0.1</altershield.framework.spi.version>
         <java.version>8</java.version>
+        <surefire.version>2.20</surefire.version>
+        <isSkipUnitTest>true</isSkipUnitTest>
         <spring.boot.version>2.5.6</spring.boot.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     </properties>
@@ -60,6 +62,11 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${org.mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.8</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
@@ -142,8 +149,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
                     <annotationProcessorPaths>
                         <path>

@@ -221,8 +221,30 @@ CREATE TABLE `opscloud_exe_defender_detect` (
     `rule_status` varchar(16) NOT NULL DEFAULT '' comment 'Defense rule status: trial run, online, etc.',
     `allow_ignore` varchar(1) NOT NULL DEFAULT '' comment 'Whether the rule allows ignored',
     PRIMARY KEY(`detect_exe_id`),
-    KEY `idx_change_order_id`(`change_order_id`, `uid`) GLOBAL,
-    KEY `idx_node_id`(`node_id`, `uid`) GLOBAL,
-    KEY `idx_detect_group_id`(`detect_group_id`, `uid`) GLOBAL,
-    KEY `idx_rule_id`(`rule_id`) GLOBAL
+    KEY `idx_change_order_id`(`change_order_id`, `uid`) ,
+    KEY `idx_node_id`(`node_id`, `uid`),
+    KEY `idx_detect_group_id`(`detect_group_id`, `uid`),
+    KEY `idx_rule_id`(`rule_id`)
 ) DEFAULT CHARSET = utf8mb4 COMMENT = 'Defender detection record table';
+
+
+ CREATE TABLE `altershield_key_value` (
+  `name` varchar(36) NOT NULL COMMENT '键',
+  `serial_num` bigint(20) unsigned NOT NULL COMMENT '编号:从0开始,同一个key的多个编号可以append为一个大string',
+  `gmt_create` timestamp NOT NULL COMMENT '创建时间',
+  `gmt_modified` timestamp NOT NULL COMMENT '修改时间',
+  `value` varchar(65000) DEFAULT NULL COMMENT '值',
+  PRIMARY KEY (`name`, `serial_num`)
+) DEFAULT CHARSET = utf8mb4  COMMENT = '无分区keyValue表';
+
+
+CREATE TABLE `altershield_sequence` (
+  `name` varchar(64) NOT NULL COMMENT '主键',
+  `gmt_create` timestamp NOT NULL COMMENT '创建时间',
+  `gmt_modified` timestamp NOT NULL COMMENT '修改时间',
+  `value` bigint(20) unsigned NOT NULL COMMENT '1',
+  `min_value` bigint(20) unsigned NOT NULL COMMENT '1',
+  `max_value` bigint(20) unsigned NOT NULL COMMENT '2821109907455',
+  `step` bigint(20) unsigned NOT NULL COMMENT '1000',
+  PRIMARY KEY (`name`)
+) DEFAULT CHARSET = utf8mb4 COMMENT = '变更核心sequence表，用于生成各种id'

@@ -56,7 +56,7 @@ public class AlterShieldCoreConfig {
      * @return the http ops cloud client
      */
     @Bean
-    public HttpAlterShieldClient createHttpOpsCloudClient(HttpInvoker httpInvoker)
+    public HttpAlterShieldClient createHttpAlterShieldClient(HttpInvoker httpInvoker)
     {
         logger.info("start create http client");
         HttpAlterShieldClientImpl httpAlterShieldClient = new HttpAlterShieldClientImpl();

@@ -24,54 +24,24 @@
 /**
  * Alipay.com Inc. Copyright (c) 2004-2022 All Rights Reserved.
  */
-package com.alipay.altershield.change.meta.service;
+package com.alipay.altershield.change.meta.service.impl;
 
-
-import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
-import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
-import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
-
-import java.util.function.Function;
+import org.springframework.stereotype.Component;
 
 /**
  * @author yuanji
- * @version : OpsCloudGenerationTransfer.java, v 0.1 2022年10月10日 15:25 yuanji Exp $
+ * @version : G2OpsCloudGenerationTransfer.java, v 0.1 2022年10月10日 15:32 yuanji Exp $
  */
-public interface OpsCloudGenerationTransfer {
+@Component
+public class G2AlterShieldGenerationTransfer extends BaseAlterShieldGenerationTransfer {
 
-    /**
-     * 支持的代G
-     * @return
-     */
-    MetaChangeSceneGenerationEnum getChangeSceneGeneration();
 
-    /**
-     * 到g0
-     * @param metaChangeSceneEntity
-     * @return
-     */
-    AlterShieldResult<String> toG0(MetaChangeSceneEntity metaChangeSceneEntity);
+    @Override
+    public MetaChangeSceneGenerationEnum getChangeSceneGeneration() {
+        return MetaChangeSceneGenerationEnum.G2;
+    }
 
-    /**
-     * 到g1
-     * @param metaChangeSceneEntity
-     * @return
-     */
-    AlterShieldResult<String> toG1(MetaChangeSceneEntity metaChangeSceneEntity, Function<MetaChangeSceneEntity, MetaChangeStepEntity> orderStepCreateFunction);
 
-    /**
-     * 到g2
-     * @param metaChangeSceneEntity
-     * @return
-     */
-    AlterShieldResult<String> toG2(MetaChangeSceneEntity metaChangeSceneEntity);
-
-    /**
-     * 到g3
-     * @param metaChangeSceneEntity
-     * @return
-     */
-    AlterShieldResult<String> toG3(MetaChangeSceneEntity metaChangeSceneEntity);
 
 }

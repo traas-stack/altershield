@@ -26,22 +26,36 @@
  */
 package com.alipay.altershield.change.meta.service.impl;
 
+import com.alipay.altershield.change.meta.service.AlterShieldGenerationTransfer;
+import com.alipay.altershield.change.meta.service.AlterShieldGenerationTransferManager;
 import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ *
  * @author yuanji
- * @version : G2OpsCloudGenerationTransfer.java, v 0.1 2022年10月10日 15:32 yuanji Exp $
+ * @version : OpsCloudGenerationTransferManagerImpl.java, v 0.1 2022年10月11日 11:48 yuanji Exp $
  */
 @Component
-public class G2OpsCloudGenerationTransfer extends BaseOpsCloudGenerationTransfer {
+public class AlterShieldGenerationTransferManagerImpl implements AlterShieldGenerationTransferManager {
 
-
+    private ConcurrentHashMap<MetaChangeSceneGenerationEnum, AlterShieldGenerationTransfer> map = new ConcurrentHashMap<>();
     @Override
-    public MetaChangeSceneGenerationEnum getChangeSceneGeneration() {
-        return MetaChangeSceneGenerationEnum.G2;
+    public AlterShieldGenerationTransfer getOpsCloudGenerationTransfer(MetaChangeSceneGenerationEnum generation) {
+        if(generation == null)
+        {
+            return null;
+        }
+        return map.get(generation);
     }
 
-
-
+    @Override
+    public void register(AlterShieldGenerationTransfer alterShieldGenerationTransfer) {
+        Assert.notNull(alterShieldGenerationTransfer, "transfer is null");
+        Assert.notNull(alterShieldGenerationTransfer.getChangeSceneGeneration(), "transfer generation is null");
+        map.put(alterShieldGenerationTransfer.getChangeSceneGeneration(), alterShieldGenerationTransfer);
+    }
 }

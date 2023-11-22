@@ -43,10 +43,6 @@
         </dependency>
         <dependency>
             <groupId>com.alipay</groupId>
-            <artifactId>altershield-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alipay</groupId>
             <artifactId>altershield-shared</artifactId>
         </dependency>
         <dependency>

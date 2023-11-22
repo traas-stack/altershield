@@ -24,7 +24,7 @@
 package com.alipay.altershield;
 
 import com.alipay.altershield.listener.LoggingListener;
-import com.alipay.altershield.scann.OpsCloudSchedulerEventScan;
+import com.alipay.altershield.scann.AlterShieldSchedulerEventScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -43,7 +43,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @SpringBootApplication
 @ComponentScan(basePackages = "com.alipay.altershield",excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
         pattern = "com.alipay.altershield.framework.sdk.*"))
-@OpsCloudSchedulerEventScan(basePackages = "com.alipay.altershield")
+@AlterShieldSchedulerEventScan(basePackages = "com.alipay.altershield")
 public class AlterShieldApplication {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(AlterShieldApplication.class);

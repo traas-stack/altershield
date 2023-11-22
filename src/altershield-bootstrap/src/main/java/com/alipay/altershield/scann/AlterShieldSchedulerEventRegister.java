@@ -53,12 +53,12 @@ import java.util.Set;
  * @author yuanji
  * @version : OpsCloudSchedulerEventRegister.java, v 0.1 2022年08月15日 19:26 yuanji Exp $
  */
-public class OpsCloudSchedulerEventRegister implements ImportBeanDefinitionRegistrar, ResourceLoaderAware,
+public class AlterShieldSchedulerEventRegister implements ImportBeanDefinitionRegistrar, ResourceLoaderAware,
         EnvironmentAware {
 
     private Environment    environment;
     private ResourceLoader resourceLoader;
-    private static final Logger logger = LoggerFactory.getLogger(OpsCloudSchedulerEventRegister.class);
+    private static final Logger logger = LoggerFactory.getLogger(AlterShieldSchedulerEventRegister.class);
 
 
     @Override
@@ -73,10 +73,10 @@ public class OpsCloudSchedulerEventRegister implements ImportBeanDefinitionRegis
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry registry) {
-        if (!annotationMetadata.hasAnnotation(OpsCloudSchedulerEventScan.class.getName())) {
+        if (!annotationMetadata.hasAnnotation(AlterShieldSchedulerEventScan.class.getName())) {
             return;
         }
-        Map<String, Object> annotationAttributesMap = annotationMetadata.getAnnotationAttributes(OpsCloudSchedulerEventScan.class.getName());
+        Map<String, Object> annotationAttributesMap = annotationMetadata.getAnnotationAttributes(AlterShieldSchedulerEventScan.class.getName());
         AnnotationAttributes annotationAttributes = Optional.ofNullable(AnnotationAttributes.fromMap(annotationAttributesMap)).orElseGet(
                 AnnotationAttributes::new);
         // Get the package to be scanned

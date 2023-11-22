@@ -24,38 +24,54 @@
 /**
  * Alipay.com Inc. Copyright (c) 2004-2022 All Rights Reserved.
  */
-package com.alipay.altershield.change.meta.service.impl;
+package com.alipay.altershield.change.meta.service;
 
-import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransfer;
-import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransferManager;
+
+import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
+import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
+import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
- *
  * @author yuanji
- * @version : OpsCloudGenerationTransferManagerImpl.java, v 0.1 2022年10月11日 11:48 yuanji Exp $
+ * @version : OpsCloudGenerationTransfer.java, v 0.1 2022年10月10日 15:25 yuanji Exp $
  */
-@Component
-public class OpsCloudGenerationTransferManagerImpl implements OpsCloudGenerationTransferManager {
+public interface AlterShieldGenerationTransfer {
 
-    private ConcurrentHashMap<MetaChangeSceneGenerationEnum, OpsCloudGenerationTransfer> map = new ConcurrentHashMap<>();
-    @Override
-    public OpsCloudGenerationTransfer getOpsCloudGenerationTransfer(MetaChangeSceneGenerationEnum generation) {
-        if(generation == null)
-        {
-            return null;
-        }
-        return map.get(generation);
-    }
+    /**
+     * 支持的代G
+     * @return
+     */
+    MetaChangeSceneGenerationEnum getChangeSceneGeneration();
 
-    @Override
-    public void register(OpsCloudGenerationTransfer opsCloudGenerationTransfer) {
-        Assert.notNull(opsCloudGenerationTransfer, "transfer is null");
-        Assert.notNull(opsCloudGenerationTransfer.getChangeSceneGeneration(), "transfer generation is null");
-        map.put(opsCloudGenerationTransfer.getChangeSceneGeneration(), opsCloudGenerationTransfer);
-    }
+    /**
+     * 到g0
+     * @param metaChangeSceneEntity
+     * @return
+     */
+    AlterShieldResult<String> toG0(MetaChangeSceneEntity metaChangeSceneEntity);
+
+    /**
+     * 到g1
+     * @param metaChangeSceneEntity
+     * @return
+     */
+    AlterShieldResult<String> toG1(MetaChangeSceneEntity metaChangeSceneEntity, Function<MetaChangeSceneEntity, MetaChangeStepEntity> orderStepCreateFunction);
+
+    /**
+     * 到g2
+     * @param metaChangeSceneEntity
+     * @return
+     */
+    AlterShieldResult<String> toG2(MetaChangeSceneEntity metaChangeSceneEntity);
+
+    /**
+     * 到g3
+     * @param metaChangeSceneEntity
+     * @return
+     */
+    AlterShieldResult<String> toG3(MetaChangeSceneEntity metaChangeSceneEntity);
+
 }

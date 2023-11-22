@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: altershield-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: altershield
+  template:
+    metadata:
+      labels:
+        app: altershield
+    spec:
+      containers:
+        - name: altershield
+          image: your-registry/altershield:latest
+          ports:
+            - containerPort: 8080

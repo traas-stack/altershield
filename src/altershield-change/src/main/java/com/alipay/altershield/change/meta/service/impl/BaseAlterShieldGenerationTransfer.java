@@ -30,8 +30,8 @@ import com.alipay.altershield.change.meta.model.MetaChangeSceneEntity;
 import com.alipay.altershield.change.meta.model.effective.MetaChangeOrderStepEntity;
 import com.alipay.altershield.change.meta.model.effective.MetaChangeStepEntity;
 import com.alipay.altershield.change.meta.repository.MetaChangeSceneRepository;
-import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransfer;
-import com.alipay.altershield.change.meta.service.OpsCloudGenerationTransferManager;
+import com.alipay.altershield.change.meta.service.AlterShieldGenerationTransfer;
+import com.alipay.altershield.change.meta.service.AlterShieldGenerationTransferManager;
 import com.alipay.altershield.common.service.ServiceProcessTemplate;
 import com.alipay.altershield.framework.core.change.facade.result.AlterShieldResult;
 import com.alipay.altershield.framework.core.change.model.enums.MetaChangeSceneGenerationEnum;
@@ -52,7 +52,7 @@ import java.util.stream.Collectors;
  * @version : BaseOpsCloudGenerationTransfer.java, v 0.1 2022年10月11日 11:24 yuanji Exp $
  */
 
-public abstract class BaseOpsCloudGenerationTransfer implements OpsCloudGenerationTransfer, InitializingBean {
+public abstract class BaseAlterShieldGenerationTransfer implements AlterShieldGenerationTransfer, InitializingBean {
 
     @Autowired
     protected MetaChangeSceneRepository metaChangeSceneRepository;
@@ -62,11 +62,11 @@ public abstract class BaseOpsCloudGenerationTransfer implements OpsCloudGenerati
 
 
     @Autowired
-    private OpsCloudGenerationTransferManager opsCloudGenerationTransferManager;
+    private AlterShieldGenerationTransferManager alterShieldGenerationTransferManager;
 
     @Override
     public void afterPropertiesSet() {
-        opsCloudGenerationTransferManager.register(this);
+        alterShieldGenerationTransferManager.register(this);
     }
 
     protected void buildG0Status(MetaChangeSceneEntity metaChangeSceneEntity) {
@@ -120,7 +120,7 @@ public abstract class BaseOpsCloudGenerationTransfer implements OpsCloudGenerati
     }
 
     private AlterShieldResult<String> toG0G1(MetaChangeSceneEntity metaChangeSceneEntity, MetaChangeSceneGenerationEnum targetGeneration,
-                                          G2OpsCloudGenerationTransfer.TransferHelp transferHelp) {
+                                          G2AlterShieldGenerationTransfer.TransferHelp transferHelp) {
 
 
         return ServiceProcessTemplate.wrapTryCatch(() ->
