@@ -7,10 +7,11 @@ altershield:
         value: altershield
       scheduler:
         testUid: 00
+        maxUid: 01
 
 spring:
   datasource:
-    url: jdbc:mysql://rm-bp121clo2mdfhem90ho.mysql.rds.aliyuncs.com:3306/altershield
+    jdbc-url: jdbc:mysql://rm-bp121clo2mdfhem90ho.mysql.rds.aliyuncs.com:3306/altershield
     username: altershield
     password: OpsCloud@123
 

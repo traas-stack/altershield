@@ -10,7 +10,7 @@ spring:
     active: local
   #dataSource 数据源配置
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 10000
       validation-timeout: 3000

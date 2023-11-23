@@ -62,7 +62,7 @@ public class AlterShieldConstant {
     /**
      * Switch the scheduler's pause state
      */
-    public static volatile boolean SWITCH_SCHEDULER_PAUSE = false;
+    public static volatile boolean SWITCH_SCHEDULER_PAUSE = true;
     /**
      * Change order details page URL
      */

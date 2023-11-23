@@ -69,7 +69,7 @@ public class AlterShieldExeServiceConfig {
      */
     //构建新变更接口
     @Bean()
-    public ExeChangeAsyncCheckService createOpsCloudExeChangeAsyncCheckService()
+    public ExeChangeAsyncCheckService createAlterShieldExeChangeAsyncCheckService()
     {
         logger.info("starting create opscloud OpscloudExeChangeAsyncCheckService");
         ExeChangeAsyncCheckServiceImpl exeChangeAsyncCheckService = new ExeChangeAsyncCheckServiceImpl();

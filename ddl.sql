@@ -229,46 +229,46 @@ CREATE TABLE `altershield_exe_defender_detect` (
 
 
 CREATE TABLE `altershield_key_value` (
- `name` varchar(36) NOT NULL COMMENT '键',
- `serial_num` bigint(20) unsigned NOT NULL COMMENT '编号:从0开始,同一个key的多个编号可以append为一个大string',
- `gmt_create` timestamp NOT NULL COMMENT '创建时间',
- `gmt_modified` timestamp NOT NULL COMMENT '修改时间',
- `value` text DEFAULT NULL COMMENT '值',
- PRIMARY KEY (`name`, `serial_num`)
+     `name` varchar(36) NOT NULL COMMENT '键',
+     `serial_num` bigint(20) unsigned NOT NULL COMMENT '编号:从0开始,同一个key的多个编号可以append为一个大string',
+     `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+     `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+     `value` text DEFAULT NULL COMMENT '值',
+     PRIMARY KEY (`name`, `serial_num`)
 ) DEFAULT CHARSET = utf8mb4  COMMENT = '无分区keyValue表';
 
 CREATE TABLE `altershield_sequence` (
-  `name` varchar(64) NOT NULL COMMENT '主键',
-  `gmt_create` timestamp NOT NULL COMMENT '创建时间',
-  `gmt_modified` timestamp NOT NULL COMMENT '修改时间',
-  `value` bigint(20) unsigned NOT NULL COMMENT '1',
-  `min_value` bigint(20) unsigned NOT NULL COMMENT '1',
-  `max_value` bigint(20) unsigned NOT NULL COMMENT '2821109907455',
-  `step` bigint(20) unsigned NOT NULL COMMENT '1000',
-  PRIMARY KEY (`name`)
+    `name` varchar(64) NOT NULL COMMENT '主键',
+    `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    `value` bigint(20) unsigned NOT NULL COMMENT '1',
+    `min_value` bigint(20) unsigned NOT NULL COMMENT '1',
+    `max_value` bigint(20) unsigned NOT NULL COMMENT '2821109907455',
+    `step` bigint(20) unsigned NOT NULL COMMENT '1000',
+    PRIMARY KEY (`name`)
 ) DEFAULT CHARSET = utf8mb4 COMMENT = '变更核心sequence表，用于生成各种id';
 
 CREATE TABLE `altershield_exe_scheduler_event` (
-  `event_id` varchar(36) NOT NULL COMMENT '主键',
-  `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `uid` varchar(2) GENERATED ALWAYS AS (substr(`event_id`,-12,2)) VIRTUAL,
-  `event_type` varchar(128) NOT NULL COMMENT '任务处理码。用于反序列事件',
-  `info` varchar(16383) DEFAULT NULL COMMENT '附加信息',
-  `retried` int(11) NOT NULL COMMENT '当前重试次数',
-  `status` varchar(16) NOT NULL COMMENT '状态',
-  `rst_msg` varchar(4096) DEFAULT NULL COMMENT '执行结果',
-  `gmt_plan` timestamp NOT NULL COMMENT '计划执行时间',
-  `source_id` varchar(64) NOT NULL COMMENT '对应事件的sourceId',
-  `listener_type` varchar(64) DEFAULT NULL COMMENT '对应于处理的listener类型,创建的时候为空',
-  `priority` int(10) unsigned NOT NULL COMMENT '任务优先级',
-  `event_group` varchar(128) NOT NULL COMMENT '事件分组',
-  `gmt_event_start` timestamp NULL DEFAULT NULL COMMENT '事件开始时间，这儿指的是事件源的时间',
-  `gmt_execute_start` timestamp NULL DEFAULT NULL COMMENT '实际执行时间',
-  `gmt_execute_end` timestamp NULL DEFAULT NULL COMMENT '实际执行时间结束时间',
-  `gmt_event_end` timestamp NULL DEFAULT NULL COMMENT '事件结束时间',
-  PRIMARY KEY (`event_id`),
-  KEY `idx_group_status_plan_code` (`uid`, `event_group`, `status`, `priority`, `gmt_plan`, `event_type`),
-  KEY `idx_group_status_plan` (`uid`, `event_group`, `status`, `gmt_plan`) ,
-  KEY `idx_plan_group` (`uid`, `gmt_plan`, `event_group`)
+   `event_id` varchar(36) NOT NULL COMMENT '主键',
+   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+   `uid` varchar(2) GENERATED ALWAYS AS (substr(`event_id`,-12,2)) VIRTUAL,
+   `event_type` varchar(128) NOT NULL COMMENT '任务处理码。用于反序列事件',
+   `info` text DEFAULT NULL COMMENT '附加信息',
+   `retried` int(11) NOT NULL COMMENT '当前重试次数',
+   `status` varchar(16) NOT NULL COMMENT '状态',
+   `rst_msg` varchar(4096) DEFAULT NULL COMMENT '执行结果',
+   `gmt_plan` timestamp NULL DEFAULT NULL COMMENT '计划执行时间',
+   `source_id` varchar(64) NOT NULL COMMENT '对应事件的sourceId',
+   `listener_type` varchar(64) DEFAULT NULL COMMENT '对应于处理的listener类型,创建的时候为空',
+   `priority` int(10) unsigned NOT NULL COMMENT '任务优先级',
+   `event_group` varchar(128) NOT NULL COMMENT '事件分组',
+   `gmt_event_start` timestamp NULL DEFAULT NULL COMMENT '事件开始时间，这儿指的是事件源的时间',
+   `gmt_execute_start` timestamp NULL DEFAULT NULL COMMENT '实际执行时间',
+   `gmt_execute_end` timestamp NULL DEFAULT NULL COMMENT '实际执行时间结束时间',
+   `gmt_event_end` timestamp NULL DEFAULT NULL COMMENT '事件结束时间',
+   PRIMARY KEY (`event_id`),
+   KEY `idx_group_status_plan_code` (`uid`, `event_group`, `status`, `priority`, `gmt_plan`, `event_type`),
+   KEY `idx_group_status_plan` (`uid`, `event_group`, `status`, `gmt_plan`) ,
+   KEY `idx_plan_group` (`uid`, `gmt_plan`, `event_group`)
 ) DEFAULT CHARSET = utf8mb4 COMMENT = '变更管控调度事件表';
