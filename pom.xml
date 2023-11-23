@@ -136,6 +136,11 @@
             </dependency>
             <dependency>
                 <groupId>com.alipay</groupId>
+                <artifactId>altershield-plugin-market</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alipay</groupId>
                 <artifactId>altershield-web</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>

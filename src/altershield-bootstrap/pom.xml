@@ -49,5 +49,9 @@
             <groupId>com.alipay</groupId>
             <artifactId>altershield-schedule</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>altershield-plugin-market</artifactId>
+        </dependency>
     </dependencies>
 </project>
