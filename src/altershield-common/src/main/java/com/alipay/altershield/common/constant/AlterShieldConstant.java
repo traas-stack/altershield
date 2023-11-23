@@ -138,7 +138,7 @@ public class AlterShieldConstant {
      */
     public static volatile long G1_SYNC_DECISION_TAG_TIMEOUT_MS = 1000;
 
-    // -------------- Defender -----------------
+    // -------------- Defender Start -----------------
     /**
      * Maximum blocking observation time of defense rules
      */
@@ -148,6 +148,18 @@ public class AlterShieldConstant {
      * Synchronization defense verification timeout, unit: milliseconds
      */
     public static volatile long DEFENDER_SYNC_DETECT_TIMEOUT = 3000;
+
+    /**
+     * Inner defense plugin configuration
+     */
+    public static volatile String DEFENDER_INNER_PLUGINS = "[\n"
+            + "\t{\n"
+            + "\t\t\"pluginKey\": \"xxx\",\n"
+            + "\t\t\"mainClass\": \"xxx\",\n"
+            + "\t\t\"invokeType\": \"sync\"\n"
+            + "\t}\n"
+            + "]";
+    // -------------- Defender Finish -----------------
 
     // TODO 更换为开源的接入文档地址
     /**

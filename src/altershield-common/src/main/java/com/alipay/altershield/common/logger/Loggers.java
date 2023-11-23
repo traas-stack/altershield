@@ -111,4 +111,8 @@ public interface Loggers {
      * 外部任务调用
      */
     Logger OUTER_TASK = LoggerFactory.getLogger("ALTER_SHIELD_OUTER_TASK");
+    /**
+     * plugin market log
+     */
+    Logger PLUGIN_MARKET = LoggerFactory.getLogger("ALTER_SHIELD_PLUGIN_MARKET");
 }
