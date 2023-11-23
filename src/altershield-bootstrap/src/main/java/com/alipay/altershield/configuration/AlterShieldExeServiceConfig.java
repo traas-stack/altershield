@@ -52,7 +52,7 @@ public class AlterShieldExeServiceConfig {
      */
     //构建新变更核心同步接口
     @Bean()
-    public ExeChangeSyncCheckService createOpsCloudExeChangeSyncCheckService()
+    public ExeChangeSyncCheckService createAlterShieldExeChangeSyncCheckService()
     {
         logger.info("starting create opscloud OpscloudExeChangeSyncCheckService");
 

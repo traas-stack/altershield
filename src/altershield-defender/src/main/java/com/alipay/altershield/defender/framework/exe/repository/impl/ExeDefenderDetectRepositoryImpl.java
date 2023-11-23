@@ -1,12 +1,35 @@
 /*
+ * MIT License
+ *
+ * Copyright (c) [2023]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/*
  * Ant Group
  * Copyright (c) 2004-2022 All Rights Reserved.
  */
 package com.alipay.altershield.defender.framework.exe.repository.impl;
 
-import com.alipay.altershield.defender.framework.exe.dal.dataobject.OpsCloudExeDefenderDetectDO;
-import com.alipay.altershield.defender.framework.exe.dal.dataobject.OpsCloudExeDefenderDetectParam;
-import com.alipay.altershield.defender.framework.exe.dal.mapper.OpsCloudExeDefenderDetectMapper;
+import com.alipay.altershield.defender.framework.exe.dal.dataobject.ExeDefenderDetectDO;
+import com.alipay.altershield.defender.framework.exe.dal.dataobject.ExeDefenderDetectParam;
+import com.alipay.altershield.defender.framework.exe.dal.mapper.ExeDefenderDetectMapper;
 import com.alipay.altershield.defender.framework.exe.entity.convertor.ExeDefenderDetectConvertor;
 import com.alipay.altershield.defender.framework.exe.repository.ExeDefenderDetectRepository;
 import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
@@ -29,7 +52,7 @@ import java.util.List;
 public class ExeDefenderDetectRepositoryImpl implements ExeDefenderDetectRepository {
 
     @Autowired
-    private OpsCloudExeDefenderDetectMapper opsCloudExeDefenderDetectMapper;
+    private ExeDefenderDetectMapper exeDefenderDetectMapper;
 
     @Autowired
     private ExeDefenderDetectConvertor exeDefenderDetectConvertor;
@@ -42,7 +65,7 @@ public class ExeDefenderDetectRepositoryImpl implements ExeDefenderDetectReposit
      */
     @Override
     public ExeDefenderDetectEntity loadByExeId(String detectExeId) {
-        OpsCloudExeDefenderDetectDO detectDO = opsCloudExeDefenderDetectMapper.selectByPrimaryKey(detectExeId);
+        ExeDefenderDetectDO detectDO = exeDefenderDetectMapper.selectByPrimaryKey(detectExeId);
         return exeDefenderDetectConvertor.convert2Model(detectDO);
     }
 
@@ -54,7 +77,7 @@ public class ExeDefenderDetectRepositoryImpl implements ExeDefenderDetectReposit
      */
     @Override
     public ExeDefenderDetectEntity lockByExeId(String detectExeId) {
-        OpsCloudExeDefenderDetectDO detectDO = opsCloudExeDefenderDetectMapper.selectByPrimaryKeyForUpdate(detectExeId);
+        ExeDefenderDetectDO detectDO = exeDefenderDetectMapper.selectByPrimaryKeyForUpdate(detectExeId);
         return exeDefenderDetectConvertor.convert2Model(detectDO);
     }
 
@@ -66,9 +89,9 @@ public class ExeDefenderDetectRepositoryImpl implements ExeDefenderDetectReposit
      */
     @Override
     public List<ExeDefenderDetectEntity> selectByChangeOrderId(String changeOrderId) {
-        OpsCloudExeDefenderDetectParam param = new OpsCloudExeDefenderDetectParam();
+        ExeDefenderDetectParam param = new ExeDefenderDetectParam();
         param.createCriteria().andChangeOrderIdEqualTo(changeOrderId);
-        List<OpsCloudExeDefenderDetectDO> detectDOs = opsCloudExeDefenderDetectMapper.selectByParam(param);
+        List<ExeDefenderDetectDO> detectDOs = exeDefenderDetectMapper.selectByParam(param);
         return exeDefenderDetectConvertor.convert2ModelList(detectDOs);
     }
 
@@ -80,8 +103,8 @@ public class ExeDefenderDetectRepositoryImpl implements ExeDefenderDetectReposit
      */
     @Override
     public boolean batchInsert(List<ExeDefenderDetectEntity> detectEntities) {
-        List<OpsCloudExeDefenderDetectDO> detectDOs = exeDefenderDetectConvertor.convert2DOList(detectEntities);
-        int columns = opsCloudExeDefenderDetectMapper.batchInsert(detectDOs);
+        List<ExeDefenderDetectDO> detectDOs = exeDefenderDetectConvertor.convert2DOList(detectEntities);
+        int columns = exeDefenderDetectMapper.batchInsert(detectDOs);
         return columns == detectEntities.size();
     }
 
@@ -93,8 +116,8 @@ public class ExeDefenderDetectRepositoryImpl implements ExeDefenderDetectReposit
      */
     @Override
     public boolean insert(ExeDefenderDetectEntity detectEntity) {
-        OpsCloudExeDefenderDetectDO detectDO = exeDefenderDetectConvertor.convert2DO(detectEntity);
-        int column = opsCloudExeDefenderDetectMapper.insert(detectDO);
+        ExeDefenderDetectDO detectDO = exeDefenderDetectConvertor.convert2DO(detectEntity);
+        int column = exeDefenderDetectMapper.insert(detectDO);
         return column > 0;
     }
 
@@ -111,15 +134,15 @@ public class ExeDefenderDetectRepositoryImpl implements ExeDefenderDetectReposit
         }
 
         entity.setGmtModified(new Date());
-        int columns = opsCloudExeDefenderDetectMapper.updateByPrimaryKeySelective(exeDefenderDetectConvertor.convert2DO(entity));
+        int columns = exeDefenderDetectMapper.updateByPrimaryKeySelective(exeDefenderDetectConvertor.convert2DO(entity));
         return columns > 0;
     }
 
     @Override
     public List<ExeDefenderDetectEntity> selectByGroupId(String groupId) {
-        OpsCloudExeDefenderDetectParam param = new OpsCloudExeDefenderDetectParam();
+        ExeDefenderDetectParam param = new ExeDefenderDetectParam();
         param.createCriteria().andDetectGroupIdEqualTo(groupId);
-        List<OpsCloudExeDefenderDetectDO> detectDOs = opsCloudExeDefenderDetectMapper.selectByParam(param);
+        List<ExeDefenderDetectDO> detectDOs = exeDefenderDetectMapper.selectByParam(param);
         return exeDefenderDetectConvertor.convert2ModelList(detectDOs);
     }
 
@@ -129,20 +152,20 @@ public class ExeDefenderDetectRepositoryImpl implements ExeDefenderDetectReposit
             return false;
         }
 
-        int updateByIds = opsCloudExeDefenderDetectMapper.batchUpdateByIds(detectExeIds, ignored);
+        int updateByIds = exeDefenderDetectMapper.batchUpdateByIds(detectExeIds, ignored);
         return updateByIds >= detectExeIds.size();
     }
 
     @Override
     public List<ExeDefenderDetectEntity> selectDetectStatusByNodeId(String nodeId, DefenseStageEnum stage) {
-        OpsCloudExeDefenderDetectParam param = new OpsCloudExeDefenderDetectParam();
-        OpsCloudExeDefenderDetectParam.Criteria criteria = param.createCriteria();
+        ExeDefenderDetectParam param = new ExeDefenderDetectParam();
+        ExeDefenderDetectParam.Criteria criteria = param.createCriteria();
         criteria.andNodeIdEqualTo(nodeId);
         if (stage != null) {
             criteria.andStageEqualTo(stage.getStage());
         }
 
-        List<OpsCloudExeDefenderDetectDO> detectDOList = opsCloudExeDefenderDetectMapper.selectByParam(param);
+        List<ExeDefenderDetectDO> detectDOList = exeDefenderDetectMapper.selectByParam(param);
 
         return exeDefenderDetectConvertor.convert2ModelList(detectDOList);
     }
