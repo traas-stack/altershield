@@ -1,5 +1,6 @@
 # 构建阶段
 FROM maven:3.8.2-openjdk-8 AS build
+ENV MAVEN_OPTS="-Xmx512m"
 RUN mkdir -p /opt/software/app
 WORKDIR /opt/software/app
 COPY ./ /opt/software/app
