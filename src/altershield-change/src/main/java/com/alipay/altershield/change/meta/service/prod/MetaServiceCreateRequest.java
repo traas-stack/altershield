@@ -134,6 +134,6 @@ public class MetaServiceCreateRequest {
     /**
      * 租户码
      */
-    private String tldcTenantCode;
+    private String tenantCode;
 
 }

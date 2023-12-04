@@ -132,7 +132,7 @@ public class ExeChangeOrderEntity extends ExeBaseChangeOrderEntity {
      *
      * @mbg.generated
      */
-    private String fromTldTenantCode;
+    private String fromTenantCode;
 
     /**
      * Database Column Remarks: 影响的应用

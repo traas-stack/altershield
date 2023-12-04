@@ -68,12 +68,9 @@ import javax.sql.DataSource;
  * @version : OpsCloudMetaDataSourceConfig.java, v 0.1 2022年03月04日 11:06 上午 yuanji Exp $
  */
 @Configuration
-@MapperScan(value = {"com.alipay.opscloud.change.exe.dal.mapper",
-        "com.alipay.opscloud.scheduler.dal.mapper",
-        "com.alipay.opscloud.defender.exe.dal.mapper",
-        "com.alipay.opscloud.common.id.sequence.dal.mapper",
-        "com.alipay.opscloud.smart.meta.dal.mapper",
-        "com.alipay.opscloud.smart.exe.dal.mapper"},
+@MapperScan(value = {
+        "com.alipay.altershield.change.exe.dal.mapper",
+     },
         sqlSessionFactoryRef = "sqlSessionFactory")
 public class AlterShieldExeDataSourceConfig {
     private static final Logger logger = Loggers.DEFAULT;

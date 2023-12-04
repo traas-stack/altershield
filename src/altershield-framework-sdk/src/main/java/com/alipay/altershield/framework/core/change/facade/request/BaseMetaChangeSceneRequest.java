@@ -38,18 +38,18 @@ import java.util.Map;
 public class BaseMetaChangeSceneRequest  {
 
     /**
-     * tldc租户，在一个云上是唯一标识
+     * 租户，在一个云上是唯一标识
      */
     @StringLength(max = 64)
     @NotNull
-    private String tldcTenantCode;
+    private String tenantCode;
 
     /**
      * 服务租户；多个租户用逗号隔开
      */
     @StringLength(max = 4096)
     @NotNull
-    private String serverTldcTenantCode;
+    private String serverTenantCode;
 
     /**
      * 变更场景名
@@ -112,39 +112,39 @@ public class BaseMetaChangeSceneRequest  {
      */
     private Map<String, List<String>> tags;
     /**
-     * Gets tldc tenant code.
+     * Gets tenant code.
      *
-     * @return the tldc tenant code
+     * @return the tenant code
      */
-    public String getTldcTenantCode() {
-        return tldcTenantCode;
+    public String getTenantCode() {
+        return tenantCode;
     }
 
     /**
-     * Sets tldc tenant code.
+     * Sets tenant code.
      *
-     * @param tldcTenantCode the tldc tenant code
+     * @param tenantCode the tenant code
      */
-    public void setTldcTenantCode(String tldcTenantCode) {
-        this.tldcTenantCode = tldcTenantCode;
+    public void setTenantCode(String tenantCode) {
+        this.tenantCode = tenantCode;
     }
 
     /**
-     * Gets server tldc tenant code.
+     * Gets server tenant code.
      *
-     * @return the server tldc tenant code
+     * @return the server tenant code
      */
-    public String getServerTldcTenantCode() {
-        return serverTldcTenantCode;
+    public String getServerTenantCode() {
+        return serverTenantCode;
     }
 
     /**
-     * Sets server tldc tenant code.
+     * Sets server tenant code.
      *
-     * @param serverTldcTenantCode the server tldc tenant code
+     * @param serverTenantCode the server tenant code
      */
-    public void setServerTldcTenantCode(String serverTldcTenantCode) {
-        this.serverTldcTenantCode = serverTldcTenantCode;
+    public void setServerTenantCode(String serverTenantCode) {
+        this.serverTenantCode = serverTenantCode;
     }
 
     /**

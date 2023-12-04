@@ -21,7 +21,7 @@ spring:
       minimum-idle: 5
       read-only: false
 log_level: INFO
-logging_path: ${user.home}/logs
+logging_path: /home/admin/logs
 logging:
   config : classpath:log4j2-spring.xml
 

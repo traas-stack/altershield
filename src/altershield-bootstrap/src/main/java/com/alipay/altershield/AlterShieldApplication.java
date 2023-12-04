@@ -50,6 +50,5 @@ public class AlterShieldApplication {
         LoggingListener loggingListener = new LoggingListener();
         app.addListeners(loggingListener);
         app.run(args);
-        app.run(args);
     }
 }

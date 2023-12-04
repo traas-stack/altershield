@@ -88,7 +88,7 @@ public class AlterShieldGroupServiceImpl implements AlterShieldGroupService, Ini
         if (StringUtils.isBlank(group)) {
             group = System.getProperty(envKey, DEFAULT_GROUP).toLowerCase();
         }
-        logger.info("init opscloud group:{}", group);
+        logger.info("init altershield group:{}", group);
 
     }
 }

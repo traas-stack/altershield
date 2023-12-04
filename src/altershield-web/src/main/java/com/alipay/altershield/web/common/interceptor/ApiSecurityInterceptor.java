@@ -44,6 +44,7 @@
 package com.alipay.altershield.web.common.interceptor;
 
 import com.alipay.altershield.change.meta.repository.MetaChangePlatformRepository;
+import com.alipay.altershield.common.constant.AlterShieldConstant;
 import com.alipay.altershield.common.openapi.OpenApiRequestThreadLocal;
 import com.alipay.altershield.framework.common.httpclient.HttpAlterShieldClient;
 import com.alipay.altershield.framework.common.util.SignUtil;
@@ -117,6 +118,9 @@ public class ApiSecurityInterceptor {
 
             content = getContent(request);
             boolean result = SignUtil.verifySign(t, content, signResult, token);
+            if (AlterShieldConstant.SKIP_OPEN_API_AUTH) {
+                result = true;
+            }
             if (!result) {
                 String msg = String.format("check authentication fail, platform=%s, signResult=%s, t =%d, content=%s", platform, signResult,
                         t,

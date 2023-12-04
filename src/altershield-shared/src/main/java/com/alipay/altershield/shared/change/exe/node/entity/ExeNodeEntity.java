@@ -267,7 +267,7 @@ public abstract class ExeNodeEntity extends AbstractExeTraceEntity {
      *
      * @mbg.generated
      */
-    private String tldcTenantCode;
+    private String tenantCode;
 
     /**
      * Database Column Remarks:

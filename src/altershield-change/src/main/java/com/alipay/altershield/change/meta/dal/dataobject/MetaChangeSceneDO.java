@@ -23,12 +23,50 @@
  */
 package com.alipay.altershield.change.meta.dal.dataobject;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * @author jinyalong
+ *
+ * @author xiangyue
  */
-public class MetaChangeSceneDO extends MetaBaseChangeSceneDO {
+public class MetaChangeSceneDO {
+    /**
+     * Database Column Remarks:
+     *   主键
+     *
+     *
+     * @mbg.generated
+     */
+    private String id;
+
+    /**
+     * Database Column Remarks:
+     *   创建时间
+     *
+     *
+     * @mbg.generated
+     */
+    private Date gmtCreate;
+
+    /**
+     * Database Column Remarks:
+     *   修改时间
+     *
+     *
+     * @mbg.generated
+     */
+    private Date gmtModified;
+
+    /**
+     * Database Column Remarks:
+     *   租户
+     *
+     *
+     * @mbg.generated
+     */
+    private String tenantCode;
 
     /**
      * Database Column Remarks:
@@ -41,6 +79,42 @@ public class MetaChangeSceneDO extends MetaBaseChangeSceneDO {
 
     /**
      * Database Column Remarks:
+     *   变更场景名字
+     *
+     *
+     * @mbg.generated
+     */
+    private String name;
+
+    /**
+     * Database Column Remarks:
+     *   场景key,一个场景的唯一标识
+     *
+     *
+     * @mbg.generated
+     */
+    private String changeSceneKey;
+
+    /**
+     * Database Column Remarks:
+     *   场景负责人，多个用逗号隔开
+     *
+     *
+     * @mbg.generated
+     */
+    private String owner;
+
+    /**
+     * Database Column Remarks:
+     *   场景代G；G0,G1,G2,G3,G4
+     *
+     *
+     * @mbg.generated
+     */
+    private String generation;
+
+    /**
+     * Database Column Remarks:
      *   风险等级
      *
      *
@@ -48,7 +122,14 @@ public class MetaChangeSceneDO extends MetaBaseChangeSceneDO {
      */
     private String riskInfo;
 
-
+    /**
+     * Database Column Remarks:
+     *   平台名字，altershield_meta_platform
+     *
+     *
+     * @mbg.generated
+     */
+    private String platformName;
 
     /**
      * Database Column Remarks:
@@ -97,6 +178,15 @@ public class MetaChangeSceneDO extends MetaBaseChangeSceneDO {
 
     /**
      * Database Column Remarks:
+     *   变更场景状态 0.暂存态 1.发布状态
+     *
+     *
+     * @mbg.generated
+     */
+    private Byte status;
+
+    /**
+     * Database Column Remarks:
      *   变更生效配置详情
      *
      *
@@ -124,13 +214,92 @@ public class MetaChangeSceneDO extends MetaBaseChangeSceneDO {
 
     private List<MetaChangeStepDO> changeSteps;
 
-
     public List<MetaChangeStepDO> getChangeSteps() {
         return changeSteps;
     }
 
     public void setChangeSteps(List<MetaChangeStepDO> changeSteps) {
         this.changeSteps = changeSteps;
+    }
+
+    /**
+     *
+     * @return the value of altershield_meta_change_scene.id
+     *
+     * @mbg.generated
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     *
+     * @param id the value for altershield_meta_change_scene.id
+     *
+     * @mbg.generated
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     *
+     * @return the value of altershield_meta_change_scene.gmt_create
+     *
+     * @mbg.generated
+     */
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    /**
+     *
+     * @param gmtCreate the value for altershield_meta_change_scene.gmt_create
+     *
+     * @mbg.generated
+     */
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    /**
+     *
+     * @return the value of altershield_meta_change_scene.gmt_modified
+     *
+     * @mbg.generated
+     */
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    /**
+     *
+     * @param gmtModified the value for altershield_meta_change_scene.gmt_modified
+     *
+     * @mbg.generated
+     */
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    /**
+     *
+     * @return the value of altershield_meta_change_scene.tenant_code
+     *
+     * @mbg.generated
+     */
+    public String getTenantCode() {
+        return tenantCode;
+    }
+
+    /**
+     *
+     * @param tenantCode the value for altershield_meta_change_scene.tenant_code
+     *
+     * @mbg.generated
+     */
+    public void setTenantCode(String tenantCode) {
+        this.tenantCode = tenantCode;
     }
 
     /**
@@ -153,6 +322,85 @@ public class MetaChangeSceneDO extends MetaBaseChangeSceneDO {
         this.serverTenantCode = serverTenantCode;
     }
 
+    /**
+     *
+     * @return the value of altershield_meta_change_scene.name
+     *
+     * @mbg.generated
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     *
+     * @param name the value for altershield_meta_change_scene.name
+     *
+     * @mbg.generated
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     *
+     * @return the value of altershield_meta_change_scene.change_scene_key
+     *
+     * @mbg.generated
+     */
+    public String getChangeSceneKey() {
+        return changeSceneKey;
+    }
+
+    /**
+     *
+     * @param changeSceneKey the value for altershield_meta_change_scene.change_scene_key
+     *
+     * @mbg.generated
+     */
+    public void setChangeSceneKey(String changeSceneKey) {
+        this.changeSceneKey = changeSceneKey;
+    }
+
+    /**
+     *
+     * @return the value of altershield_meta_change_scene.owner
+     *
+     * @mbg.generated
+     */
+    public String getOwner() {
+        return owner;
+    }
+
+    /**
+     *
+     * @param owner the value for altershield_meta_change_scene.owner
+     *
+     * @mbg.generated
+     */
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    /**
+     *
+     * @return the value of altershield_meta_change_scene.generation
+     *
+     * @mbg.generated
+     */
+    public String getGeneration() {
+        return generation;
+    }
+
+    /**
+     *
+     * @param generation the value for altershield_meta_change_scene.generation
+     *
+     * @mbg.generated
+     */
+    public void setGeneration(String generation) {
+        this.generation = generation;
+    }
 
     /**
      *
@@ -174,6 +422,25 @@ public class MetaChangeSceneDO extends MetaBaseChangeSceneDO {
         this.riskInfo = riskInfo;
     }
 
+    /**
+     *
+     * @return the value of altershield_meta_change_scene.platform_name
+     *
+     * @mbg.generated
+     */
+    public String getPlatformName() {
+        return platformName;
+    }
+
+    /**
+     *
+     * @param platformName the value for altershield_meta_change_scene.platform_name
+     *
+     * @mbg.generated
+     */
+    public void setPlatformName(String platformName) {
+        this.platformName = platformName;
+    }
 
     /**
      *
@@ -275,7 +542,25 @@ public class MetaChangeSceneDO extends MetaBaseChangeSceneDO {
         this.changeTargetType = changeTargetType;
     }
 
+    /**
+     *
+     * @return the value of altershield_meta_change_scene.status
+     *
+     * @mbg.generated
+     */
+    public Byte getStatus() {
+        return status;
+    }
 
+    /**
+     *
+     * @param status the value for altershield_meta_change_scene.status
+     *
+     * @mbg.generated
+     */
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
 
     /**
      *
@@ -338,20 +623,38 @@ public class MetaChangeSceneDO extends MetaBaseChangeSceneDO {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (!(o instanceof MetaChangeSceneDO)) { return false; }
+        if (!super.equals(o)) { return false; }
+        MetaChangeSceneDO that = (MetaChangeSceneDO) o;
+        return Objects.equals(riskInfo, that.riskInfo) &&
+                Objects.equals(changeEffectiveConfigJsonRef, that.changeEffectiveConfigJsonRef) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(callbackConfigJsonRef, that.callbackConfigJsonRef) &&
+                Objects.equals(scope, that.scope) &&
+                Objects.equals(tagsJsonRef, that.tagsJsonRef) &&
+                Objects.equals(serverTenantCode, that.serverTenantCode) &&
+                Objects.equals(changeTargetType, that.changeTargetType) &&
+                Objects.equals(effectiveTargetType, that.effectiveTargetType) &&
+                Objects.equals(changeContentType, that.changeContentType) &&
+                Objects.equals(changeSteps, that.changeSteps);
+    }
+
+    @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("MetaChangeSceneDO{");
-        sb.append("serverTenantCode='").append(serverTenantCode).append('\'');
-        sb.append(", riskInfo='").append(riskInfo).append('\'');
-        sb.append(", scope='").append(scope).append('\'');
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", effectiveTargetType='").append(effectiveTargetType).append('\'');
-        sb.append(", changeContentType='").append(changeContentType).append('\'');
-        sb.append(", changeTargetType='").append(changeTargetType).append('\'');
-        sb.append(", changeEffectiveConfigJsonRef='").append(changeEffectiveConfigJsonRef).append('\'');
-        sb.append(", callbackConfigJsonRef='").append(callbackConfigJsonRef).append('\'');
-        sb.append(", tagsJsonRef='").append(tagsJsonRef).append('\'');
-        sb.append('}');
-        sb.append(super.toString());
-        return sb.toString();
+        return "MetaChangeSceneDO{" +
+                "riskInfo='" + riskInfo + '\'' +
+                ", changeEffectiveConfigJsonRef='" + changeEffectiveConfigJsonRef + '\'' +
+                ", description='" + description + '\'' +
+                ", callbackConfigJsonRef='" + callbackConfigJsonRef + '\'' +
+                ", scope='" + scope + '\'' +
+                ", tagsJsonRef='" + tagsJsonRef + '\'' +
+                ", serverTntCode='" + serverTenantCode + '\'' +
+                ", changeTargetType='" + changeTargetType + '\'' +
+                ", effectiveTargetType='" + effectiveTargetType + '\'' +
+                ", changeContentType='" + changeContentType + '\'' +
+                ", changeSteps=" + changeSteps +
+                "} " + super.toString();
     }
 }

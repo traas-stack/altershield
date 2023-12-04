@@ -62,7 +62,7 @@ public class AlterShieldConstant {
     /**
      * Switch the scheduler's pause state
      */
-    public static volatile boolean SWITCH_SCHEDULER_PAUSE = true;
+    public static volatile boolean SWITCH_SCHEDULER_PAUSE = false;
     /**
      * Change order details page URL
      */
@@ -175,5 +175,6 @@ public class AlterShieldConstant {
      */
     public static volatile String ALTER_SHIELD_DOCUMENT_G2 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#Ebzy6";
 
+    public static volatile Boolean SKIP_OPEN_API_AUTH = true;
 
 }
