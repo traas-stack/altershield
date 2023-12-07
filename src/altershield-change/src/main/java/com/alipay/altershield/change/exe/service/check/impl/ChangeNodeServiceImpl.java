@@ -97,7 +97,7 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
     private ExeChangeNodeRepository exeChangeNodeRepository;
 
     @Autowired
-    private ChangeStartNotifyRequestConvert opsCloudChangeStartNotifyRequestConvert;
+    private ChangeStartNotifyRequestConvert changeStartNotifyRequestConvert;
     @Autowired
     private CoordCounterService coordCounterService;
 
@@ -202,8 +202,8 @@ public class ChangeNodeServiceImpl implements ChangeNodeService, ExeChangeNodeSe
         //自动生成trace
         model.setDispatchGroup(alterShieldGroupService.getGroup());
         model.setStatus(ExeNodeStateEnum.PRE_AOP_SUBMIT);
-        ExeNodeEntity exeNodeEntity = opsCloudChangeStartNotifyRequestConvert.createExeNodeEntity(model.getChangeStepType());
-        opsCloudChangeStartNotifyRequestConvert.convert(model, exeNodeEntity);
+        ExeNodeEntity exeNodeEntity = changeStartNotifyRequestConvert.createExeNodeEntity(model.getChangeStepType());
+        changeStartNotifyRequestConvert.convert(model, exeNodeEntity);
         exeNodeEntity.setExeNodeCheckInfo(new ExeNodeCheckInfo(System.currentTimeMillis()));
         exeNodeEntity.setEmergency(model.isEmergency());
 

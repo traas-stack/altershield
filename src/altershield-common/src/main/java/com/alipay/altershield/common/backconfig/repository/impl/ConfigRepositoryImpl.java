@@ -64,7 +64,7 @@ public class ConfigRepositoryImpl implements ConfigRepository {
     @Autowired
     private MetaConfigMapper metaConfigMapper;
     @Override
-    public String create(ConfigEntity entity) {
+    public int create(ConfigEntity entity) {
         return metaConfigMapper.insert(ConfigConverter.INSTANCE.convertToDataObject(entity));
     }
 

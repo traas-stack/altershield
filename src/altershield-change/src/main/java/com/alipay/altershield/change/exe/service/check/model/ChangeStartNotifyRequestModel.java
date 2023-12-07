@@ -54,7 +54,7 @@ import com.alipay.altershield.framework.core.change.facade.request.ChangeStartNo
  */
 public class ChangeStartNotifyRequestModel {
 
-    private ChangeStartNotifyRequest opsCloudChangeStartNotifyRequest;
+    private ChangeStartNotifyRequest changeStartNotifyRequest;
 
     private MetaChangeStepEntity metaChangeStepEntity;
 
@@ -67,7 +67,7 @@ public class ChangeStartNotifyRequestModel {
     public ChangeStartNotifyRequestModel(
             ChangeStartNotifyRequest opsCloudChangeStartNotifyRequest,
             MetaChangeStepEntity metaChangeStepEntity) {
-        this.opsCloudChangeStartNotifyRequest = opsCloudChangeStartNotifyRequest;
+        this.changeStartNotifyRequest = opsCloudChangeStartNotifyRequest;
         this.metaChangeStepEntity = metaChangeStepEntity;
     }
 
@@ -77,11 +77,11 @@ public class ChangeStartNotifyRequestModel {
      * @return the change scene key
      */
     public String getChangeSceneKey() {
-        return opsCloudChangeStartNotifyRequest.getChangeSceneKey();
+        return changeStartNotifyRequest.getChangeSceneKey();
     }
 
     private String getPlatform() {
-        return opsCloudChangeStartNotifyRequest.getPlatform();
+        return changeStartNotifyRequest.getPlatform();
     }
 
     /**
@@ -90,7 +90,7 @@ public class ChangeStartNotifyRequestModel {
      * @return the biz exec order id
      */
     public String getBizExecOrderId() {
-        return opsCloudChangeStartNotifyRequest.getBizExecOrderId();
+        return changeStartNotifyRequest.getBizExecOrderId();
     }
 
     /**
@@ -98,8 +98,8 @@ public class ChangeStartNotifyRequestModel {
      *
      * @return the ops cloud change start notify request
      */
-    public ChangeStartNotifyRequest getOpsCloudChangeStartNotifyRequest() {
-        return opsCloudChangeStartNotifyRequest;
+    public ChangeStartNotifyRequest getChangeStartNotifyRequest() {
+        return changeStartNotifyRequest;
     }
 
     /**

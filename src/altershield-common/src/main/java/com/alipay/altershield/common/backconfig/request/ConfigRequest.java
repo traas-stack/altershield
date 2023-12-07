@@ -21,25 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.alipay.altershield.shared.change.exe.node.entity;
+package com.alipay.altershield.common.backconfig.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-/**
- * 执行结点context
- * 用于存储当前变更结点的数据
- * @author yuanji
- * @version : ExeNodeContext.java, v 0.1 2022年03月28日 7:46 下午 yuanji Exp $
- */
 @Data
-public class ExeNodeContext {
-
-    private boolean spiSuccess = false;
-
+@AllArgsConstructor
+@NoArgsConstructor
+public class ConfigRequest {
+    /** 配置名称 */
+    private String name;
+    /** 配置值 */
+    private String value;
+    /** 描述 */
+    private String cfgDesc;
     /**
-     * 当检查失败的时候是否返回规则列表
+     * 操作人
      */
-    private boolean returnRuleWhenCheckFail = false;
-
+    private String operator;
 
 }

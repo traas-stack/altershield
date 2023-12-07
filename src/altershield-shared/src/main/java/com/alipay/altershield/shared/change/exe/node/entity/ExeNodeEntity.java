@@ -331,7 +331,7 @@ public abstract class ExeNodeEntity extends AbstractExeTraceEntity {
         {
             setContextRef(new ExeNodeContext());
         }
-        getContextRef().setSpiSucc(tag);
+        getContextRef().setSpiSuccess(tag);
     }
 
 

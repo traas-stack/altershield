@@ -28,6 +28,7 @@
 package com.alipay.altershield.common.backconfig.service;
 
 
+import com.alipay.altershield.common.backconfig.request.ConfigRequest;
 import com.alipay.altershield.common.backconfig.request.QueryConfigRequest;
 import com.alipay.altershield.common.backconfig.result.QueryConfigResult;
 import com.alipay.altershield.framework.core.change.facade.result.AlterShieldPageResult;
@@ -49,4 +50,18 @@ public interface ConfigService {
      * @return 配置列表
      */
     AlterShieldPageResult<List<QueryConfigResult>> queryConfigList(QueryConfigRequest request);
+
+    /**
+     * Modify config.
+     *
+     * @param request the request
+     */
+    void modifyConfig(ConfigRequest request);
+
+    /**
+     * Save config.
+     *
+     * @param request the request
+     */
+    void saveConfig(ConfigRequest request);
 }

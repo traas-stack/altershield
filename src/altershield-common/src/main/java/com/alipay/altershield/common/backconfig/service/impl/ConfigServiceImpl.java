@@ -29,6 +29,7 @@ package com.alipay.altershield.common.backconfig.service.impl;
 
 import com.alipay.altershield.common.backconfig.entity.ConfigEntity;
 import com.alipay.altershield.common.backconfig.repository.ConfigRepository;
+import com.alipay.altershield.common.backconfig.request.ConfigRequest;
 import com.alipay.altershield.common.backconfig.request.QueryConfigRequest;
 import com.alipay.altershield.common.backconfig.result.QueryConfigResult;
 import com.alipay.altershield.common.backconfig.service.ConfigService;
@@ -75,6 +76,25 @@ public class ConfigServiceImpl implements ConfigService {
         });
     }
 
+    @Override
+    public void modifyConfig(ConfigRequest request) {
+        configRepository.save(buildConfigEntity(request));
+    }
+
+    @Override
+    public void saveConfig(ConfigRequest request) {
+        configRepository.create(buildConfigEntity(request));
+    }
+
+
+    private ConfigEntity buildConfigEntity(ConfigRequest request) {
+        ConfigEntity configEntity = new ConfigEntity();
+        configEntity.setName(request.getName());
+        configEntity.setValue(request.getValue());
+        configEntity.setCfgDesc(request.getCfgDesc());
+        return configEntity;
+    }
+
     /**
      * 构建配置项查询结果
      *
@@ -85,7 +105,7 @@ public class ConfigServiceImpl implements ConfigService {
         QueryConfigResult result = new QueryConfigResult();
         result.setName(config.getName());
         result.setValue(config.getValue());
-        result.setDesc(config.getDesc());
+        result.setDesc(config.getCfgDesc());
 
         return result;
     }

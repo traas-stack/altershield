@@ -77,7 +77,7 @@ public class ConfigEntity implements Serializable {
     /** 配置值 */
     private String value;
     /** 描述 */
-    private String desc;
+    private String cfgDesc;
 
 
 }

@@ -80,7 +80,7 @@ public class ExeChangeAsyncCheckServiceImpl implements ExeChangeAsyncCheckServic
     public AlterShieldResult<ChangeNotifySubmitResult> startPreCheck(ChangeStartNotifyRequestModel requestModel) {
         return ServiceProcessTemplate.wrapTryCatch(() ->
                 transactionTemplate.execute(status -> {
-                    ChangeStartNotifyRequest request = requestModel.getOpsCloudChangeStartNotifyRequest();
+                    ChangeStartNotifyRequest request = requestModel.getChangeStartNotifyRequest();
                     MetaChangeSceneEntity metaChangeSceneEntity = metaChangeSceneRepository.getChangeSceneByChangeSceneKey(
                             request.getChangeSceneKey());
                     if (metaChangeSceneEntity == null) {
@@ -106,7 +106,7 @@ public class ExeChangeAsyncCheckServiceImpl implements ExeChangeAsyncCheckServic
                                         MetaChangeSceneEntity metaChangeSceneEntity) {
         String nodeId = idGenerator.generateIdByRelatedId(IdBizCodeEnum.OPSCLD_EXE_NODE, request.getTrace().getTraceId());
         ExeNodeContext context = new ExeNodeContext();
-        context.setReturnRuleWhenCheckFail(requestModel.getOpsCloudChangeStartNotifyRequest().isReturnRuleWhenCheckFail());
+        context.setReturnRuleWhenCheckFail(requestModel.getChangeStartNotifyRequest().isReturnRuleWhenCheckFail());
         ChangeNodeCreateModel model = new ChangeNodeCreateModel(nodeId, cloudId, exeChangeOrderEntity.getOrderId(),
                 requestModel.getMetaChangeStepEntity(), context, request, metaChangeSceneEntity,
                 exeChangeOrderEntity.getChangeScenarioCode());
