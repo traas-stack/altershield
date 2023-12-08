@@ -112,8 +112,8 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
                 }).collect(Collectors.toList());
 
         // 4、Determine whether there are rules in blocking status that have not been ignored, and if so, block them.
-        List<ExeDefenderDetectEntity> blockRule = detectEntities.stream().filter(e -> e.isBlocked() && !e.isIgnored()).collect(Collectors.toList());
-        if (!CollectionUtils.isEmpty(blockRule)) {
+        List<ExeDefenderDetectEntity> failRules = detectEntities.stream().filter(e -> e.getStatus().equals(DefenderStatusEnum.FAIL) && !e.isIgnored()).collect(Collectors.toList());
+        if (!CollectionUtils.isEmpty(failRules)) {
             // Publish detection failure event
             publishFailEvent(changeOrderId, nodeId, detectGroupId, stage, changeSceneKey, changeStepType);
             // Update node status to failed
@@ -164,8 +164,8 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
                 .collect(Collectors.toList());
 
         // 8、If the existing blocking field is true and is not ignored, the blocking is issued.
-        blockRule = detectEntities.stream().filter(e -> e.isBlocked() && !e.isIgnored()).collect(Collectors.toList());
-        if (!CollectionUtils.isEmpty(blockRule)) {
+        failRules = detectEntities.stream().filter(e -> e.isBlocked() && !e.isIgnored()).collect(Collectors.toList());
+        if (!CollectionUtils.isEmpty(failRules)) {
             // Publish detection failure event
             publishFailEvent(changeOrderId, nodeId, detectGroupId, stage, changeSceneKey, changeStepType);
             // Update node status to failed
@@ -174,7 +174,7 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
         }
 
         // 9、If there is a rule whose status is exception/timeout and is not ignored and the exception handling logic is blocking, then block is issued.
-        blockRule = detectEntities.stream().filter(e -> {
+        failRules = detectEntities.stream().filter(e -> {
             DefenderStatusEnum status = e.getStatus();
             MetaDefenderRuleEntity rule = ruleMaps.get(e.getRuleId());
             if (Objects.isNull(rule)) {
@@ -183,7 +183,7 @@ public class DefenderTaskCheckerImpl extends AbstractDefenderService implements 
             return (DefenderStatusEnum.EXCEPTION.equals(status) || DefenderStatusEnum.TIMEOUT.equals(status))
                     && ExceptionStrategyEnum.BLOCK.equals(rule.getExceptionStrategy());
         }).collect(Collectors.toList());
-        if (!CollectionUtils.isEmpty(blockRule)) {
+        if (!CollectionUtils.isEmpty(failRules)) {
             publishFailEvent(changeOrderId, nodeId, detectGroupId, stage, changeSceneKey, changeStepType);
             // Update node status to failed
             updateNodeStatusFinishFail(nodeId, stage);

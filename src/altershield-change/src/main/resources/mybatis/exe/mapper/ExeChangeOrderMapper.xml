@@ -187,7 +187,7 @@
       change_apps_ref, change_content_ref,
       parent_order_info_ref, change_target_ref,
       rst_ref)
-    values (#{orderId,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+    values (#{orderId,jdbcType=VARCHAR}, now(),now(),
       #{bizExecOrderId,jdbcType=VARCHAR}, #{changeSceneKey,jdbcType=VARCHAR}, #{platform,jdbcType=VARCHAR},
       #{traceId,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{coord,jdbcType=VARCHAR},
       #{changeTitle,jdbcType=VARCHAR}, #{changeUrl,jdbcType=VARCHAR}, #{changeScenarioCode,jdbcType=VARCHAR},

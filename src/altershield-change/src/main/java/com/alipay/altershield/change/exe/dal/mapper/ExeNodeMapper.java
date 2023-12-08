@@ -117,15 +117,6 @@ public interface ExeNodeMapper {
     int updateByParam(@Param("record") ExeNodeDO record, @Param("exeNodeParam") ExeNodeParam exeNodeParam);
 
     /**
-     * 根据主键选择性更新
-     * @param record
-     * @return
-     *
-     * @mbg.generated
-     */
-    int updateByPrimaryKeySelective(ExeNodeDO record);
-
-    /**
      * 根据主键更新，不更新长文本字段
      * @param record
      * @return

@@ -62,7 +62,7 @@ public class AlterShieldConstant {
     /**
      * Switch the scheduler's pause state
      */
-    public static volatile boolean SWITCH_SCHEDULER_PAUSE = true;
+    public static volatile boolean SWITCH_SCHEDULER_PAUSE = false;
     /**
      * Change order details page URL
      */
@@ -154,8 +154,13 @@ public class AlterShieldConstant {
      */
     public static volatile String DEFENDER_INNER_PLUGINS = "[\n"
             + "\t{\n"
-            + "\t\t\"pluginKey\": \"xxx\",\n"
-            + "\t\t\"mainClass\": \"xxx\",\n"
+            + "\t\t\"pluginKey\": \"defender_assert_false_plugin\",\n"
+            + "\t\t\"mainClass\": \"com.alipay.altershield.shared.pluginmarket.innerplugin.defender.AssertFalsePlugin\",\n"
+            + "\t\t\"invokeType\": \"sync\"\n"
+            + "\t}\n,"
+            + "\t{\n"
+            + "\t\t\"pluginKey\": \"defender_assert_true_plugin\",\n"
+            + "\t\t\"mainClass\": \"com.alipay.altershield.shared.pluginmarket.innerplugin.defender.AssertTruePlugin\",\n"
             + "\t\t\"invokeType\": \"sync\"\n"
             + "\t}\n"
             + "]";

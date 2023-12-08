@@ -31,6 +31,7 @@ import com.alipay.altershield.common.constant.AlterShieldConstant;
 import com.alipay.altershield.common.logger.Loggers;
 import com.alipay.altershield.common.util.DateUtil;
 import com.alipay.altershield.defender.framework.AbstractDefenderService;
+import com.alipay.altershield.defender.framework.enums.ExceptionStrategyEnum;
 import com.alipay.altershield.defender.framework.meta.entity.MetaDefenderRuleEntity;
 import com.alipay.altershield.framework.common.util.exception.AlterShieldInternalException;
 import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;

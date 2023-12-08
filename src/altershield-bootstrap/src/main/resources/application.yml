@@ -20,7 +20,7 @@ spring:
       maximum-pool-size: 10
       minimum-idle: 5
       read-only: false
-log_level: INFO
+log_level: DEBUG
 logging_path: /home/admin/logs
 logging:
   config : classpath:log4j2-spring.xml

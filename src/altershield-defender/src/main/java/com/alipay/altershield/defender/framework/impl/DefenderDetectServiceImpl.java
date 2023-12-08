@@ -238,6 +238,7 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
         }
 
         try {
+            String detectGroupId = idGenerator.generateIdByRelatedId(IdBizCodeEnum.OPSCLD_DEFENDER_DETECT_GROUP_ID, request.getNodeId());
             // 2.0 Get the final list of defense rules to be executed
             Set<MetaDefenderRuleEntity> matchedRules = matchDefenseRule(request);
             if (CollectionUtils.isEmpty(matchedRules)) {
@@ -249,7 +250,6 @@ public class DefenderDetectServiceImpl extends AbstractDefenderService implement
             // 3.0 Inserting detection records and scheduling events
             List<ExeDefenderDetectEntity> toAddDetects = new ArrayList<>(matchedRules.size());
             // 3.1 A batch of detection corresponds to a detection group id
-            String detectGroupId = idGenerator.generateIdByRelatedId(IdBizCodeEnum.OPSCLD_DEFENDER_DETECT_GROUP_ID, request.getNodeId());
             for (MetaDefenderRuleEntity rule : matchedRules) {
                 // 3.2 Build defense detection record entity
                 ExeDefenderDetectEntity detect = createDetectEntity(request.getChangeOrderId(), request.getNodeId(),

@@ -11,9 +11,9 @@ altershield:
 
 spring:
   datasource:
-    jdbc-url: jdbc:mysql://rm-bp121clo2mdfhem90ho.mysql.rds.aliyuncs.com:3306/altershield
-    username: altershield
-    password: OpsCloud@123
+    jdbc-url: jdbc:mysql://11.166.87.105:3306/altershield
+    username: root@cafe1a#BJ
+    password: AntCloud2021..
 
 logging:
   config : classpath:log4j2-spring-dev.xml

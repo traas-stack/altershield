@@ -32,6 +32,7 @@ import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
 import com.alipay.altershield.framework.core.risk.model.enums.FeedbackStatusEnum;
 import com.alipay.altershield.shared.common.largefield.ref.KvRef;
 import com.alipay.altershield.shared.common.largefield.ref.KvRefCodec;
+import com.alipay.altershield.shared.defender.enums.DefenderRuleStatusEnum;
 import com.alipay.altershield.spi.defender.model.enums.DefenderStatusEnum;
 
 import java.util.Date;
@@ -158,6 +159,11 @@ public class ExeDefenderDetectEntity extends DefenderBaseEntity {
      * The feedback person of the defense execution record
      */
     private String feedbackOperator;
+
+    /**
+     *规则状态*
+     */
+    private DefenderRuleStatusEnum ruleStatus;
 
     /**
      * Is it allowed to ignore
@@ -599,5 +605,13 @@ public class ExeDefenderDetectEntity extends DefenderBaseEntity {
      */
     public void setAllowIgnore(boolean allowIgnore) {
         this.allowIgnore = allowIgnore;
+    }
+
+    public DefenderRuleStatusEnum getRuleStatus() {
+        return ruleStatus;
+    }
+
+    public void setRuleStatus(DefenderRuleStatusEnum ruleStatus) {
+        this.ruleStatus = ruleStatus;
     }
 }

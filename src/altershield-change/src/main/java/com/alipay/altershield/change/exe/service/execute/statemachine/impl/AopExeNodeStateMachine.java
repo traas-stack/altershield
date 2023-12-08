@@ -81,6 +81,12 @@ public abstract class AopExeNodeStateMachine extends CheckFinishNodeStateMachine
 
             checkCallback(metaChangeStepEntity, defenseStageEnum, entity);
         } else {
+            // 1、检查Node状态是否结束，如果结束直接回调
+            if (entity.getStatus().isFinal()) {
+                AlterShieldLoggerManager.log("info", logger, entity.getNodeExeId(), "node检查结束: ", entity.getStatus().getStatus());
+                checkCallback(metaChangeStepEntity, defenseStageEnum, entity);
+                return;
+            }
             //没有超时就继续轮训
             sendPoolingEvent(defenseStageEnum, entity);
         }
