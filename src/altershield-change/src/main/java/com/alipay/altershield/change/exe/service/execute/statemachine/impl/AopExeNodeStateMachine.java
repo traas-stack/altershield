@@ -144,7 +144,12 @@ public abstract class AopExeNodeStateMachine extends CheckFinishNodeStateMachine
     @Override
     public void setNodeDefenseFinish(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum, Boolean checkPaas) {
         ExeNodeCheckInfo exeNodeCheckInfo = entity.getExeNodeCheckInfo();
-        exeNodeCheckInfo.setPreCheckPass(checkPaas);
+        if (defenseStageEnum.equals(DefenseStageEnum.POST)) {
+            exeNodeCheckInfo.setPostCheckPass(checkPaas);
+        } else {
+            exeNodeCheckInfo.setPreCheckPass(checkPaas);
+        }
+
         exeNodeCheckInfo.markFinish(defenseStageEnum);
         if(updateStatus(defenseStageEnum))
         {
