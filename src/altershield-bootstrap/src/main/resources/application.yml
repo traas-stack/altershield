@@ -10,7 +10,7 @@ spring:
     active: local
   #dataSource 数据源配置
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 10000
       validation-timeout: 3000
@@ -20,8 +20,8 @@ spring:
       maximum-pool-size: 10
       minimum-idle: 5
       read-only: false
-log_level: INFO
-logging_path: ${user.home}/logs
+log_level: DEBUG
+logging_path: /home/admin/logs
 logging:
   config : classpath:log4j2-spring.xml
 

@@ -147,6 +147,6 @@ public abstract class CheckFinishNodeStateMachine extends ExeNodeStateMachine {
      */
     protected boolean checkFinishSuccess()
     {
-        return false;
+        return true;
     }
 }

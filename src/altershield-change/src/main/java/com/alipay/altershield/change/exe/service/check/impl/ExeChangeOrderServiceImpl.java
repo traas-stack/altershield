@@ -88,7 +88,7 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
     private ExeChangeOrderRequestConverter exeChangeOrderRequestConverter;
 
     @Autowired
-    private AlterShieldGroupService opsCloudGroupService;
+    private AlterShieldGroupService alterShieldGroupService;
 
     @Value("${altershield.framework.server.common.cloudId}")
     private String cloudId;
@@ -166,7 +166,7 @@ public class ExeChangeOrderServiceImpl implements ExeChangeOrderService, ExeChan
         entity.setUid(uid);
         entity.setOrderId(orderId);
         entity.setFromCloudId(fromCloudId);
-        entity.setDispatchGroup(opsCloudGroupService.getGroup());
+        entity.setDispatchGroup(alterShieldGroupService.getGroup());
         entity.setTenantCode(request.getTenantCode());
         return entity;
     }

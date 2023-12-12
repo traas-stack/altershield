@@ -39,7 +39,7 @@ public interface MetaConfigMapper {
      * @param metaConfigDO the meta config do
      * @return the string
      */
-    public String insert(MetaConfigDO metaConfigDO);
+    public int insert(MetaConfigDO metaConfigDO);
 
 
     /**

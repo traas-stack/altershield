@@ -59,7 +59,7 @@ public interface ConfigRepository {
      *
      * @param entity
      */
-    String create(ConfigEntity entity);
+    int create(ConfigEntity entity);
 
     /**
      *

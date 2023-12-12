@@ -33,6 +33,7 @@ import com.alipay.altershield.defender.framework.model.AbstractDefenderEntityCon
 import com.alipay.altershield.framework.core.risk.model.enums.DefenseStageEnum;
 import com.alipay.altershield.framework.core.risk.model.enums.FeedbackStatusEnum;
 import com.alipay.altershield.shared.defender.entity.ExeDefenderDetectEntity;
+import com.alipay.altershield.shared.defender.enums.DefenderRuleStatusEnum;
 import com.alipay.altershield.spi.defender.model.enums.DefenderStatusEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -94,6 +95,7 @@ public class ExeDefenderDetectConvertor extends AbstractDefenderEntityConvertor 
         if (StringUtils.isNotBlank(modelDO.getStage())) {
             model.setStage(DefenseStageEnum.getByStage(modelDO.getStage()));
         }
+        model.setRuleStatus(DefenderRuleStatusEnum.getByStatus(modelDO.getRuleStatus()));
 
         model.setAllowIgnore("Y".equalsIgnoreCase(modelDO.getAllowIgnore()));
         return model;
@@ -145,6 +147,7 @@ public class ExeDefenderDetectConvertor extends AbstractDefenderEntityConvertor 
         }
         doModel.setUid(IdUtil.getUid(model.getNodeId()));
         doModel.setAllowIgnore(model.isAllowIgnore() ? "Y" : "N");
+        doModel.setRuleStatus(model.getRuleStatus().getStatus());
 
         return doModel;
     }

@@ -154,8 +154,13 @@ public class AlterShieldConstant {
      */
     public static volatile String DEFENDER_INNER_PLUGINS = "[\n"
             + "\t{\n"
-            + "\t\t\"pluginKey\": \"xxx\",\n"
-            + "\t\t\"mainClass\": \"xxx\",\n"
+            + "\t\t\"pluginKey\": \"defender_assert_false_plugin\",\n"
+            + "\t\t\"mainClass\": \"com.alipay.altershield.shared.pluginmarket.innerplugin.defender.AssertFalsePlugin\",\n"
+            + "\t\t\"invokeType\": \"sync\"\n"
+            + "\t}\n,"
+            + "\t{\n"
+            + "\t\t\"pluginKey\": \"defender_assert_true_plugin\",\n"
+            + "\t\t\"mainClass\": \"com.alipay.altershield.shared.pluginmarket.innerplugin.defender.AssertTruePlugin\",\n"
             + "\t\t\"invokeType\": \"sync\"\n"
             + "\t}\n"
             + "]";
@@ -175,5 +180,6 @@ public class AlterShieldConstant {
      */
     public static volatile String ALTER_SHIELD_DOCUMENT_G2 = "https://yuque.antfin-inc.com/opscloud/bt914r/dgcd8z#Ebzy6";
 
+    public static volatile Boolean SKIP_OPEN_API_AUTH = true;
 
 }

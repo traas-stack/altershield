@@ -81,6 +81,12 @@ public abstract class AopExeNodeStateMachine extends CheckFinishNodeStateMachine
 
             checkCallback(metaChangeStepEntity, defenseStageEnum, entity);
         } else {
+            // 1、检查Node状态是否结束，如果结束直接回调
+            if (entity.getStatus().isFinal()) {
+                AlterShieldLoggerManager.log("info", logger, entity.getNodeExeId(), "node检查结束: ", entity.getStatus().getStatus());
+                checkCallback(metaChangeStepEntity, defenseStageEnum, entity);
+                return;
+            }
             //没有超时就继续轮训
             sendPoolingEvent(defenseStageEnum, entity);
         }
@@ -138,7 +144,12 @@ public abstract class AopExeNodeStateMachine extends CheckFinishNodeStateMachine
     @Override
     public void setNodeDefenseFinish(ExeNodeEntity entity, DefenseStageEnum defenseStageEnum, Boolean checkPaas) {
         ExeNodeCheckInfo exeNodeCheckInfo = entity.getExeNodeCheckInfo();
-        exeNodeCheckInfo.setPreCheckPass(checkPaas);
+        if (defenseStageEnum.equals(DefenseStageEnum.POST)) {
+            exeNodeCheckInfo.setPostCheckPass(checkPaas);
+        } else {
+            exeNodeCheckInfo.setPreCheckPass(checkPaas);
+        }
+
         exeNodeCheckInfo.markFinish(defenseStageEnum);
         if(updateStatus(defenseStageEnum))
         {

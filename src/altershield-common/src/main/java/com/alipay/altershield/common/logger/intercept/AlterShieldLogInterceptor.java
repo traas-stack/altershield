@@ -43,11 +43,8 @@
  */
 package com.alipay.altershield.common.logger.intercept;
 
-import com.alibaba.common.lang.diagnostic.Profiler;
-import com.alipay.altershield.common.logger.Loggers;
 import com.alipay.altershield.common.intercept.DefaultSensitiveContentHandler;
 import com.alipay.altershield.common.intercept.SensitiveContentHandler;
-import com.alipay.altershield.common.constant.AlterShieldConstant;
 import com.alipay.altershield.common.thread.ExecutionThreadLocal;
 import com.alipay.altershield.common.util.ConstantsUtil;
 import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
@@ -99,17 +96,18 @@ public class AlterShieldLogInterceptor implements InitializingBean {
         }
         MethodSignature methodSignature = (MethodSignature) point.getSignature();
         AlterShieldLoggerManager.log("debug",LOGGER, "start intercept log invoke", methodSignature);
-        final String key =  point.getTarget().getClass().getSimpleName() + "." + point.getSignature().getName();
-        boolean resetFlag = false;
-        if(Profiler.getEntry()  == null)
-        {
-            Profiler.start(key);
-            resetFlag = true;
-        }
-        else
-        {
-            Profiler.enter(key);
-        }
+//        TODO 性能分析
+//        final String key =  point.getTarget().getClass().getSimpleName() + "." + point.getSignature().getName();
+//        boolean resetFlag = false;
+//        if(Profiler.getEntry()  == null)
+//        {
+//            Profiler.start(key);
+//            resetFlag = true;
+//        }
+//        else
+//        {
+//            Profiler.enter(key);
+//        }
 
 
         // 准备trace等信息到ExecutionThreadLocal全局可用。
@@ -158,21 +156,21 @@ public class AlterShieldLogInterceptor implements InitializingBean {
         } finally {
             // 清空线程缓存
             ExecutionThreadLocal.set(oldThreadLocalObj);
-            Profiler.release();
-            if (resetFlag) {
-                try {
-                        final Long duration = Profiler.getDuration();
-                        if (duration > AlterShieldConstant.PROFILER_THRESHOLD) {
-                            final String detail = Profiler.dump("Detail: ", "           ");
-                            String log = String.format("调用服务：%s的方法%s耗时：%dms，超过预期\n%s\n",new Object[] {
-                                    point.getTarget().getClass().getSimpleName(),
-                                    point.getSignature().getName(), duration, detail});
-                           AlterShieldLoggerManager.log("warn", Loggers.SERVICE_PROFILER, log);
-                        }
-                } finally {
-                    Profiler.reset();
-                }
-            }
+//            Profiler.release();
+//            if (resetFlag) {
+//                try {
+//                        final Long duration = Profiler.getDuration();
+//                        if (duration > AlterShieldConstant.PROFILER_THRESHOLD) {
+//                            final String detail = Profiler.dump("Detail: ", "           ");
+//                            String log = String.format("调用服务：%s的方法%s耗时：%dms，超过预期\n%s\n",new Object[] {
+//                                    point.getTarget().getClass().getSimpleName(),
+//                                    point.getSignature().getName(), duration, detail});
+//                           AlterShieldLoggerManager.log("warn", Loggers.SERVICE_PROFILER, log);
+//                        }
+//                } finally {
+//                    Profiler.reset();
+//                }
+//            }
 
         }
         AlterShieldLoggerManager.log("debug",LOGGER, "intercept log invoke finish", methodSignature);

@@ -141,7 +141,7 @@ public class CheckCallbackServiceImpl implements CheckCallbackService, Initializ
             return null;
         }
         AlterShieldLoggerManager.log("debug", logger, "get call back url", url);
-       ChangeCheckCallbackProxyModel model = create(platform, url, entity, defenseStage, checkId, verdict);
+        ChangeCheckCallbackProxyModel model = create(platform, url, entity, defenseStage, checkId, verdict);
         return changeCheckCallbackProxy.doCallback(model);
     }
 

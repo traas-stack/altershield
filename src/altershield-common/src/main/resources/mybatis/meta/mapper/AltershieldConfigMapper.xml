@@ -14,23 +14,23 @@
     gmt_create ,gmt_modified ,name ,value ,cfg_desc
   </sql>
   <insert id="insert" parameterType="com.alipay.altershield.common.backconfig.dal.dataobject.MetaConfigDO">
-    insert into opscld_config (name, value, cfg_desc, gmt_create, gmt_modified) VALUES (#{name}, #{value}, #{cfgDesc}, now(), now())
+    insert into altershield_config (name, value, cfg_desc, gmt_create, gmt_modified) VALUES (#{name}, #{value}, #{cfgDesc}, now(), now())
   </insert>
   <select id="lockByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from opscld_config where name = #{name}
+    from altershield_config where name = #{name}
     FOR UPDATE
   </select>
 
   <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from opscld_config where name = #{name}
+    from altershield_config where name = #{name}
   </select>
 
   <update id="saveByName">
-    UPDATE opscld_config
+    UPDATE altershield_config
     <set>
       name = #{name},
       value = #{value},
@@ -42,14 +42,14 @@
 
 
   <select id="selectTotalCount"  resultType="long">
-    select COUNT(*) from opscld_config
+    select COUNT(*) from altershield_config
   </select>
 
 
   <select id="selectByPage"  parameterType="map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from opscld_config limit #{start} , #{size}
+    from altershield_config limit #{start} , #{size}
     <where>
       <if test="name != null">
         name like CONCAT('%s', #{name}, '%s')
@@ -58,7 +58,7 @@
   </select>
 
   <delete id="deleteByName" parameterType="string">
-    delete from opscld_config WHERE name = #{name}
+    delete from altershield_config WHERE name = #{name}
   </delete>
 
 </mapper>

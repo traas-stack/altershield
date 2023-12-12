@@ -36,7 +36,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 public class SchedulerThreadPoolConfig {
 
-    private static final  int poolSize = 4;
+    private static final int poolSize = 4;
 
     /**
      * schedulePoint专用线程池

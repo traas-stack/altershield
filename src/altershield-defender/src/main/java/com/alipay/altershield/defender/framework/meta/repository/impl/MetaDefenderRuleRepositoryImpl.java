@@ -1,4 +1,27 @@
 /*
+ * MIT License
+ *
+ * Copyright (c) [2023]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/*
  * Ant Group
  * Copyright (c) 2004-2022 All Rights Reserved.
  */
@@ -32,7 +55,7 @@ import java.util.Set;
 public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepository {
 
     @Autowired
-    private MetaDefenderRuleMapper opsCloudMetaDefenderRuleMapper;
+    private MetaDefenderRuleMapper metaDefenderRuleMapper;
 
     @Autowired
     private MetaDefenderRuleConvertor defenderRuleConvertor;
@@ -47,7 +70,7 @@ public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepositor
      */
     @Override
     public List<MetaDefenderRuleEntity> selectAll() {
-        List<MetaDefenderRuleDO> ruleDOs = opsCloudMetaDefenderRuleMapper.selectAll();
+        List<MetaDefenderRuleDO> ruleDOs = metaDefenderRuleMapper.selectAll();
         return defenderRuleConvertor.convert2ModelList(ruleDOs);
     }
 
@@ -68,7 +91,7 @@ public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepositor
             criteria.andStageEqualTo(stage.getStage());
         }
 
-        List<MetaDefenderRuleDO> ruleDOs = opsCloudMetaDefenderRuleMapper.selectByParam(param);
+        List<MetaDefenderRuleDO> ruleDOs = metaDefenderRuleMapper.selectByParam(param);
         return defenderRuleConvertor.convert2ModelList(ruleDOs);
     }
 
@@ -79,7 +102,7 @@ public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepositor
      */
     @Override
     public MetaDefenderRuleEntity loadByRuleId(String ruleId) {
-        MetaDefenderRuleDO ruleDO = opsCloudMetaDefenderRuleMapper.selectByPrimaryKey(ruleId);
+        MetaDefenderRuleDO ruleDO = metaDefenderRuleMapper.selectByPrimaryKey(ruleId);
         return defenderRuleConvertor.convert2Model(ruleDO);
     }
 
@@ -93,7 +116,7 @@ public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepositor
     public List<MetaDefenderRuleEntity> selectByRuleIds(Set<String> ruleIds) {
         MetaDefenderRuleParam param = new MetaDefenderRuleParam();
         param.createCriteria().andIdIn(new ArrayList<>(ruleIds));
-        List<MetaDefenderRuleDO> ruleDOs = opsCloudMetaDefenderRuleMapper.selectByParam(param);
+        List<MetaDefenderRuleDO> ruleDOs = metaDefenderRuleMapper.selectByParam(param);
         return defenderRuleConvertor.convert2ModelList(ruleDOs);
     }
 
@@ -130,7 +153,7 @@ public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepositor
         param.appendOrderByClause(MetaDefenderRuleParam.OrderCondition.GMTCREATE, MetaDefenderRuleParam.SortType.DESC);
         param.setPagination(current / pageSize, pageSize);
 
-        List<MetaDefenderRuleDO> ruleDOs = opsCloudMetaDefenderRuleMapper.selectByParam(param);
+        List<MetaDefenderRuleDO> ruleDOs = metaDefenderRuleMapper.selectByParam(param);
         return defenderRuleConvertor.convert2ModelList(ruleDOs);
     }
 
@@ -162,7 +185,7 @@ public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepositor
             extendPageSelectCriteria(criteria, ruleId, name, status, tenant, stage, pluginKey, defenseRangeKeys);
         }
 
-        return opsCloudMetaDefenderRuleMapper.countByParam(param);
+        return metaDefenderRuleMapper.countByParam(param);
     }
 
     /**
@@ -174,7 +197,7 @@ public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepositor
     @Override
     public boolean insert(MetaDefenderRuleEntity rule) {
         MetaDefenderRuleDO ruleDO = defenderRuleConvertor.convert2DO(rule);
-        int column = opsCloudMetaDefenderRuleMapper.insert(ruleDO);
+        int column = metaDefenderRuleMapper.insert(ruleDO);
         return column > 0;
     }
 
@@ -187,7 +210,7 @@ public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepositor
     @Override
     public boolean update(MetaDefenderRuleEntity rule) {
         MetaDefenderRuleDO ruleDO = defenderRuleConvertor.convert2DO(rule);
-        int column = opsCloudMetaDefenderRuleMapper.updateByPrimaryKeySelective(ruleDO);
+        int column = metaDefenderRuleMapper.updateByPrimaryKeySelective(ruleDO);
         return column > 0;
     }
 
@@ -199,7 +222,7 @@ public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepositor
      */
     @Override
     public boolean delete(String ruleId) {
-        int column = opsCloudMetaDefenderRuleMapper.deleteByPrimaryKey(ruleId);
+        int column = metaDefenderRuleMapper.deleteByPrimaryKey(ruleId);
         return column > 0;
     }
 
@@ -241,7 +264,7 @@ public class MetaDefenderRuleRepositoryImpl implements MetaDefenderRuleRepositor
         }
 
         if (!StringUtils.isBlank(pluginKey)) {
-            criteria.andPluginKeyEqualToWhenPresent(pluginKey);
+            criteria.andPluginKeyEqualTo(pluginKey);
         }
     }
 

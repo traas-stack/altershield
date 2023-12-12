@@ -34,11 +34,7 @@ import lombok.Data;
 @Data
 public class ExeNodeContext {
 
-    private boolean spiSucc = false;
-    /**
-     * 老变更核心id
-     */
-    private String opsCloudCoreNodeId;
+    private boolean spiSuccess = false;
 
     /**
      * 当检查失败的时候是否返回规则列表

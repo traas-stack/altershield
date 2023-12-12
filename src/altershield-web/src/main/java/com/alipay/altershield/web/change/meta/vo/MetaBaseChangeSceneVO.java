@@ -69,7 +69,7 @@ public class MetaBaseChangeSceneVO implements Serializable {
      * tldc租户，在一个云上是唯一标识
      */
     @ApiModelProperty(value = "可信租户码")
-    private String tldcTenantCode;
+    private String tenantCode;
 
     /**
      * 服务租户；多个租户用逗号隔开

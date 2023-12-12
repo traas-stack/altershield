@@ -49,7 +49,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -67,8 +66,8 @@ public class SchedulerEventHandlerServiceImpl implements SchedulerEventHandlerSe
     @Autowired
     private SchedulerEventListenerManager opsCloudSchedulerEventListenerManager;
 
-    @Resource
-    private TransactionTemplate transactionTemplate;
+    @Autowired
+    private TransactionTemplate confTransactionTemplate;
 
     @Autowired
     private SchedulerEventRepository schedulePointRepository;
@@ -103,7 +102,7 @@ public class SchedulerEventHandlerServiceImpl implements SchedulerEventHandlerSe
     public SchedulerEventHandleStatus internalExecutePoint(final ScheduleDispatchContext scheduleDispatchContext) {
 
         try {
-            return transactionTemplate.execute(
+            return confTransactionTemplate.execute(
                     status -> handlePoint(scheduleDispatchContext));
         } catch (CannotAcquireLockException lockE) {
             AlterShieldLoggerManager.log("warn", logger, "schedulerEvent.warn", "doNothing.NoLock", scheduleDispatchContext.getEventId());
@@ -111,7 +110,7 @@ public class SchedulerEventHandlerServiceImpl implements SchedulerEventHandlerSe
         }
     }
 
-    private SchedulerEventHandleStatus handlePoint(ScheduleDispatchContext scheduleDispatchContext) {
+    public SchedulerEventHandleStatus handlePoint(ScheduleDispatchContext scheduleDispatchContext) {
         //如果获取任务失败，说明这个任务被其它机器提前处理了，需要通知主线程不再处理
         SchedulerEventEntity eventEntity = fetchPointEntity(scheduleDispatchContext);
 
@@ -202,9 +201,9 @@ public class SchedulerEventHandlerServiceImpl implements SchedulerEventHandlerSe
         return listeners;
     }
 
-    private SchedulerEventEntity fetchPointEntity(ScheduleDispatchContext scheduleDispatchContext) {
+    public SchedulerEventEntity fetchPointEntity(ScheduleDispatchContext scheduleDispatchContext) {
         logger.info("SchedulerEventHandlerServiceImpl$fetchPointEntity{}", scheduleDispatchContext);
-        SchedulerEventEntity eventEntity = schedulePointRepository.lockByIdNowait(scheduleDispatchContext.getEventId());
+        SchedulerEventEntity eventEntity = schedulePointRepository.lockById(scheduleDispatchContext.getEventId());
         if (eventEntity == null) {
             throw new CannotAcquireLockException("cannotAcquireLock");
         }

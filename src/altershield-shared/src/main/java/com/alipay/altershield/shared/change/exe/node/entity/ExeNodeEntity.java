@@ -267,7 +267,7 @@ public abstract class ExeNodeEntity extends AbstractExeTraceEntity {
      *
      * @mbg.generated
      */
-    private String tldcTenantCode;
+    private String tenantCode;
 
     /**
      * Database Column Remarks:
@@ -331,7 +331,7 @@ public abstract class ExeNodeEntity extends AbstractExeTraceEntity {
         {
             setContextRef(new ExeNodeContext());
         }
-        getContextRef().setSpiSucc(tag);
+        getContextRef().setSpiSuccess(tag);
     }
 
 

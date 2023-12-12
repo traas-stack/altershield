@@ -27,6 +27,7 @@
  */
 package com.alipay.altershield.web.common.config;
 
+import com.alipay.altershield.common.backconfig.request.ConfigRequest;
 import com.alipay.altershield.common.backconfig.request.QueryConfigRequest;
 import com.alipay.altershield.common.backconfig.result.QueryConfigResult;
 import com.alipay.altershield.common.backconfig.service.ConfigService;
@@ -61,6 +62,28 @@ public class ConfigController {
             return configService.queryConfigList(request);
         } catch (Exception e) {
             return new AlterShieldResult<>(AlterShieldInternalErrorCode.SYSTEM_ERROR.getCode(), "未知异常");
+        }
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public AlterShieldResult<Void> update(@RequestBody ConfigRequest request) {
+        try {
+            configService.modifyConfig(request);
+            return new AlterShieldResult<>();
+        } catch (Exception e) {
+            return new AlterShieldResult<>(false, AlterShieldInternalErrorCode.SYSTEM_ERROR.getCode(), "未知异常");
+        }
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @ResponseBody
+    public AlterShieldResult<Void> create(@RequestBody ConfigRequest request) {
+        try {
+            configService.saveConfig(request);
+            return new AlterShieldResult<>();
+        } catch (Exception e) {
+            return new AlterShieldResult<>(false, AlterShieldInternalErrorCode.SYSTEM_ERROR.getCode(), "未知异常");
         }
     }
 }
