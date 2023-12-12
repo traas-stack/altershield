@@ -19,6 +19,7 @@ import lombok.Data;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.CollectionUtils;
 
@@ -49,17 +50,26 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
     private static final String SERIES_QUERY_TYPE = "workloadExternal";
     private static final String POINTS = "points";
     private static final String TIMESTAMP = "timestamp";
+    private static final String DATA = "data";
     private static final String RESULT_CODE = "resultCode";
     private static final String VERDICT = "verdict";
     private static final String PASS = "PASS";
     private static final String FAIL = "FAIL";
     private static final String ALGORITHM_MESSAGE = "algorithmMessage";
     private static final String ERROR_MESSAGE = "errorMessage";
+    private static final String DETECT_ROUTER_TYPE = "detectRouterType";
+    private static final String STATISTIC_MULTI_BY_ATOMIC = "statisticMultiByAtomic";
 
     private static final String QUERY_SERIES_DATA_URL = "/openapi/metric/query";
     private static final String ALGORITHM_DETECT_URL = "/api/check/batch_monitor_detect";
     private static final long DEFAULT_BACKTRACE_TIME = 30 * 60 * 1000;
     private static final long DEFAULT_QUERY_INTERVAL_TIME = 30 * 1000;
+
+    @Value("${algorithm_host}")
+    private String algorithmHost;
+
+    @Value("${monitor_client_host}")
+    private String monitorClientHost;
 
     @Override
     public DefenderDetectPluginResult submitDetectTask(DefenderDetectPluginRequest request) {
@@ -115,7 +125,7 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
             request.setWorkloadExternalQuery(queryDetail);
 
             defenderThreadPool.execute(() -> {
-                String response = HttpUtils.doPost(QUERY_SERIES_DATA_URL,
+                String response = HttpUtils.doPost(monitorClientHost + QUERY_SERIES_DATA_URL,
                         JSONObject.parseObject(JSONObject.toJSONString(request)), null);
                 if (StringUtils.isBlank(response)) {
                     AlterShieldLoggerManager.log("error", Loggers.DEFENDER_PLUGIN, "MonitorMetricDetectionPlugin",
@@ -139,7 +149,7 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
         return resultMap;
     }
 
-    private DefenderDetectPluginResult invokeAlgorithmDetection(DefenderDetectPluginRequest req, long checkEndTime,
+    public DefenderDetectPluginResult invokeAlgorithmDetection(DefenderDetectPluginRequest req, long checkEndTime,
                                                                 Map<MetricFieldEnum, JSONArray> seriesDatas) {
         AlgorithmDetectRequest request = new AlgorithmDetectRequest();
         request.setChangeStart(req.getChangeExecuteInfo().getChangeStartTime().getTime());
@@ -179,16 +189,25 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
             baseKeySeries.setSeries(series);
             baseKeySeriesList.add(baseKeySeries);
         }
-        request.setDetectSeries(baseKeySeriesList);
+        DetectSeries detectSeries = new DetectSeries();
+        detectSeries.setKeySeriesList(baseKeySeriesList);
+        request.setDetectSeries(detectSeries);
 
-        String response = HttpUtils.doPost(ALGORITHM_DETECT_URL, JSONObject.parseObject(JSONObject.toJSONString(request)), null);
+        Map<String, String> args = new HashMap<>();
+        args.put(DETECT_ROUTER_TYPE, STATISTIC_MULTI_BY_ATOMIC);
+        request.setBizAlgKargs(args);
+
+        String response = HttpUtils.doPost(algorithmHost + ALGORITHM_DETECT_URL,
+                JSONObject.parseObject(JSONObject.toJSONString(request)), null);
         if (StringUtils.isBlank(response)) {
             AlterShieldLoggerManager.log("error", Loggers.DEFENDER_PLUGIN, "MonitorMetricDetectionPlugin",
                     "invokeAlgorithmDetection", "Detection response is empty", req.getNodeId());
             return DefenderDetectPluginResult.exception("Detection response is empty");
         }
 
-        JSONObject result = JSON.parseObject(response);
+        JSONObject respJsn = JSON.parseObject(response);
+        JSONObject result = respJsn.getJSONObject(DATA);
+
         if (result.getInteger(RESULT_CODE) != 0) {
             AlterShieldLoggerManager.log("error", Loggers.DEFENDER_PLUGIN, "MonitorMetricDetectionPlugin",
                     "invokeAlgorithmDetection", "Invoke algorithm failed", req.getNodeId(), response);
@@ -240,6 +259,12 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
             AlterShieldLoggerManager.log("error", Loggers.DEFENDER_PLUGIN, "MonitorMetricDetectionPlugin", "paramCheck",
                     "The change finish time cannot be null", request.getNodeId());
             return DefenderDetectPluginResult.exception("The change finish time cannot be null");
+        }
+
+        if (request.getChangeInfluenceInfo() == null) {
+            AlterShieldLoggerManager.log("error", Loggers.DEFENDER_PLUGIN, "MonitorMetricDetectionPlugin", "paramCheck",
+                    "The change influence information cannot be null", request.getNodeId());
+            return DefenderDetectPluginResult.exception("The change influence information cannot be null");
         }
 
         return null;
@@ -340,12 +365,12 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
         /**
          * Time series data to detect
          */
-        private List<BaseKeySeries> detectSeries;
+        private DetectSeries detectSeries;
 
         /**
-         * [Optional] Time series data of contrast group to compare with detect group
+         * Time series data to detect for long time
          */
-        private List<BaseKeySeries> contrastSeries;
+        private DetectSeries longSeries;
 
         /**
          * [Optional] Algorithm configuration
@@ -356,6 +381,16 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
          * [Optional] Data parameters are used to specify the detection of configuration data.
          */
         private Map<String, String> datrasourceKargs;
+    }
+
+    @Data
+    @ToString
+    private class DetectSeries {
+
+        /**
+         * time series data list
+         */
+        private List<BaseKeySeries> keySeriesList;
     }
 
     @Data
@@ -407,7 +442,7 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
         }
     }
 
-    private enum MetricFieldEnum {
+    public enum MetricFieldEnum {
         CPU_UTIL("cpu_util", MetricEnum.SYSTEM_POD),
         MEM_UTIL("mem_util", MetricEnum.SYSTEM_POD),
         LOAD_LOAD1("load_load1", MetricEnum.SYSTEM_POD),
