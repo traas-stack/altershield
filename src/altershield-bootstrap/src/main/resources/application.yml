@@ -25,6 +25,6 @@ logging_path: /home/admin/logs
 logging:
   config : classpath:log4j2-spring.xml
 defender:
-  monitor_client_host: xxx
-  algorithm_host: http://192.168.97.142
+  monitor_client_host: http://192.168.120.189:8080
+  algorithm_host: http://192.168.97.142:8083
 
