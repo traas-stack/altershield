@@ -152,18 +152,19 @@ public class AlterShieldConstant {
     /**
      * Inner defense plugin configuration
      */
-    public static volatile String DEFENDER_INNER_PLUGINS = "[\n"
-            + "\t{\n"
-            + "\t\t\"pluginKey\": \"defender_assert_false_plugin\",\n"
-            + "\t\t\"mainClass\": \"com.alipay.altershield.shared.pluginmarket.innerplugin.defender.AssertFalsePlugin\",\n"
-            + "\t\t\"invokeType\": \"sync\"\n"
-            + "\t}\n,"
-            + "\t{\n"
-            + "\t\t\"pluginKey\": \"defender_assert_true_plugin\",\n"
-            + "\t\t\"mainClass\": \"com.alipay.altershield.shared.pluginmarket.innerplugin.defender.AssertTruePlugin\",\n"
-            + "\t\t\"invokeType\": \"sync\"\n"
-            + "\t}\n"
-            + "]";
+    public static volatile String DEFENDER_INNER_PLUGINS = "[{\n"
+            + "\t\"pluginKey\": \"defender_assert_false_plugin\",\n"
+            + "\t\"mainClass\": \"com.alipay.altershield.shared.pluginmarket.innerplugin.defender.AssertFalsePlugin\",\n"
+            + "\t\"invokeType\": \"sync\"\n"
+            + "}, {\n"
+            + "\t\"pluginKey\": \"defender_assert_true_plugin\",\n"
+            + "\t\"mainClass\": \"com.alipay.altershield.shared.pluginmarket.innerplugin.defender.AssertTruePlugin\",\n"
+            + "\t\"invokeType\": \"sync\"\n"
+            + "}, {\n"
+            + "\t\"pluginKey\": \"monitor_metric_detection_plugin\",\n"
+            + "\t\"mainClass\": \"com.alipay.altershield.shared.pluginmarket.innerplugin.defender.MonitorMetricDetectionPlugin\",\n"
+            + "\t\"invokeType\": \"async\"\n"
+            + "}]";
     // -------------- Defender Finish -----------------
 
     // TODO 更换为开源的接入文档地址
