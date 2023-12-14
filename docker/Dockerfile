@@ -33,4 +33,4 @@ COPY --from=build /opt/software/app/src/altershield-bootstrap/target/altershield
 
 # 安装Nginx
 EXPOSE 8080
-CMD ["java", "-jar", "/app/altershield.jar"]
+CMD ["java", "-jar", "-Dspring.profiles.active=dev", "/app/altershield.jar"]
