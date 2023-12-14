@@ -108,6 +108,10 @@ public interface Loggers {
      */
     Logger DEFENDER = LoggerFactory.getLogger("ALTER_SHIELD_DEFENDER");
     /**
+     * defender plugin log
+     */
+    Logger DEFENDER_PLUGIN = LoggerFactory.getLogger("ALTER_SHIELD_DEFENDER_PLUGIN");
+    /**
      * 外部任务调用
      */
     Logger OUTER_TASK = LoggerFactory.getLogger("ALTER_SHIELD_OUTER_TASK");
