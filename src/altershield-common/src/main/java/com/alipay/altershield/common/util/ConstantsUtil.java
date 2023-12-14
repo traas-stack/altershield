@@ -101,7 +101,7 @@ public class ConstantsUtil {
             } else if (long.class.getName().equals(clz.getName())) {
                 long l = Long.parseLong(value);
                 f.set(null, l);
-            } else if (boolean.class.getName().equals(clz.getName())) {
+            } else if (boolean.class.getName().equals(clz.getName()) || Boolean.class.getName().equals(clz.getName())) {
                 f.set(null, "true".equalsIgnoreCase(value));
             } else if (char.class.getName().equals(clz.getName())) {
                 f.set(null, value.charAt(0));

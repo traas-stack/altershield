@@ -15,5 +15,6 @@ spring:
     username: root@cafe1a#BJ
     password: AntCloud2021..
 
+logging_path: ./logs
 logging:
-  config : classpath:log4j2-spring-dev.xml
+  config : classpath:log4j2-spring.xml

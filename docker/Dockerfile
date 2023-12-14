@@ -23,6 +23,11 @@ FROM openjdk:8-jdk-alpine
 # 安装telnet和curl工具
 RUN apk update && apk add --no-cache curl
 
+# 安装telnet和curl工具
+RUN apk update && apk add --no-cache curl
+RUN mkdir -p /home/admin/logs
+RUN chmod -R 777 /home/admin/logs
+
 WORKDIR /app
 COPY --from=build /opt/software/app/src/altershield-bootstrap/target/altershield-bootstrap-0.0.1-SNAPSHOT.jar /app/altershield.jar
 

@@ -21,10 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-/*
- * Ant Group
- * Copyright (c) 2004-2022 All Rights Reserved.
- */
 package com.alipay.altershield.shared.pluginmarket.innerplugin.defender;
 
 import com.alipay.altershield.spi.defender.DefenderSyncDetectPlugin;
