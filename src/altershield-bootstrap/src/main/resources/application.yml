@@ -25,6 +25,8 @@ logging_path: /home/admin/logs
 logging:
   config : classpath:log4j2-spring.xml
 defender:
-  monitor_client_host: http://192.168.120.189:8080
-  algorithm_host: http://192.168.214.177:8083
+  # 数据拉取client
+  monitor_client_host: http://localhost:8080
+  # 如部署了算法服务，请改为对应地址
+  algorithm_host: http://localhost:8083
 
