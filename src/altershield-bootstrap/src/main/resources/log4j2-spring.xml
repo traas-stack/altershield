@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="app_name">altershield</Property>
+        <Property name="log_level">${ctx:log_level}</Property>
+        <Property name="log_root">${ctx:logging_path}</Property>
+    </Properties>
+    <Appenders>
+        <Console name="STDOUT_APPENDER" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n%throwable" charset="UTF-8" />
+        </Console>
+        <Console name="STDERR_APPENDER" target="SYSTEM_ERR">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n%throwable" charset="UTF-8" />
+        </Console>
+        <RollingFile name="ERROR_APPENDER" fileName="${log_root}/${app_name}/common-error.log"
+            filePattern="${log_root}/${app_name}/common-error.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n%throwable"
+                charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+            <ThresholdFilter level="ERROR" />
+        </RollingFile>
+
+        <RollingFile name="APP-DEFAULT_APPENDER" fileName="${log_root}/${app_name}/altershield-default.log"
+            filePattern="${log_root}/${app_name}/altershield-default.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_FRAMEWORK_APPENDER" fileName="${log_root}/${app_name}/altershield-framework.log"
+                     filePattern="${log_root}/${app_name}/altershield-framework.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_LOCAL_SCHEDULE_APPENDER" fileName="${log_root}/${app_name}/altershield-local-schedule.log"
+                     filePattern="${log_root}/${app_name}/altershield-local-schedule.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_SCHEDULE_POINT_APPENDER" fileName="${log_root}/${app_name}/altershield-schedule-point.log"
+                     filePattern="${log_root}/${app_name}/altershield-schedule-point.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_SCHEDULE_POINT_DIGEST_APPENDER" fileName="${log_root}/${app_name}/altershield-schedule-point-digest.log"
+                     filePattern="${log_root}/${app_name}/altershield-schedule-point-digest.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_DAL_APPENDER" fileName="${log_root}/${app_name}/altershield-dal.log"
+                     filePattern="${log_root}/${app_name}/altershield-dal.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_DAO_DIGEST_APPENDER" fileName="${log_root}/${app_name}/altershield-dao-digest.log"
+                     filePattern="${log_root}/${app_name}/altershield-dao-digest.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_FACADE_EXE_APPENDER" fileName="${log_root}/${app_name}/altershield-facade-exe.log"
+                     filePattern="${log_root}/${app_name}/altershield-facade-exe.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_SERVICE_INFO_APPENDER" fileName="${log_root}/${app_name}/altershield-service-info.log"
+                     filePattern="${log_root}/${app_name}/altershield-service-info.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_SERVICE_OPERATE_DIGEST_APPENDER" fileName="${log_root}/${app_name}/altershield-operate-digest.log"
+                     filePattern="${log_root}/${app_name}/altershield-operate-digest.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_SERVICE_QUERY_DIGEST_APPENDER" fileName="${log_root}/${app_name}/altershield-service-query-digest.log"
+                     filePattern="${log_root}/${app_name}/altershield-service-query-digest.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_SERVICE_PROFILER_APPENDER" fileName="${log_root}/${app_name}/altershield-service-profiler.log"
+                     filePattern="${log_root}/${app_name}/altershield-service-profiler.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_BIZ_SERVICE_APPENDER" fileName="${log_root}/${app_name}/altershield-biz-service.log"
+                     filePattern="${log_root}/${app_name}/altershield-biz-service.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_META_CACHE_APPENDER" fileName="${log_root}/${app_name}/altershield-meta-cache.log"
+                     filePattern="${log_root}/${app_name}/altershield-meta-cache.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_META_CHANGE_APPENDER" fileName="${log_root}/${app_name}/altershield-meta-change.log"
+                     filePattern="${log_root}/${app_name}/altershield-meta-change.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_EXE_STATE_MACHINE_APPENDER" fileName="${log_root}/${app_name}/altershield-exe-state-machine.log"
+                     filePattern="${log_root}/${app_name}/altershield-exe-state-machine.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_DEFENDER_APPENDER" fileName="${log_root}/${app_name}/altershield-defender.log"
+                     filePattern="${log_root}/${app_name}/altershield-defender.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_DEFENDER_PLUGIN_APPENDER" fileName="${log_root}/${app_name}/altershield-defender_plugin.log"
+                     filePattern="${log_root}/${app_name}/altershield-defender_plugin.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_OUTER_TASK_APPENDER" fileName="${log_root}/${app_name}/altershield-outer-task.log"
+                     filePattern="${log_root}/${app_name}/altershield-outer-task.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <AsyncLogger name="STDOUT" additivity="false" level="${log_level}">
+            <AppenderRef ref="STDOUT_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="STDERR" additivity="false" level="ERROR">
+            <AppenderRef ref="STDERR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="com.alipay.altershield" additivity="false" level="${log_level}">
+            <AppenderRef ref="APP-DEFAULT_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <!-- loggers -->
+        <AsyncLogger name="ALTER_SHIELD_FRAMEWORK" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_FRAMEWORK_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_LOCAL_SCHEDULE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_LOCAL_SCHEDULE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_SCHEDULE_POINT" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SCHEDULE_POINT_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_SCHEDULE_POINT_DIGEST" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SCHEDULE_POINT_DIGEST_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_DAL" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_DAL_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_DAO_DIGEST" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_DAO_DIGEST_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_FACADE_EXE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_FACADE_EXE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_SERVICE_INFO" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SERVICE_INFO_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_SERVICE_OPERATE_DIGEST" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SERVICE_OPERATE_DIGEST_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_SERVICE_QUERY_DIGEST" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SERVICE_QUERY_DIGEST_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_SERVICE_PROFILER" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_SERVICE_PROFILER_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_BIZ_SERVICE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_BIZ_SERVICE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_META_CACHE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_META_CACHE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_META_CHANGE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_META_CHANGE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_EXE_STATE_MACHINE" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_EXE_STATE_MACHINE_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_DEFENDER" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_DEFENDER_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_DEFENDER_PLUGIN" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_DEFENDER_PLUGIN_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+        <AsyncLogger name="ALTER_SHIELD_OUTER_TASK" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_OUTER_TASK_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
+
+
+        <AsyncRoot level="${log_level}">
+            <AppenderRef ref="APP-DEFAULT_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncRoot>
+
+    </Loggers>
+
+</Configuration>

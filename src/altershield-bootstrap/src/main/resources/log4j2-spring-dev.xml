@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss,SSS}  %-5p %C{1} : %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+        </Root>
+
+        <Logger name="org.springframework.osgi" level="WARN">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.springframework.beans.factory" level="WARN">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="java.sql" level="ERROR">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.ibatis" level="WARN">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="org.mule" level="WARN">
+            <AppenderRef ref="Console"/>
+        </Logger>
+    </Loggers>
+</Configuration>

@@ -908,4 +908,19 @@ public class CommonUtil {
         }
     }
 
+    /**
+     * 计算两个时间的耗时，如果有一个为null，则返回 -1
+     * @param finishTime
+     * @param startTime
+     * @return
+     */
+    public static long cost(Date finishTime, Date startTime)
+    {
+        if(finishTime == null || startTime == null)
+        {
+            return -1;
+        }
+        return finishTime.getTime() - startTime.getTime();
+    }
+
 }

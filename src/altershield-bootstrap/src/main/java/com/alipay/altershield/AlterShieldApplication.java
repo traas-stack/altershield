@@ -23,17 +23,32 @@
  */
 package com.alipay.altershield;
 
+import com.alipay.altershield.listener.LoggingListener;
+import com.alipay.altershield.scann.AlterShieldSchedulerEventScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 
 /**
  * @author xiangyue
  * @version : AlterShieldApplication.java, v 0.1 2023-04-27 11:28 xiangyue Exp $$
  */
+@EnableOpenApi
+@EnableWebMvc
+@EnableScheduling
 @SpringBootApplication
+@ComponentScan(basePackages = "com.alipay.altershield",excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
+        pattern = "com.alipay.altershield.framework.sdk.*"))
+@AlterShieldSchedulerEventScan(basePackages = "com.alipay.altershield")
 public class AlterShieldApplication {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(AlterShieldApplication.class);
+        LoggingListener loggingListener = new LoggingListener();
+        app.addListeners(loggingListener);
         app.run(args);
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alipay.altershield.common.id.sequence.dal.mapper.SequenceMapper">
+  <resultMap id="BaseResultMap" type="com.alipay.altershield.common.id.sequence.dal.dataobject.SequenceDO">
+
+    <id column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="value" jdbcType="BIGINT" property="value" />
+    <result column="min_value" jdbcType="BIGINT" property="minValue" />
+    <result column="max_value" jdbcType="BIGINT" property="maxValue" />
+    <result column="step" jdbcType="BIGINT" property="step" />
+  </resultMap>
+   <select id="lockByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+     name,min_value,max_value,step,value
+     from altershield_sequence where name = #{name}
+     FOR UPDATE
+   </select>
+
+  <insert id="insert" parameterType="string">
+    insert into altershield_sequence
+           (name, gmt_create, gmt_modified, value, min_value, max_value, step)
+    values (#{name}, now(), now(), 1,0, 2821109907455, 1000)
+  </insert>
+  <update id="update">
+
+    UPDATE altershield_sequence
+    <set>
+        value = #{latestValue},
+        gmt_modified = now()
+    </set>
+        WHERE name = #{name}
+  </update>
+
+</mapper>

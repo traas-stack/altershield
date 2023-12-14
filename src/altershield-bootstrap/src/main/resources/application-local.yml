@@ -1,0 +1,19 @@
+altershield:
+  framework:
+    server:
+      common:
+        cloudId: k8s
+      group:
+        value: altershield
+      scheduler:
+        testUid: 00
+        maxUid: 01
+
+spring:
+  datasource:
+    jdbc-url: jdbc:localhost:3306/altershield?allowPublicKeyRetrieval=true&useSSL=false
+    username: altershield
+    password: altershield
+
+logging:
+  config : classpath:log4j2-spring-dev.xml

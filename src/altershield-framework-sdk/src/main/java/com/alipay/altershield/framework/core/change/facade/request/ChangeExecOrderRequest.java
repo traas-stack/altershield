@@ -26,6 +26,7 @@ package com.alipay.altershield.framework.core.change.facade.request;
 import com.alipay.altershield.framework.common.validate.ChangeTargetNotEmpty;
 import com.alipay.altershield.framework.common.validate.StringLength;
 import com.alipay.altershield.framework.common.validate.UserInfoFormat;
+import com.alipay.altershield.framework.core.change.model.AlterShieldChangeContent;
 import com.alipay.altershield.framework.core.change.model.ChangeParentOrderInfo;
 import com.alipay.altershield.framework.core.change.model.ChangeTarget;
 import com.alipay.altershield.framework.core.change.model.trace.OpsChngTrace;
@@ -84,7 +85,7 @@ public abstract class ChangeExecOrderRequest extends ChangeBaseRequest {
      * [required] Change Target List
      */
     @ChangeTargetNotEmpty
-    private ChangeTarget[] changeTargets;
+    private AlterShieldChangeContent[] changeContents;
     /**
      * Change Content Parameters. json
      */

@@ -30,7 +30,6 @@
         <property name="heartbeatUtil" ref="heartbeatUtil"/>
         <property name="changeFacade" ref="alterShieldChangeFacade"/>
         <property name="hiddenServerError" value="${altershield.framework.client.base.hiddenServerError}"/>
-        <property name="validator" ref="validator"/>
     </bean>
 
     <!-- 标准三板斧场景使用 -->
@@ -53,8 +52,7 @@
         <property name="httpAlterShieldClient" ref="httpAlterShieldClient"/>
     </bean>
 
-    <bean id="opsCloudMetaChangeSceneClient" class="com.alipay.altershield.framework.sdk.meta.client.impl.MetaChangeSceneClientImpl">
-        <property name="validator" ref="validator"/>
+    <bean id="metaChangeSceneClient" class="com.alipay.altershield.framework.sdk.meta.client.impl.MetaChangeSceneClientImpl">
         <property name= "metaChangeSceneFacade" ref="httpAlterShieldMetaChangeSceneFacade"/>
     </bean>
 </beans>

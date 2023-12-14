@@ -1,0 +1,32 @@
+spring:
+  mvc:
+    dispatch-options-request: true
+  aop:
+    proxy-target-class: true
+  application:
+    name: altershield
+  ##默认是使用本地的
+  profiles:
+    active: local
+  #dataSource 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 10000
+      validation-timeout: 3000
+      idle-timeout: 60000
+      login-timeout: 5
+      max-lifetime: 4000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      read-only: false
+log_level: DEBUG
+logging_path: /home/admin/logs
+logging:
+  config : classpath:log4j2-spring.xml
+defender:
+  # 数据拉取client
+  monitor_client_host: http://localhost:8080
+  # 如部署了算法服务，请改为对应地址
+  algorithm_host: http://localhost:8083
+

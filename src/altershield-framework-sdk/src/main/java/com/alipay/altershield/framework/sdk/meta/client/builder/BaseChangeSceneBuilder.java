@@ -46,13 +46,13 @@ public class BaseChangeSceneBuilder<T extends BaseChangeSceneBuilder> {
     String changeSceneKey;
 
     @NotNull
-    String tldcTenantCode;
+    String tenantCode;
 
     /**
      * 服务租户；多个租户用逗号隔开
      */
     @StringLength(max = 4096)
-    String serverTldcTenantCode;
+    String serverTenantCode;
 
     /**
      * 变更场景名
@@ -124,13 +124,13 @@ public class BaseChangeSceneBuilder<T extends BaseChangeSceneBuilder> {
         return (T) this;
     }
 
-    public T setTldcTenantCode(String tldcTenantCode) {
-        this.tldcTenantCode = tldcTenantCode;
+    public T setTenantCode(String tenantCode) {
+        this.tenantCode = tenantCode;
         return (T) this;
     }
 
-    public T setServerTldcTenantCode(String... serverTldcTenantCode) {
-        this.serverTldcTenantCode = StringUtils.join(serverTldcTenantCode, ",");
+    public T setServerTenantCode(String... serverTenantCode) {
+        this.serverTenantCode = StringUtils.join(serverTenantCode, ",");
         return (T) this;
     }
 
@@ -257,8 +257,8 @@ public class BaseChangeSceneBuilder<T extends BaseChangeSceneBuilder> {
         createMetaChangeSceneRequest.setRiskInfo(riskInfo);
         createMetaChangeSceneRequest.setScope(scope);
         createMetaChangeSceneRequest.setOwner(owner);
-        createMetaChangeSceneRequest.setServerTldcTenantCode(serverTldcTenantCode);
-        createMetaChangeSceneRequest.setTldcTenantCode(tldcTenantCode);
+        createMetaChangeSceneRequest.setServerTenantCode(serverTenantCode);
+        createMetaChangeSceneRequest.setTenantCode(tenantCode);
         return createMetaChangeSceneRequest;
     }
 }

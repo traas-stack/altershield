@@ -101,7 +101,7 @@ public class UUIDUtil {
         // 20190427 00 245 XXX ZZZXX0ZX 32XX 0009NEMS
         return CommonUtil.FAKE_ID_BIZ_CODE
                 .equalsIgnoreCase(id.substring(OFF_BIZ_ID_START, OFF_EXT_START))
-                && CommonUtil.getOpscldIdDefaultExtString().equalsIgnoreCase(getExtString(id));
+                && CommonUtil.getAlterShieldIdDefaultExtString().equalsIgnoreCase(getExtString(id));
     }
 
     /**
@@ -115,7 +115,7 @@ public class UUIDUtil {
         final String dataSystemVersion = "00";// 2
         final String sysCode = "245";// 3
         final String bizCd = CommonUtil.FAKE_ID_BIZ_CODE;// 3
-        final String extCode = CommonUtil.getOpscldIdDefaultExtString();
+        final String extCode = CommonUtil.getAlterShieldIdDefaultExtString();
         final String sharding = uid;// 2
         final String random = "XX";// 2
         final String seq = convert36(r.nextLong());// 8
