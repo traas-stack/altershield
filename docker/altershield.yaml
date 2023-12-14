@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: altershield
-          image: codefriday123/altershield:1.0-dev-0.0.1
+          image: altershield/altershield:dev-1.0.0
           ports:
             - containerPort: 8080
