@@ -2,6 +2,9 @@
 FROM openjdk:8-jdk-alpine
 # 安装telnet和curl工具
 RUN apk update && apk add --no-cache curl
+# 设置时区为中国上海
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN mkdir -p /home/admin/logs
 RUN chmod -R 777 /home/admin/logs
 WORKDIR /app
@@ -9,4 +12,5 @@ COPY ../src/altershield-bootstrap/target/altershield-bootstrap-0.0.1-SNAPSHOT.ja
 
 # 安装Nginx
 EXPOSE 8080
-CMD ["java", "-jar", "-Dspring.profiles.active=dev", "/app/altershield.jar"]
+COPY ../docker/start.sh /app/start.sh
+CMD ["sh", "/app/start.sh"]

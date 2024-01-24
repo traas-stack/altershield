@@ -1,4 +1,27 @@
 /*
+ * MIT License
+ *
+ * Copyright (c) [2023]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/*
  * Ant Group
  * Copyright (c) 2004-2022 All Rights Reserved.
  */
@@ -7,6 +30,9 @@ package com.alipay.altershield.defender.framework.listener;
 import com.alipay.altershield.common.logger.Loggers;
 import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
 import com.alipay.altershield.framework.core.change.model.AlterShieldChangeContent;
+import com.alipay.altershield.framework.core.change.model.enums.ChangePhaseLastBatchEnum;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeBatchNodeEntity;
+import com.alipay.altershield.shared.change.exe.node.entity.ExeChangeBatchEffectiveInfoEntity;
 import com.alipay.altershield.shared.change.exe.node.entity.ExeNodeEntity;
 import com.alipay.altershield.shared.change.exe.order.entity.ExeChangeOrderEntity;
 import com.alipay.altershield.shared.change.exe.service.ExeChangeNodeService;
@@ -59,14 +85,13 @@ public class DefenderDetectEventListener implements AlterShieldSchedulerEventLis
     @Override
     public AlterShieldSchedulerEventExecuteResult onEvent(AlterShieldSchedulerEventContext context, DefenderDetectEvent event) {
         AlterShieldLoggerManager.log("info", Loggers.DEFENDER, "DefenderDetectEventListener", "onEvent", event);
-
         AlterShieldSchedulerEventExecuteResult result = new AlterShieldSchedulerEventExecuteResult();
-
         DefenderTaskExecuteRequest request = buildTaskExecuteRequest(event);
         DefenderTaskResult executeRst = defenderTaskExecutor.execute(request);
         result.setMsg(executeRst.getMsg());
         if (executeRst.isNeedRetry()) {
             result.setStatus(AlterShieldScheduleEventResultStatus.RETRY);
+            return result;
         }
         result.setStatus(AlterShieldScheduleEventResultStatus.SUCCESS);
         return result;
@@ -90,7 +115,7 @@ public class DefenderDetectEventListener implements AlterShieldSchedulerEventLis
         ExeNodeEntity node = exeChangeNodeService.getNode(event.getNodeId());
         ExeChangeOrderEntity changeOrder = exeChangeOrderQueryService.getChangeOrder(event.getChangeOrderId());
         request.setChangeBaseInfo(buildChangeBaseInfo(changeOrder));
-        request.setChangeExecuteInfo(buildChangExecuteInfo(event));
+        request.setChangeExecuteInfo(buildChangExecuteInfo(node, event));
         request.setChangeInfluenceInfo(buildChangeInfluenceInfo(node, changeOrder));
 
         return request;
@@ -106,8 +131,20 @@ public class DefenderDetectEventListener implements AlterShieldSchedulerEventLis
         return changeInfluenceInfo;
     }
 
-    private ChangeExecuteInfo buildChangExecuteInfo(DefenderDetectEvent event) {
+    private ChangeExecuteInfo buildChangExecuteInfo(ExeNodeEntity exeNode, DefenderDetectEvent event) {
+
         ChangeExecuteInfo changeExecuteInfo = new ChangeExecuteInfo();
+        if (exeNode instanceof ExeBatchNodeEntity) {
+            ExeChangeBatchEffectiveInfoEntity effectiveInfoEntity = ((ExeBatchNodeEntity) exeNode).getChangeEffectiveInfoRef().readObject();
+            changeExecuteInfo.setBatchNo(effectiveInfoEntity.getBatchNo());
+            changeExecuteInfo.setLastBatch(
+                    ChangePhaseLastBatchEnum.LAST.getTag().equals(effectiveInfoEntity.getIsLastBatchTag()));
+            changeExecuteInfo.setLastBatchInPhase(
+                    ChangePhaseLastBatchEnum.LAST.getTag().equals(effectiveInfoEntity.getIsLastBatchInPhaseTag()));
+            changeExecuteInfo.setTotalBatchNum(effectiveInfoEntity.getTotalBatchNum());
+            changeExecuteInfo.setTotalBatchInPhase(effectiveInfoEntity.getTotalBatchInEnvNum());
+            changeExecuteInfo.setExtInfo(effectiveInfoEntity.getExtInfo());
+        }
         changeExecuteInfo.setChangeStartTime(event.getChangeStartTime());
         if (event.getChangeFinishTime() != null) {
             changeExecuteInfo.setChangeFinishTime(event.getChangeFinishTime());

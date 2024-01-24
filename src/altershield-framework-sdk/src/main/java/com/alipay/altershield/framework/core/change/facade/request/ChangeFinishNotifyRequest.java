@@ -75,7 +75,7 @@ public class ChangeFinishNotifyRequest extends ChangeCheckRequest {
     /**
      * @optional Change the end time. If not empty, use the current time
      */
-    private Date finishTime;
+    private Date finishTime = new Date();
 
     /**
      * Change Effective Target Type。 If the carrier type changes after the change, this new value

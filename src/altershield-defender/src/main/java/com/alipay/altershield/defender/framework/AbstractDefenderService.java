@@ -137,6 +137,8 @@ public abstract class AbstractDefenderService {
      * @return Plugin detection results
      */
     protected AlterShieldResult<Void> executeSubmitTask(DefenderTaskExecuteRequest request) {
+        AlterShieldLoggerManager.log("info", Loggers.DEFENDER, "AbstractDefenderService",
+                "executeSubmitTask", "start execute", request.toString());
         // 1.0 Assemble task submission function
         Function<DefenderAsyncDetectPlugin, Void> invoker = detectPlugin -> {
             DefenderDetectPluginRequest req = buildDetectPluginRequest(request);
@@ -159,9 +161,9 @@ public abstract class AbstractDefenderService {
 
             return pluginResult;
         } catch (Throwable t) {
-            AlterShieldLoggerManager.log("error", Loggers.DEFENDER, "AbstractDefenderService", "executeSubmitTask",
+            AlterShieldLoggerManager.log("error", Loggers.DEFENDER, t, "AbstractDefenderService", "executeSubmitTask",
                     "plugin execute got an exception", "fail", request.getChangeOrderId(), request.getNodeId(), request.getDetectExeId(),
-                    request.getRuleId(), request.getPluginKey(), t);
+                    request.getRuleId(), request.getPluginKey());
             return AlterShieldResult.systemError("plugin execute got an exception");
         }
     }
@@ -194,9 +196,9 @@ public abstract class AbstractDefenderService {
 
             return pluginResult;
         } catch (Throwable t) {
-            AlterShieldLoggerManager.log("error", Loggers.DEFENDER, "AbstractDefenderService", "retrievePluginResult",
+            AlterShieldLoggerManager.log("error", Loggers.DEFENDER, t,  "AbstractDefenderService", "retrievePluginResult",
                     "plugin execute got an exception", "fail", request.getChangeOrderId(), request.getNodeId(), request.getDetectExeId(),
-                    request.getRuleId(), request.getPluginKey(), t);
+                    request.getRuleId(), request.getPluginKey());
             return AlterShieldResult.systemError("plugin execute got an exception");
         }
     }

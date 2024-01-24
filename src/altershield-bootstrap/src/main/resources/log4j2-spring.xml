@@ -124,12 +124,18 @@
             <DefaultRolloverStrategy />
         </RollingFile>
         <RollingFile name="ALTER_SHIELD_DEFENDER_PLUGIN_APPENDER" fileName="${log_root}/${app_name}/altershield-defender_plugin.log"
-                     filePattern="${log_root}/${app_name}/altershield-defender_plugin.log.%d{yyyy-MM-dd}" append="true">
+                     filePattern="${log_root}/${app_name}/altershield-defender-plugin.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
             <DefaultRolloverStrategy />
         </RollingFile>
         <RollingFile name="ALTER_SHIELD_OUTER_TASK_APPENDER" fileName="${log_root}/${app_name}/altershield-outer-task.log"
+                     filePattern="${log_root}/${app_name}/altershield-outer-task.log.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
+            <TimeBasedTriggeringPolicy />
+            <DefaultRolloverStrategy />
+        </RollingFile>
+        <RollingFile name="ALTER_SHIELD_PLUGIN_MARKET_APPENDER" fileName="${log_root}/${app_name}/altershield-plugin-market.log"
                      filePattern="${log_root}/${app_name}/altershield-outer-task.log.%d{yyyy-MM-dd}" append="true">
             <PatternLayout pattern="%d %-5p %c{2} - %m%n" charset="UTF-8" />
             <TimeBasedTriggeringPolicy />
@@ -222,7 +228,10 @@
             <AppenderRef ref="ALTER_SHIELD_OUTER_TASK_APPENDER" />
             <AppenderRef ref="ERROR_APPENDER" />
         </AsyncLogger>
-
+        <AsyncLogger name="ALTER_SHIELD_PLUGIN_MARKET" additivity="false" level="${log_level}">
+            <AppenderRef ref="ALTER_SHIELD_PLUGIN_MARKET_APPENDER" />
+            <AppenderRef ref="ERROR_APPENDER" />
+        </AsyncLogger>
 
         <AsyncRoot level="${log_level}">
             <AppenderRef ref="APP-DEFAULT_APPENDER" />

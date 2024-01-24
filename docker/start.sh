@@ -1,0 +1,1 @@
+java -jar -Dspring.profiles.active=dev /app/altershield.jar

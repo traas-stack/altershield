@@ -11,9 +11,9 @@ altershield:
 
 spring:
   datasource:
-    jdbc-url: jdbc:localhost:3306/altershield?allowPublicKeyRetrieval=true&useSSL=false
-    username: altershield
-    password: altershield
-
+    jdbc-url: jdbc:mysql://11.166.87.105:3306/altershield
+    username: root@cafe1a#BJ
+    password: AntCloud2021..
+logging_path: ./logs
 logging:
-  config : classpath:log4j2-spring-dev.xml
+  config : classpath:log4j2-spring.xml
