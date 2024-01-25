@@ -158,6 +158,7 @@ public class DefenderTaskExecutorImpl extends AbstractDefenderService implements
                         long duringTime = DateUtil.getDiffFromTwoDates(detectEntity.getGmtStart(), new Date());
                         if (duringTime > AlterShieldConstant.DEFENDER_MAX_BLOCK_OBSERVE_SECOND * 1000) {
                             detectEntity.setStatus(DefenderStatusEnum.TIMEOUT);
+                            return DefenderTaskResult.succeed("ASYNC_CHECK Timeout");
                         }
                     }
                     detectEntity.setGmtFinish(DateUtil.getNowDate());
@@ -213,6 +214,10 @@ public class DefenderTaskExecutorImpl extends AbstractDefenderService implements
 
         // 2.0 If there is a clear final state, update the corresponding detection record
         DefenderDetectPluginResult detectRst = retrieveRst.getDomain();
+        if (!detectRst.isDefenseFinished()) {
+            // Defense verification has not ended
+            return false;
+        }
         if (DefenderStatusEnum.PASS.equals(detectRst.getStatus()) || DefenderStatusEnum.FAIL.equals(detectRst.getStatus())) {
             detectEntity.setStatus(detectRst.getStatus());
             detectEntity.setGmtFinish(DateUtil.getNowDate());

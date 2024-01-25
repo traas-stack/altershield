@@ -142,7 +142,12 @@ public class AlterShieldConstant {
     /**
      * Maximum blocking observation time of defense rules
      */
-    public static volatile long DEFENDER_MAX_BLOCK_OBSERVE_SECOND = 600;
+    public static volatile long DEFENDER_MAX_BLOCK_OBSERVE_SECOND = 900;
+
+    /**
+     * Maximum blocking observation time of monitor check
+     */
+    public static volatile long MONITOR_CHECK_MAX_BLOCK_OBSERVE_SECOND = 600;
 
     /**
      * Synchronization defense verification timeout, unit: milliseconds

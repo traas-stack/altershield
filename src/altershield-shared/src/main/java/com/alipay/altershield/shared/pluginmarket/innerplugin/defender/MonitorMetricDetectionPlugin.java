@@ -30,9 +30,12 @@ package com.alipay.altershield.shared.pluginmarket.innerplugin.defender;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.altershield.common.constant.AlterShieldConstant;
 import com.alipay.altershield.common.logger.Loggers;
+import com.alipay.altershield.common.util.DateUtil;
 import com.alipay.altershield.common.util.HttpUtils;
 import com.alipay.altershield.framework.common.util.logger.AlterShieldLoggerManager;
+import com.alipay.altershield.shared.defender.result.DefenderTaskResult;
 import com.alipay.altershield.shared.pluginmarket.annotations.PluginAutowired;
 import com.alipay.altershield.spi.defender.DefenderAsyncDetectPlugin;
 import com.alipay.altershield.spi.defender.model.enums.DefenderStatusEnum;
@@ -48,10 +51,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -113,8 +113,7 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
         if (CollectionUtils.isEmpty(seriesDatas)) {
             return DefenderDetectPluginResult.exception("Cannot detect with empty time series data");
         }
-        long changeEndTime = request.getChangeExecuteInfo().getChangeFinishTime().getTime();
-        return invokeAlgorithmDetection(request, changeEndTime, seriesDatas);
+        return invokeAlgorithmDetection(request, checkTime, seriesDatas);
     }
 
     private Map<MetricFieldEnum, JSONArray> queryTimeSeriesData(DefenderDetectPluginRequest req, long checkEndTime) {
@@ -248,7 +247,7 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
         if (result.getInteger(RESULT_CODE) != 0) {
             AlterShieldLoggerManager.log("error", Loggers.DEFENDER_PLUGIN, "MonitorMetricDetectionPlugin",
                     "invokeAlgorithmDetection", "Invoke algorithm failed", req.getNodeId(), response);
-            return DefenderDetectPluginResult.exception(result.getString(ERROR_MESSAGE));
+            return DefenderDetectPluginResult.success(false);
         }
 
         String verdict = result.getString(VERDICT);
@@ -258,6 +257,11 @@ public class MonitorMetricDetectionPlugin implements DefenderAsyncDetectPlugin {
         rst.setStatus(PASS.equalsIgnoreCase(verdict) ? DefenderStatusEnum.PASS : DefenderStatusEnum.FAIL);
         rst.setMsg(result.getString(ALGORITHM_MESSAGE));
         rst.setResultJson(response);
+
+        // defenseFinish(当超时或校验阻断时才算结束)
+        long duringTime = DateUtil.getDiffFromTwoDates(req.getChangeExecuteInfo().getChangeFinishTime(), new Date());
+        rst.setDefenseFinished(FAIL.equalsIgnoreCase(verdict) || duringTime > AlterShieldConstant.MONITOR_CHECK_MAX_BLOCK_OBSERVE_SECOND * 1000);
+
         return rst;
     }
 

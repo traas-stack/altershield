@@ -20,6 +20,11 @@ public class DefenderDetectPluginResult {
     private boolean defensed;
 
     /**
+     * Is the defense verification completed
+     */
+    private boolean defenseFinished;
+
+    /**
      * Defender rule id, optional
      */
     private String ruleId;
@@ -45,10 +50,15 @@ public class DefenderDetectPluginResult {
     private String resultJson;
 
     public static DefenderDetectPluginResult exception(String msg){
+        return exception(msg, true);
+    }
+
+    public static DefenderDetectPluginResult exception(String msg, boolean defenseFinished){
         DefenderDetectPluginResult result = new DefenderDetectPluginResult();
         result.setDefensed(false);
         result.setMsg(msg);
         result.setStatus(DefenderStatusEnum.EXCEPTION);
+        result.setDefenseFinished(defenseFinished);
         return result;
     }
 
@@ -57,15 +67,29 @@ public class DefenderDetectPluginResult {
         result.setDefensed(false);
         result.setMsg(msg);
         result.setStatus(DefenderStatusEnum.EXCEPTION);
+        result.setDefenseFinished(true);
         return result;
     }
 
     public static DefenderDetectPluginResult success() {
+        return success(true);
+    }
+
+    public static DefenderDetectPluginResult success(boolean defenseFinished) {
         DefenderDetectPluginResult result = new DefenderDetectPluginResult();
         result.setDefensed(true);
         result.setMsg("success");
         result.setStatus(DefenderStatusEnum.PASS);
+        result.setDefenseFinished(defenseFinished);
         return result;
+    }
+
+    public boolean isDefenseFinished() {
+        return defenseFinished;
+    }
+
+    public void setDefenseFinished(boolean defenseFinished) {
+        this.defenseFinished = defenseFinished;
     }
 
     /**
